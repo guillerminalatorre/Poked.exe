@@ -1,5 +1,5 @@
 package Pokemon;
 
-public class Agua {
+public class Agua implements IAgua {
 
 }
