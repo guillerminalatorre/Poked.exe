@@ -1,6 +1,6 @@
 package Pokemon;
 
 public interface IRoca {
-	public static final String tipo= "Roca";
-	public static final int nivel= 10;
+	public static final String tiporRoca= "Roca";
+	public static final int nivelRoca= 10;
 }	
