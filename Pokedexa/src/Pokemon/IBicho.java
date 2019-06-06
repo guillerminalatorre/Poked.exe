@@ -1,6 +1,6 @@
 package Pokemon;
 
 public interface IBicho {
-	public static final String tipo= "Bicho";
-	public static final int nivel= 3;
+	public static final String tipoBicho= "Bicho";
+	public static final int nivelBicho= 3;
 }
