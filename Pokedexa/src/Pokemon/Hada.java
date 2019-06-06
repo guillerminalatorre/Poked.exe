@@ -1,5 +1,5 @@
 package Pokemon;
 
-public class Veneno {
+public class Hada {
 
 }
