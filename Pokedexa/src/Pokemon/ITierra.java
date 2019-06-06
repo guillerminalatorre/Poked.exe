@@ -1,6 +1,6 @@
 package Pokemon;
 
 public interface ITierra {
-        public static final String tipo = "Tierra";
-      	public static final int nivel = 7;
+        public static final String tipoTierra = "Tierra";
+      	public static final int nivelTierra = 7;
 }
