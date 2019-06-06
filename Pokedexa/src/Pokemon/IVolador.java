@@ -1,6 +1,6 @@
 package Pokemon;
 
 public interface IVolador {
-	public static final String tipo = "Volador";
-	public static final int nivel = 7;
+	public static final String tipoVolador = "Volador";
+	public static final int nivelVolador = 7;
 }
