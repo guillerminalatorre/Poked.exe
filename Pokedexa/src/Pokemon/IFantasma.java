@@ -1,6 +1,6 @@
 package Pokemon;
 
 public interface IFantasma {
-	public static final String tipo= "Fantasma";
-	public static final int nivel= 15;
+	public static final String tipoFantasma= "Fantasma";
+	public static final int nivelFantasma= 15;
 }
