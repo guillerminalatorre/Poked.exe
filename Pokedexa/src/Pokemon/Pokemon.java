@@ -1,8 +1,5 @@
 package Pokemon;
 
-import java.util.ArrayList;
-import java.util.Vector;
-
 public abstract class Pokemon 
 {
 	private int id;
