@@ -13,10 +13,9 @@ public class PlantaVeneno extends Pokemon implements IPlanta, IVeneno
      * @param genero
      * @param rutaImagen
      */
-    public PlantaVeneno (int id, String nombre, int vidas, String genero,String rutaImagen)
+    public PlantaVeneno (int id, String nombre,int nivel, int vidas, String genero,String rutaImagen)
     {
-    	super(id, nombre, vidas, genero, tipoPlanta + tipoVeneno, rutaImagen);
-    	setVidasNivel(calcularNivel());
+    	super(id, nombre,nivel, vidas, genero, tipoPlanta + tipoVeneno, rutaImagen);
     }
     
     /**
