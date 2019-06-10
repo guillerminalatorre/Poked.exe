@@ -38,5 +38,4 @@ public class Dragon_Volador extends Pokemon implements IDragon , IVolador{
 	{
 		return nivelDrago+nivelVolador+nivelPrimeraEvolucion()+nivelSegundaEvolucion()+nivelTerceraEvolucion();
 	}
-
 }
