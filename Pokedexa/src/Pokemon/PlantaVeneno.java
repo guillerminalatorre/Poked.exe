@@ -3,7 +3,7 @@ package Pokemon;
 public class PlantaVeneno extends Pokemon implements IPlanta, IVeneno
 {
 
-	private static final String tipoPlanta = "Veneno";
+	private static final String tipoPlanta = "Planta";
 	private static final int nivelPlanta = 3;
     private static final String tipoVeneno = "Veneno";
     private static final int nivelVeneno = 5;
