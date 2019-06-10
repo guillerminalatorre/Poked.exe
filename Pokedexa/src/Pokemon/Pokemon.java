@@ -18,7 +18,7 @@ public abstract class Pokemon
 	 * @param nivel
 	 * @param genero
 	 */
-	public Pokemon (int id, String nombre, int vidas, int nivel, String genero, String tipo,String rutaImagen)
+	public Pokemon (int id, String nombre,int Nivel,  int Vidas, String genero, String tipo,String rutaImagen)
 	{
 		this.id = id;
 		this.nombre = nombre;
@@ -36,18 +36,18 @@ public abstract class Pokemon
 	 * @param nivel
 	 * @param genero
 	 */
-	public Pokemon (int id, String nombre, int nivel, String genero, String tipo,String rutaImagen)
+	public Pokemon (int id, String nombre, String genero, String tipo,String rutaImagen)
 	{
 		this.id = id;
 		this.nombre = nombre;
-		setVidas(nivel);
-		setNivel(nivel);
+		setVidas(0);
+		setNivel(0);
 		this.genero = genero;
 		this.rutaImagen = rutaImagen;
 	}
 	
 	/**
-	 * las vidas varían en cada pokemon depende la actividad que se aplique sobre él, por eso pueden ser sobreescritas
+	 * las vidas varian en cada pokemon depende la actividad que se aplique sobre Ã©l, por eso pueden ser sobreescritas
 	 * @param vidas
 	 */
 	protected void setVidas (int vidas)
@@ -56,7 +56,7 @@ public abstract class Pokemon
 	}
 	
 	/**
-	 * el nivel varía en cada pokemon depende la actividad que se aplique sobre él, por eso puede ser sobreescrito
+	 * el nivel varia en cada pokemon depende la actividad que se aplique sobre Ã©l, por eso puede ser sobreescrito
 	 * @param nivel
 	 */
 	protected void setNivel (int nivel)
@@ -86,6 +86,12 @@ public abstract class Pokemon
 	
 	public String getTipo() {
 		return tipo;
+	}
+	
+	public void setVidasNivel(int n)
+	{
+		setVidas(n);
+		setNivel(n);
 	}
 	
 	protected abstract int calcularNivel();
@@ -158,7 +164,7 @@ public abstract class Pokemon
 						if (nombre == null) {
 							if (other.getNombre() == null)
 								rta = true;
-						} else if (nombre.equals(other.getNombre()))
+						} else if (nombre.equalsIgnoreCase(other.getNombre()))
 							rta = true;
 					}
 				}
