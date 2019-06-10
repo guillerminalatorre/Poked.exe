@@ -3,10 +3,7 @@ package Pokemon;
 public class PlantaVeneno extends Pokemon implements IPlanta, IVeneno
 {
 
-	private static final String tipoPlanta = "Planta";
-	private static final int nivelPlanta = 3;
-    private static final String tipoVeneno = "Veneno";
-    private static final int nivelVeneno = 5;
+
     
     /**
      * Constructor COPIA
@@ -18,7 +15,8 @@ public class PlantaVeneno extends Pokemon implements IPlanta, IVeneno
      */
     public PlantaVeneno (int id, String nombre, int vidas, String genero,String rutaImagen)
     {
-    	super(id, nombre, vidas, calcularNivel(), genero, tipoPlanta + tipoVeneno, rutaImagen);
+    	super(id, nombre, vidas, genero, tipoPlanta + tipoVeneno, rutaImagen);
+    	setVidasNivel(calcularNivel());
     }
     
     /**
@@ -31,36 +29,18 @@ public class PlantaVeneno extends Pokemon implements IPlanta, IVeneno
      */
     public PlantaVeneno(int id, String nombre, String genero, String tipo,String rutaImagen)
     {
-    	super(id, nombre,calcularNivel(),calcularNivel(), genero, tipoPlanta + tipoVeneno, rutaImagen);
+    	super(id, nombre,genero, tipoPlanta + tipoVeneno, rutaImagen);
+    	setVidasNivel(calcularNivel());
     }
     
   
 	
 	/**
-	 * Metodo abstracto entre las clases solocambia el "tipo" las evoluciones quedan igual.
+	 * Metodo abstracto entre las clases solo cambia el "tipo" las evoluciones quedan igual.
 	 */
 	protected int calcularNivel() 
 	{
 		return nivelPlanta+nivelVeneno+nivelPrimeraEvolucion()+nivelSegundaEvolucion()+nivelTerceraEvolucion();
 	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		return true;
-	}
-
-	@Override
-	public String toString()
-	{
-		return super.toString();
-	}
-	
-	
 
 }
