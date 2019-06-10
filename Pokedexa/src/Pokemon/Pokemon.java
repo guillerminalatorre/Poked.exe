@@ -47,7 +47,7 @@ public abstract class Pokemon
 	}
 	
 	/**
-	 * las vidas varían en cada pokemon depende la actividad que se aplique sobre él, por eso pueden ser sobreescritas
+	 * las vidas varÃ­an en cada pokemon depende la actividad que se aplique sobre Ã©l, por eso pueden ser sobreescritas
 	 * @param vidas
 	 */
 	protected void setVidas (int vidas)
@@ -56,7 +56,7 @@ public abstract class Pokemon
 	}
 	
 	/**
-	 * el nivel varía en cada pokemon depende la actividad que se aplique sobre él, por eso puede ser sobreescrito
+	 * el nivel varÃ­a en cada pokemon depende la actividad que se aplique sobre Ã©l, por eso puede ser sobreescrito
 	 * @param nivel
 	 */
 	protected void setNivel (int nivel)
@@ -150,15 +150,15 @@ public abstract class Pokemon
 		boolean rta = false;
 		if (this != obj) {
 			if (obj != null) {
-				if (getClass() == obj.getClass()) {
+				if (obj instanceof Pokemon) {
 					Pokemon other = (Pokemon) obj;
 
-					if (id == other.id) {
+					if (id == other.getId()) {
 
 						if (nombre == null) {
-							if (other.nombre == null)
+							if (other.getNombre() == null)
 								rta = true;
-						} else if (nombre.equals(other.nombre))
+						} else if (nombre.equals(other.getNombre()))
 							rta = true;
 					}
 				}
