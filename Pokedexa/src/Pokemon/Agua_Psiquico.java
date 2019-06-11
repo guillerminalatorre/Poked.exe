@@ -39,5 +39,6 @@ public class Agua_Psiquico extends Pokemon implements IAgua , IPsiquico {
 		{
 			return nivelAgua+nivelPsiquico+nivelPrimeraEvolucion()+nivelSegundaEvolucion()+nivelTerceraEvolucion();
 		}
+
 }
 
