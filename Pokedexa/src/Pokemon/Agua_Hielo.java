@@ -1,6 +1,6 @@
 package Pokemon;
 
-public class Agua_Hielo implements IAgua , IHielo{
+public class Agua_Hielo extends Pokemon implements IAgua , IHielo{
 	
 	/**
      * Constructor COPIA
