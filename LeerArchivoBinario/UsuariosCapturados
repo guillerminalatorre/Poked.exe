@@ -1,0 +1,42 @@
+/**
+	 * 
+	 * @return retorna un TreeMap<Integer, Pokemon> correspondiente a los pokemons capturados 
+	 */
+	public TreeMap<Integer, Pokemon> getArchivoCapturados()  throws FileNotFoundException
+	{
+		TreeMap <Integer, Pokemon> capturados = new TreeMap<Integer, Pokemon>();
+		
+		FileInputStream pokemons;
+		
+		int copia;
+		
+		try
+		{
+			pokemons = new FileInputStream(nombreArchivoCapturados()));
+			while((copia = pokemons.read()) != -1)
+			{
+				capturados.put(copia.getId(), copia);
+			}
+			
+		}
+		catch (FileNotFoundException exception) 
+		{
+			System.err.println("Error abriendo archivo: " + nombreArchivoCapturados());
+		} 
+		catch (IOException exception) 
+		{
+			System.err.println("Error accediendo al archivo: " + nombreArchivoCapturados());
+		}
+		finally
+		{
+			try {
+				if (null != pokemons) {
+					pokemons.close();
+				}
+			} catch (IOException ioe) {
+				System.out.println("No se puede cerrar el archivo " + nombreArchivoPokedex());
+			}
+		}
+		return capturados;
+	}
+	
