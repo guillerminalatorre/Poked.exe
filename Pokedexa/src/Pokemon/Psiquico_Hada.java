@@ -1,6 +1,6 @@
 package Pokemon;
 
-public class Psiquico extends Pokemon implements  IPsiquico , IHada{
+public class Psiquico_Hada extends Pokemon implements  IPsiquico , IHada{
 	
     /**
      * Constructor COPIA
