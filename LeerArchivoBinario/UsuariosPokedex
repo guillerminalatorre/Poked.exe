@@ -1,0 +1,43 @@
+/**
+	 * 
+	 * @return retorna las ids de la pokedex de el usuario en un ArrayList.
+	 * @throws FileNotFoundException 
+	 */
+	public ArrayList<Integer> getArchivoPokedex() throws FileNotFoundException
+	{
+		ArrayList<Integer> idsPokedex = new ArrayList<Integer>();
+		
+		FileInputStream ids = null;
+		
+		int idCopia;
+		
+		try
+		{
+			ids = new FileInputStream(nombreArchivoPokedex());
+			while((idCopia = ids.read()) != -1)
+			{
+				idsPokedex.add(idCopia);
+			}
+			
+	
+		} 
+		catch (FileNotFoundException exception) 
+		{
+			System.err.println("Error abriendo archivo: " + nombreArchivoPokedex());
+		} 
+		catch (IOException exception) 
+		{
+			System.err.println("Error accediendo al archivo: " + nombreArchivoPokedex());
+		}
+		finally
+		{
+			try {
+				if (null != ids) {
+					ids.close();
+				}
+			} catch (IOException ioe) {
+				System.out.println("No se puede cerrar el archivo " + nombreArchivoPokedex());
+			}
+		}
+		return idsPokedex;
+	}
