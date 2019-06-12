@@ -1,11 +1,12 @@
 package Usuario;
-import Pokemon.pokemon;
+import Pokemon.Pokemon;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.TreeMap;
 
 public class Usuario {
@@ -48,81 +49,20 @@ public class Usuario {
 	
 	/**
 	 * 
-	 * @return retorna las ids de la pokedex de el usuario en un ArrayList.
-	 * @throws FileNotFoundException 
+	 * @return  
 	 */
-	public ArrayList getArchivoPokedex() throws FileNotFoundException
+	public getArchivoPokedex() 
 	{
-		ArrayList<Integer> idsPokedex = new ArrayList();
 		
-		int idCopia;
-		
-		try( FileInputStream ids = new FileInputStream(nombreArchivoPokedex()))
-		{
-			while((idCopia = ids.read()) != -1)
-			{
-				idsPokedex.add(idCopia);
-			}
-		} 
-		catch (FileNotFoundException exception) 
-		{
-			System.err.println("Error abriendo archivo: " + nombreArchivoPokedex());
-		} 
-		catch (IOException exception) 
-		{
-			System.err.println("Error accediendo al archivo: " + nombreArchivoPokedex());
-		}
-		finally
-		{
-			if( ids != null ) 
-			{
-				try (ids.close())
-				catch( IOException ioe ) 
-				{
-					System.out.println( "No se puede cerrar el archivo " + nombreArchivoPokedex() );
-				}
-			}
-		}
-		return idsPokedex;
 	}
 	
 	/**
-	 * Continuar, debe leer tamaño Pokemon.
-	 * @return
+	 * 
+	 * @return 
 	 */
-	public TreeMap gerArchivoCapturados()  throws FileNotFoundException
+	public getArchivoCapturados()  
 	{
-		TreeMap <Integer, Pokemon> capturados = new TreeMap();
 		
-		Pokemon copia;
-		
-		try( FileInputStream pokemons = new FileInputStream(nombreArchivoCapturados()))
-		{
-			while((copia = pokemon.read()) != -1)
-			{
-				
-			}
-		} 
-		catch (FileNotFoundException exception) 
-		{
-			System.err.println("Error abriendo archivo: " + nombreArchivoCapturados());
-		} 
-		catch (IOException exception) 
-		{
-			System.err.println("Error accediendo al archivo: " + nombreArchivoCapurados());
-		}
-		finally
-		{
-			if( pokemons != null ) 
-			{
-				try (pokemons.close())
-				catch( IOException ioe ) 
-				{
-					System.out.println( "No se puede cerrar el archivo " + nombreArchivoCapturados() );
-				}
-			}
-		}
-		return capturados;
 	}
 	
 	// SETTERS
@@ -136,6 +76,11 @@ public class Usuario {
 	public String nombreArchivoPokedex()
 	{
 		return archivoPokedex.getPath();
+	}
+	
+	public String nombreArchivoCapturados()
+	{
+		return archivoCapturados.getPath();
 	}
 	//METODOS OVERRIDE
 	
