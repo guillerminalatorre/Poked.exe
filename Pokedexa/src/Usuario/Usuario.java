@@ -1,5 +1,5 @@
 package Usuario;
-import Pokemon.Pokemon;
+import Pokemon.pokemon;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -72,7 +72,17 @@ public class Usuario {
 		{
 			System.err.println("Error accediendo al archivo: " + nombreArchivoPokedex());
 		}
-		
+		finally
+		{
+			if( ids != null ) 
+			{
+				try (ids.close())
+				catch( IOException ioe ) 
+				{
+					System.out.println( "No se puede cerrar el archivo " + nombreArchivoPokedex() );
+				}
+			}
+		}
 		return idsPokedex;
 	}
 	
@@ -80,11 +90,41 @@ public class Usuario {
 	 * Continuar, debe leer tamaño Pokemon.
 	 * @return
 	 */
-	/*public TreeMap gerArchivoCapturados()
+	public TreeMap gerArchivoCapturados()  throws FileNotFoundException
 	{
+		TreeMap <Integer, Pokemon> capturados = new TreeMap();
 		
+		Pokemon copia;
+		
+		try( FileInputStream pokemons = new FileInputStream(nombreArchivoCapturados()))
+		{
+			while((copia = pokemon.read()) != -1)
+			{
+				
+			}
+		} 
+		catch (FileNotFoundException exception) 
+		{
+			System.err.println("Error abriendo archivo: " + nombreArchivoCapturados());
+		} 
+		catch (IOException exception) 
+		{
+			System.err.println("Error accediendo al archivo: " + nombreArchivoCapurados());
+		}
+		finally
+		{
+			if( pokemons != null ) 
+			{
+				try (pokemons.close())
+				catch( IOException ioe ) 
+				{
+					System.out.println( "No se puede cerrar el archivo " + nombreArchivoCapturados() );
+				}
+			}
+		}
+		return capturados;
 	}
-	*/
+	
 	// SETTERS
 	
 	public void setCantidadDeBatallas(int cantidadDeBatallas) {
