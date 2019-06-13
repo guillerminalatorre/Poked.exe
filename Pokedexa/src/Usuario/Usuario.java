@@ -49,22 +49,92 @@ public class Usuario {
 	
 	/**
 	 * 
-	 * @return  
+	 * @return retorna las ids de la pokedex de el usuario en un ArrayList.
+	 * @throws FileNotFoundException 
 	 */
-	public getArchivoPokedex() 
+	public ArrayList<Integer> getArchivoPokedex() throws FileNotFoundException
 	{
+		ArrayList<Integer> idsPokedex = new ArrayList<Integer>();
 		
+		FileInputStream ids = null;
+		
+		int idCopia;
+		
+		try
+		{
+			ids = new FileInputStream(nombreArchivoPokedex());
+			while((idCopia = ids.read()) != -1)
+			{
+				idsPokedex.add(idCopia);
+			}
+			
+	
+		} 
+		catch (FileNotFoundException exception) 
+		{
+			exception.printStackTrace();
+		} 
+		catch (IOException exception) 
+		{
+			exception.printStackTrace();
+		}
+		finally
+		{
+			try {
+				if (null != ids) {
+					ids.close();
+				}
+			} catch (IOException ioe) {
+				ioe.printStackTrace();
+			}
+		}
+		return idsPokedex;
 	}
+
 	
 	/**
 	 * 
-	 * @return 
+	 * @return retorna un TreeMap<Integer, Pokemon> correspondiente a los pokemons capturados 
 	 */
-	public getArchivoCapturados()  
+	public TreeMap<Integer, Pokemon> getArchivoCapturados()  throws FileNotFoundException
 	{
+		TreeMap <Integer, Pokemon> capturados = new TreeMap<Integer, Pokemon>();
 		
+		FileInputStream pokemons;
+		
+		int copia;
+		
+		try
+		{
+			pokemons = new FileInputStream(nombreArchivoCapturados()));
+			while((copia = pokemons.read()) != -1)
+			{
+				capturados.put(copia.getId(), copia);
+			}
+			
+		}
+		catch (FileNotFoundException exception) 
+		{
+			System.err.println("Error abriendo archivo: " + nombreArchivoCapturados());
+		} 
+		catch (IOException exception) 
+		{
+			System.err.println("Error accediendo al archivo: " + nombreArchivoCapturados());
+		}
+		finally
+		{
+			try {
+				if (null != pokemons) {
+					pokemons.close();
+				}
+			} catch (IOException ioe) {
+				System.out.println("No se puede cerrar el archivo " + nombreArchivoPokedex());
+			}
+		}
+		return capturados;
 	}
 	
+
 	// SETTERS
 	
 	public void setCantidadDeBatallas(int cantidadDeBatallas) {
