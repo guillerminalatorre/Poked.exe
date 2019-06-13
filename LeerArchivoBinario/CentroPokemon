@@ -1,0 +1,28 @@
+package GestorPokemon;
+import Pokemon.*;
+
+import java.io.*;
+
+public class CentroPokemon 
+{
+	private FileOutputStream lectorFlujo;
+	private ObjectOutputStream lector;
+	
+		public CentroPokemon(String nombre) {
+			try {
+				lectorFlujo=new FileOutputStream("\\Pokedexa\\src\\Usuario"+nombre);
+				lector= new ObjectOutputStream(lectorFlujo);
+				lector.close();
+			}
+			catch (IOException error) {
+				error.printStackTrace();
+			}
+		}
+
+	protected void curarPokemon(String usuario)
+	{
+		
+	}
+
+
+}
