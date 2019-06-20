@@ -1,4 +1,4 @@
-# Pokedexa
+# Poked.exe
 Ariana Latorre, Ivan Lopez, Matias Araneta
 
 En el titulo del commit debe estar la fecha y el packete en el/los que se trabajo.
