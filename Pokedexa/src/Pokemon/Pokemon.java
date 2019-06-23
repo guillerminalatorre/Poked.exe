@@ -10,6 +10,8 @@ public abstract class Pokemon
 	private String tipo;
 	private String rutaImagen;
 	
+	//CONSTRUCTORES
+	
 	/**
 	 * Constructor para COPIA, aplicado en la captura pokemon.
 	 * @param id
@@ -46,28 +48,50 @@ public abstract class Pokemon
 		this.rutaImagen = rutaImagen;
 	}
 	
+	//SETTERS
+	
 	/**
 	 * las vidas varian en cada pokemon depende la actividad que se aplique sobre Ã©l, por eso pueden ser sobreescritas
 	 * @param vidas
 	 */
-	protected void setVidas (int vidas)
+	public void setVidas (int vidas)
 	{
 		this.vidas= vidas;
 	}
-	
 	/**
 	 * el nivel varia en cada pokemon depende la actividad que se aplique sobre Ã©l, por eso puede ser sobreescrito
 	 * @param nivel
 	 */
-	protected void setNivel (int nivel)
+	public void setNivel (int nivel)
 	{
 		this.nivel = nivel;
 	}
-
+	public void setVidasNivel(int n)
+	{
+		setVidas(n);
+		setNivel(n);
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+	public void setGenero(String genero) {
+		this.genero = genero;
+	}
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+	public void setRutaImagen(String rutaImagen) {
+		this.rutaImagen = rutaImagen;
+	}
+	
+	//GETTERS 
+	
 	public int getId() {
 		return id;
 	}
-
 	public String getNombre() {
 		return nombre;
 	}
@@ -87,11 +111,8 @@ public abstract class Pokemon
 	public String getTipo() {
 		return tipo;
 	}
-	
-	public void setVidasNivel(int n)
-	{
-		setVidas(n);
-		setNivel(n);
+	public String getRutaImagen(){
+		return rutaImagen;
 	}
 	
 	protected abstract int calcularNivel();
