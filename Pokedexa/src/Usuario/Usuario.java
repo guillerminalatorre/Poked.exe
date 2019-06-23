@@ -1,10 +1,13 @@
 package Usuario;
 import Pokemon.Pokemon;
+import java.io.*;
+import ManejadorExcepciones.*;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
@@ -96,18 +99,18 @@ public class Usuario {
 	 * 
 	 * @return retorna un TreeMap<Integer, Pokemon> correspondiente a los pokemons capturados 
 	 */
-	public TreeMap<Integer, Pokemon> getArchivoCapturados()  throws FileNotFoundException
+	public TreeMap<Integer, Pokemon> getArchivoCapturados()  throws ExcepcionGenerica
 	{
 		TreeMap <Integer, Pokemon> capturados = new TreeMap<Integer, Pokemon>();
-		
-		FileInputStream pokemons;
-		
-		int copia;
+		FileInputStream pokemons;	
+		ObjectInputStream lectorPokemons = null;
+		Pokemon copia;
 		
 		try
 		{
-			pokemons = new FileInputStream(nombreArchivoCapturados()));
-			while((copia = pokemons.read()) != -1)
+			pokemons = new FileInputStream(nombreArchivoCapturados());
+			lectorPokemons= new ObjectInputStream(pokemons);
+			while((copia = (Pokemon)lectorPokemons.readObject()) != null)
 			{
 				capturados.put(copia.getId(), copia);
 			}
@@ -115,20 +118,28 @@ public class Usuario {
 		}
 		catch (FileNotFoundException exception) 
 		{
-			System.err.println("Error abriendo archivo: " + nombreArchivoCapturados());
+			exception.printStackTrace();
+			throw new ExcepcionGenerica("Error abriendo archivo: " + nombreArchivoCapturados());
 		} 
 		catch (IOException exception) 
 		{
-			System.err.println("Error accediendo al archivo: " + nombreArchivoCapturados());
+			exception.printStackTrace();
+			throw new ExcepcionGenerica("Error accediendo al archivo: " + nombreArchivoCapturados());
+		}
+		catch (ClassNotFoundException exception) 
+		{
+			exception.printStackTrace();
+			throw new ExcepcionGenerica("Clase no encontrada para leer del archivo ");
 		}
 		finally
 		{
 			try {
-				if (null != pokemons) {
-					pokemons.close();
+				if (lectorPokemons != null) {
+					lectorPokemons.close();
 				}
-			} catch (IOException ioe) {
-				System.out.println("No se puede cerrar el archivo " + nombreArchivoPokedex());
+			} catch (IOException exception) {
+				exception.printStackTrace();
+				throw new ExcepcionGenerica("No se puede cerrar el archivo " + nombreArchivoPokedex());
 			}
 		}
 		return capturados;
