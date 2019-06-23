@@ -12,9 +12,9 @@ public class Hada extends Pokemon implements IHada {
      * @param genero
      * @param rutaImagen
      */
-    public Hada (int id, String nombre,int nivel, int vidas, String genero,String rutaImagen)
+    public Hada (int id, String nombre,int nivel, int vidas, int evolucion,String rutaImagen)
     {
-    	super(id, nombre,nivel, vidas, genero, tipoHada, rutaImagen);
+    	super(id, nombre,nivel, vidas, evolucion, tipoHada, rutaImagen);
     }
     
     /**
@@ -25,9 +25,9 @@ public class Hada extends Pokemon implements IHada {
      * @param tipo
      * @param rutaImagen
      */
-    public Hada(int id, String nombre, String genero, String tipo,String rutaImagen)
+    public Hada(int id, String nombre, int evolucion, String tipo,String rutaImagen)
     {
-    	super(id, nombre,genero, tipoHada, rutaImagen);
+    	super(id, nombre,evolucion, tipoHada, rutaImagen);
     	setVidasNivel(calcularNivel());
     }
     

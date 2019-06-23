@@ -10,9 +10,9 @@ public class Electrico_Volador extends Pokemon implements IElectrico , IVolador{
      * @param genero
      * @param rutaImagen
      */
-    public Electrico_Volador (int id, String nombre,int nivel, int vidas, String genero,String rutaImagen)
+    public Electrico_Volador (int id, String nombre,int nivel, int vidas, int evolucion ,String rutaImagen)
     {
-    	super(id, nombre,nivel, vidas, genero, tipoElectrico + tipoVolador, rutaImagen);
+    	super(id, nombre,nivel, vidas, evolucion, tipoElectrico + tipoVolador, rutaImagen);
     }
     
     /**
@@ -23,9 +23,9 @@ public class Electrico_Volador extends Pokemon implements IElectrico , IVolador{
      * @param tipo
      * @param rutaImagen
      */
-    public Electrico_Volador (int id, String nombre, String genero, String tipo,String rutaImagen)
+    public Electrico_Volador (int id, String nombre, int evolucion , String tipo,String rutaImagen)
     {
-    	super(id, nombre,genero, tipoElectrico + tipoVolador, rutaImagen);
+    	super(id, nombre,evolucion , tipoElectrico + tipoVolador, rutaImagen);
     	setVidasNivel(calcularNivel());
     }
     

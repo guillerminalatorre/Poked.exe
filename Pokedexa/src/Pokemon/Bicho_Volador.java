@@ -10,9 +10,9 @@ public class Bicho_Volador extends Pokemon implements IBicho, IVolador {
      * @param genero
      * @param rutaImagen
      */
-    public Bicho_Volador (int id, String nombre,int nivel, int vidas, String genero,String rutaImagen)
+    public Bicho_Volador (int id, String nombre,int nivel, int vidas, int evolucion,String rutaImagen)
     {
-    	super(id, nombre,nivel, vidas, genero, tipoVolador + tipoBicho, rutaImagen);
+    	super(id, nombre,nivel, vidas, evolucion, tipoVolador + tipoBicho, rutaImagen);
     }
     
     /**
@@ -23,9 +23,9 @@ public class Bicho_Volador extends Pokemon implements IBicho, IVolador {
      * @param tipo
      * @param rutaImagen
      */
-    public Bicho_Volador(int id, String nombre, String genero, String tipo,String rutaImagen)
+    public Bicho_Volador(int id, String nombre, int evolucion, String tipo,String rutaImagen)
     {
-    	super(id, nombre,genero, tipoVolador + tipoBicho, rutaImagen);
+    	super(id, nombre,evolucion, tipoVolador + tipoBicho, rutaImagen);
     	setVidasNivel(calcularNivel());
     }
     

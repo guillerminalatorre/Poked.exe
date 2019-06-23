@@ -10,9 +10,9 @@ public class Agua_Volador extends Pokemon implements  IAgua , IVolador{
      * @param genero
      * @param rutaImagen
      */
-    public Agua_Volador (int id, String nombre,int nivel, int vidas, String genero,String rutaImagen)
+    public Agua_Volador (int id, String nombre,int nivel, int vidas, int evolucion,String rutaImagen)
     {
-    	super(id, nombre,nivel, vidas, genero, tipoAgua+tipoVolador, rutaImagen);
+    	super(id, nombre,nivel, vidas, evolucion, tipoAgua+tipoVolador, rutaImagen);
     }
     
     /**
@@ -23,9 +23,9 @@ public class Agua_Volador extends Pokemon implements  IAgua , IVolador{
      * @param tipo
      * @param rutaImagen
      */
-    public Agua_Volador(int id, String nombre, String genero, String tipo,String rutaImagen)
+    public Agua_Volador(int id, String nombre, int evolucion, String tipo,String rutaImagen)
     {
-    	super(id, nombre,genero, tipoAgua + tipoVolador, rutaImagen);
+    	super(id, nombre,evolucion, tipoAgua + tipoVolador, rutaImagen);
     	setVidasNivel(calcularNivel());
     }
     

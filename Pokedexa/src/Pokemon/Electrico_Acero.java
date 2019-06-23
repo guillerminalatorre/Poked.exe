@@ -10,9 +10,9 @@ public class Electrico_Acero extends Pokemon implements IElectrico , IAcero{
      * @param genero
      * @param rutaImagen
      */
-    public Electrico_Acero  (int id, String nombre,int nivel, int vidas, String genero,String rutaImagen)
+    public Electrico_Acero  (int id, String nombre,int nivel, int vidas, int evolucion,String rutaImagen)
     {
-    	super(id, nombre,nivel, vidas, genero, tipoElectrico + tipoAcero, rutaImagen);
+    	super(id, nombre,nivel, vidas, evolucion, tipoElectrico + tipoAcero, rutaImagen);
     }
     
     /**
@@ -23,9 +23,9 @@ public class Electrico_Acero extends Pokemon implements IElectrico , IAcero{
      * @param tipo
      * @param rutaImagen
      */
-    public Electrico_Acero (int id, String nombre, String genero, String tipo,String rutaImagen)
+    public Electrico_Acero (int id, String nombre, int evolucion, String tipo,String rutaImagen)
     {
-    	super(id, nombre,genero, tipoElectrico + tipoAcero, rutaImagen);
+    	super(id, nombre,evolucion, tipoElectrico + tipoAcero, rutaImagen);
     	setVidasNivel(calcularNivel());
     }
     

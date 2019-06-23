@@ -10,9 +10,9 @@ public class Planta_Psiquico extends Pokemon implements IPlanta , IPsiquico{
      * @param genero
      * @param rutaImagen
      */
-    public Planta_Psiquico (int id, String nombre,int nivel, int vidas, String genero,String rutaImagen)
+    public Planta_Psiquico (int id, String nombre,int nivel, int vidas, int evolucion,String rutaImagen)
     {
-    	super(id, nombre,nivel, vidas, genero, tipoPlanta + tipoPsiquico, rutaImagen);
+    	super(id, nombre,nivel, vidas, evolucion, tipoPlanta + tipoPsiquico, rutaImagen);
     }
     
     /**
@@ -23,9 +23,9 @@ public class Planta_Psiquico extends Pokemon implements IPlanta , IPsiquico{
      * @param tipo
      * @param rutaImagen
      */
-    public Planta_Psiquico(int id, String nombre, String genero, String tipo,String rutaImagen)
+    public Planta_Psiquico(int id, String nombre, int evolucion, String tipo,String rutaImagen)
     {
-    	super(id, nombre,genero, tipoPlanta + tipoPsiquico, rutaImagen);
+    	super(id, nombre,evolucion, tipoPlanta + tipoPsiquico, rutaImagen);
     	setVidasNivel(calcularNivel());
     }
     

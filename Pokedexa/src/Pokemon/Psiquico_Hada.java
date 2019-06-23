@@ -10,9 +10,9 @@ public class Psiquico_Hada extends Pokemon implements  IPsiquico , IHada{
      * @param genero
      * @param rutaImagen
      */
-    public Psiquico_Hada (int id, String nombre,int nivel, int vidas, String genero,String rutaImagen)
+    public Psiquico_Hada (int id, String nombre,int nivel, int vidas, int evolucion,String rutaImagen)
     {
-    	super(id, nombre,nivel, vidas, genero, tipoPsiquico + tipoHada, rutaImagen);
+    	super(id, nombre,nivel, vidas, evolucion, tipoPsiquico + tipoHada, rutaImagen);
     }
     
     /**
@@ -23,9 +23,9 @@ public class Psiquico_Hada extends Pokemon implements  IPsiquico , IHada{
      * @param tipo
      * @param rutaImagen
      */
-    public Psiquico_Hada(int id, String nombre, String genero, String tipo,String rutaImagen)
+    public Psiquico_Hada(int id, String nombre, int evolucion, String tipo,String rutaImagen)
     {
-    	super(id, nombre,genero, tipoPsiquico + tipoHada, rutaImagen);
+    	super(id, nombre,evolucion, tipoPsiquico + tipoHada, rutaImagen);
     	setVidasNivel(calcularNivel());
     }
     

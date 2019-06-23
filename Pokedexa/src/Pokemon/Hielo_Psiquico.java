@@ -12,9 +12,9 @@ public class Hielo_Psiquico extends Pokemon implements IHielo , IPsiquico{
      * @param genero
      * @param rutaImagen
      */
-    public Hielo_Psiquico (int id, String nombre,int nivel, int vidas, String genero,String rutaImagen)
+    public Hielo_Psiquico (int id, String nombre,int nivel, int vidas, int evolucion,String rutaImagen)
     {
-    	super(id, nombre,nivel, vidas, genero, tipoHielo + tipoPsiquico, rutaImagen);
+    	super(id, nombre,nivel, vidas, evolucion, tipoHielo + tipoPsiquico, rutaImagen);
     }
     
     /**
@@ -25,9 +25,9 @@ public class Hielo_Psiquico extends Pokemon implements IHielo , IPsiquico{
      * @param tipo
      * @param rutaImagen
      */
-    public Hielo_Psiquico(int id, String nombre, String genero, String tipo,String rutaImagen)
+    public Hielo_Psiquico(int id, String nombre, int evolucion, String tipo,String rutaImagen)
     {
-    	super(id, nombre,genero, tipoHielo + tipoPsiquico, rutaImagen);
+    	super(id, nombre,evolucion, tipoHielo + tipoPsiquico, rutaImagen);
     	setVidasNivel(calcularNivel());
     }
     

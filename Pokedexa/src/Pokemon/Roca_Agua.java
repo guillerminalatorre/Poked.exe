@@ -10,9 +10,9 @@ public class Roca_Agua extends Pokemon implements IRoca , IAgua{
 	 * @param genero
 	 * @param rutaImagen
 	 */
-	public Roca_Agua (int id, String nombre,int nivel, int vidas, String genero,String rutaImagen)
+	public Roca_Agua (int id, String nombre,int nivel, int vidas, int evolucion,String rutaImagen)
 	{
-		super(id, nombre,nivel, vidas, genero, tipoRoca + tipoAgua, rutaImagen);
+		super(id, nombre,nivel, vidas, evolucion, tipoRoca + tipoAgua, rutaImagen);
 	}
 	
 	/**
@@ -23,9 +23,9 @@ public class Roca_Agua extends Pokemon implements IRoca , IAgua{
 	 * @param tipo
 	 * @param rutaImagen
 	 */
-	public Roca_Agua(int id, String nombre, String genero, String tipo,String rutaImagen)
+	public Roca_Agua(int id, String nombre, int evolucion, String tipo,String rutaImagen)
 	{
-		super(id, nombre,genero, tipoRoca + tipoAgua, rutaImagen);
+		super(id, nombre,evolucion, tipoRoca + tipoAgua, rutaImagen);
 		setVidasNivel(calcularNivel());
 	}
 	

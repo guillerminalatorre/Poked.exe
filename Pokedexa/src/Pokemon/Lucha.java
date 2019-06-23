@@ -10,9 +10,9 @@ public class Lucha extends Pokemon implements ILucha {
 	    * @param genero
 	    * @param rutaImagen
 	    */
-	   public Lucha (int id, String nombre,int nivel, int vidas, String genero,String rutaImagen)
+	   public Lucha (int id, String nombre,int nivel, int vidas, int evolucion,String rutaImagen)
 	   {
-	   	super(id, nombre,nivel, vidas, genero, tipoLucha, rutaImagen);
+	   	super(id, nombre,nivel, vidas, evolucion, tipoLucha, rutaImagen);
 	   }
 	   
 	   /**
@@ -23,9 +23,9 @@ public class Lucha extends Pokemon implements ILucha {
 	    * @param tipo
 	    * @param rutaImagen
 	    */
-	   public Lucha  (int id, String nombre, String genero, String tipo,String rutaImagen)
+	   public Lucha  (int id, String nombre, int evolucion, String tipo,String rutaImagen)
 	   {
-	   	super(id, nombre,genero, tipoLucha, rutaImagen);
+	   	super(id, nombre,evolucion, tipoLucha, rutaImagen);
 	   	setVidasNivel(calcularNivel());
 	   }
 	   

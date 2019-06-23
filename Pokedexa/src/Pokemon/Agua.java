@@ -11,9 +11,9 @@ public class Agua extends Pokemon implements IAgua {
      * @param genero
      * @param rutaImagen
      */
-    public Agua (int id, String nombre,int nivel, int vidas, String genero,String rutaImagen)
+    public Agua (int id, String nombre,int nivel, int vidas, int evolucion,String rutaImagen)
     {
-    	super(id, nombre,nivel, vidas, genero, tipoAgua, rutaImagen);
+    	super(id, nombre,nivel, vidas, evolucion, tipoAgua, rutaImagen);
     }
     
     /**
@@ -24,9 +24,9 @@ public class Agua extends Pokemon implements IAgua {
      * @param tipo
      * @param rutaImagen
      */
-    public Agua(int id, String nombre, String genero, String tipo,String rutaImagen)
+    public Agua(int id, String nombre, int evolucion, String tipo,String rutaImagen)
     {
-    	super(id, nombre,genero, tipoAgua, rutaImagen);
+    	super(id, nombre,evolucion, tipoAgua, rutaImagen);
     	setVidasNivel(calcularNivel());
     }
     

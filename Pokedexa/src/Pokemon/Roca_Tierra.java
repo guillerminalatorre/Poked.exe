@@ -11,9 +11,9 @@ public class Roca_Tierra extends Pokemon implements IRoca , ITierra{
 	 * @param genero
 	 * @param rutaImagen
 	 */
-	public Roca_Tierra (int id, String nombre,int nivel, int vidas, String genero,String rutaImagen)
+	public Roca_Tierra (int id, String nombre,int nivel, int vidas, int evolucion,String rutaImagen)
 	{
-		super(id, nombre,nivel, vidas, genero, tipoRoca + tipoTierra, rutaImagen);
+		super(id, nombre,nivel, vidas, evolucion, tipoRoca + tipoTierra, rutaImagen);
 	}
 	
 	/**
@@ -24,9 +24,9 @@ public class Roca_Tierra extends Pokemon implements IRoca , ITierra{
 	 * @param tipo
 	 * @param rutaImagen
 	 */
-	public Roca_Tierra(int id, String nombre, String genero, String tipo,String rutaImagen)
+	public Roca_Tierra(int id, String nombre, int evolucion, String tipo,String rutaImagen)
 	{
-		super(id, nombre,genero, tipoRoca + tipoTierra, rutaImagen);
+		super(id, nombre,evolucion, tipoRoca + tipoTierra, rutaImagen);
 		setVidasNivel(calcularNivel());
 	}
 	

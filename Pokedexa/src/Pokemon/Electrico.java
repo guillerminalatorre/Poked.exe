@@ -7,25 +7,25 @@ public class Electrico extends Pokemon implements IElectrico {
      * @param id
      * @param nombre
      * @param vidas
-     * @param genero
+     * @param evolcion
      * @param rutaImagen
      */
-    public Electrico (int id, String nombre,int nivel, int vidas, String genero,String rutaImagen)
+    public Electrico (int id, String nombre,int nivel, int vidas, int evolucion,String rutaImagen)
     {
-    	super(id, nombre,nivel, vidas, genero, tipoElectrico, rutaImagen);
+    	super(id, nombre,nivel, vidas, evolucion, tipoElectrico, rutaImagen);
     }
     
     /**
      * Constructor DEFECTO
      * @param id
      * @param nombre
-     * @param genero
+     * @param evolucion
      * @param tipo
      * @param rutaImagen
      */
-    public Electrico (int id, String nombre, String genero, String tipo,String rutaImagen)
+    public Electrico (int id, String nombre, int evolucion, String tipo,String rutaImagen)
     {
-    	super(id, nombre,genero, tipoElectrico, rutaImagen);
+    	super(id, nombre,evolucion, tipoElectrico, rutaImagen);
     	setVidasNivel(calcularNivel());
     }
     

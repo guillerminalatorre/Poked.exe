@@ -10,9 +10,9 @@ public class Bicho_Veneno extends Pokemon implements IBicho, IVeneno {
      * @param genero
      * @param rutaImagen
      */
-    public Bicho_Veneno (int id, String nombre,int nivel, int vidas, String genero,String rutaImagen)
+    public Bicho_Veneno (int id, String nombre,int nivel, int vidas, int evolucion,String rutaImagen)
     {
-    	super(id, nombre,nivel, vidas, genero, tipoVeneno + tipoBicho, rutaImagen);
+    	super(id, nombre,nivel, vidas, evolucion, tipoVeneno + tipoBicho, rutaImagen);
     }
     
     /**
@@ -23,9 +23,9 @@ public class Bicho_Veneno extends Pokemon implements IBicho, IVeneno {
      * @param tipo
      * @param rutaImagen
      */
-    public Bicho_Veneno(int id, String nombre, String genero, String tipo,String rutaImagen)
+    public Bicho_Veneno(int id, String nombre, int evolucion, String tipo,String rutaImagen)
     {
-    	super(id, nombre,genero, tipoVeneno + tipoBicho, rutaImagen);
+    	super(id, nombre,evolucion, tipoVeneno + tipoBicho, rutaImagen);
     	setVidasNivel(calcularNivel());
     }
     

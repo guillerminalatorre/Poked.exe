@@ -10,9 +10,9 @@ public class Dragon_Volador extends Pokemon implements IDragon , IVolador{
      * @param genero
      * @param rutaImagen
      */
-    public Dragon_Volador (int id, String nombre,int nivel, int vidas, String genero,String rutaImagen)
+    public Dragon_Volador (int id, String nombre,int nivel, int vidas, int evolucion,String rutaImagen)
     {
-    	super(id, nombre,nivel, vidas, genero, tipoDragon + tipoVolador, rutaImagen);
+    	super(id, nombre,nivel, vidas, evolucion, tipoDragon + tipoVolador, rutaImagen);
     }
     
     /**
@@ -23,9 +23,9 @@ public class Dragon_Volador extends Pokemon implements IDragon , IVolador{
      * @param tipo
      * @param rutaImagen
      */
-    public Dragon_Volador(int id, String nombre, String genero, String tipo,String rutaImagen)
+    public Dragon_Volador(int id, String nombre, int evolucion, String tipo,String rutaImagen)
     {
-    	super(id, nombre,genero, tipoDragon + tipoVolador, rutaImagen);
+    	super(id, nombre,evolucion, tipoDragon + tipoVolador, rutaImagen);
     	setVidasNivel(calcularNivel());
     }
     

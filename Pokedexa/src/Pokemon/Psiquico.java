@@ -10,9 +10,9 @@ public class Psiquico extends Pokemon implements  IPsiquico{
      * @param genero
      * @param rutaImagen
      */
-    public Psiquico (int id, String nombre,int nivel, int vidas, String genero,String rutaImagen)
+    public Psiquico (int id, String nombre,int nivel, int vidas, int evolucion,String rutaImagen)
     {
-    	super(id, nombre,nivel, vidas, genero, tipoPsiquico, rutaImagen);
+    	super(id, nombre,nivel, vidas, evolucion, tipoPsiquico, rutaImagen);
     }
     
     /**
@@ -23,9 +23,9 @@ public class Psiquico extends Pokemon implements  IPsiquico{
      * @param tipo
      * @param rutaImagen
      */
-    public Psiquico(int id, String nombre, String genero, String tipo,String rutaImagen)
+    public Psiquico(int id, String nombre, int evolucion, String tipo,String rutaImagen)
     {
-    	super(id, nombre,genero, tipoPsiquico, rutaImagen);
+    	super(id, nombre,evolucion, tipoPsiquico, rutaImagen);
     	setVidasNivel(calcularNivel());
     }
     

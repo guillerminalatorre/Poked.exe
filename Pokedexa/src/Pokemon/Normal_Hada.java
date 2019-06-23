@@ -10,9 +10,9 @@ public class Normal_Hada extends Pokemon implements INormal, IHada {
      * @param genero
      * @param rutaImagen
      */
-    public Normal_Hada (int id, String nombre,int nivel, int vidas, String genero,String rutaImagen)
+    public Normal_Hada (int id, String nombre,int nivel, int vidas, int evolucion,String rutaImagen)
     {
-    	super(id, nombre,nivel, vidas, genero, tipoNormal + tipoHada, rutaImagen);
+    	super(id, nombre,nivel, vidas, evolucion, tipoNormal + tipoHada, rutaImagen);
     }
     
     /**
@@ -23,9 +23,9 @@ public class Normal_Hada extends Pokemon implements INormal, IHada {
      * @param tipo
      * @param rutaImagen
      */
-    public Normal_Hada(int id, String nombre, String genero, String tipo,String rutaImagen)
+    public Normal_Hada(int id, String nombre, int evolucion, String tipo,String rutaImagen)
     {
-    	super(id, nombre,genero, tipoNormal + tipoHada, rutaImagen);
+    	super(id, nombre,evolucion, tipoNormal + tipoHada, rutaImagen);
     	setVidasNivel(calcularNivel());
     }
     

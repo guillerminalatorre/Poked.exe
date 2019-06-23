@@ -10,9 +10,9 @@ public class Dragon extends Pokemon implements IDragon {
      * @param genero
      * @param rutaImagen
      */
-    public Dragon (int id, String nombre,int nivel, int vidas, String genero,String rutaImagen)
+    public Dragon (int id, String nombre,int nivel, int vidas, int evolucion,String rutaImagen)
     {
-    	super(id, nombre,nivel, vidas, genero, tipoDragon , rutaImagen);
+    	super(id, nombre,nivel, vidas, evolucion, tipoDragon , rutaImagen);
     }
     
     /**
@@ -23,9 +23,9 @@ public class Dragon extends Pokemon implements IDragon {
      * @param tipo
      * @param rutaImagen
      */
-    public Dragon(int id, String nombre, String genero, String tipo,String rutaImagen)
+    public Dragon(int id, String nombre, int evolucion, String tipo,String rutaImagen)
     {
-    	super(id, nombre,genero, tipoDragon , rutaImagen);
+    	super(id, nombre,evolucion, tipoDragon , rutaImagen);
     	setVidasNivel(calcularNivel());
     }
     

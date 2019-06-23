@@ -11,9 +11,9 @@ public class Agua_Psiquico extends Pokemon implements IAgua , IPsiquico {
 	     * @param genero
 	     * @param rutaImagen
 	     */
-	    public Agua_Psiquico (int id, String nombre,int nivel, int vidas, String genero,String rutaImagen)
+	    public Agua_Psiquico (int id, String nombre,int nivel, int vidas, int evolucion,String rutaImagen)
 	    {
-	    	super(id, nombre,nivel, vidas, genero, tipoAgua + tipoPsiquico, rutaImagen);
+	    	super(id, nombre,nivel, vidas, evolucion, tipoAgua + tipoPsiquico, rutaImagen);
 	    }
 	    
 	    /**
@@ -24,9 +24,9 @@ public class Agua_Psiquico extends Pokemon implements IAgua , IPsiquico {
 	     * @param tipo
 	     * @param rutaImagen
 	     */
-	    public Agua_Psiquico(int id, String nombre, String genero, String tipo,String rutaImagen)
+	    public Agua_Psiquico(int id, String nombre, int evolucion, String tipo,String rutaImagen)
 	    {
-	    	super(id, nombre,genero, tipoAgua + tipoPsiquico, rutaImagen);
+	    	super(id, nombre,evolucion, tipoAgua + tipoPsiquico, rutaImagen);
 	    	setVidasNivel(calcularNivel());
 	    }
 	    

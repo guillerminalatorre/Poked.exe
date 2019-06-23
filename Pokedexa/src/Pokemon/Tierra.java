@@ -11,9 +11,9 @@ public class Tierra extends Pokemon implements ITierra{
 	 * @param genero
 	 * @param rutaImagen
 	 */
-	public Tierra (int id, String nombre,int nivel, int vidas, String genero,String rutaImagen)
+	public Tierra (int id, String nombre,int nivel, int vidas, int evolucion,String rutaImagen)
 	{
-		super(id, nombre,nivel, vidas, genero,  tipoTierra, rutaImagen);
+		super(id, nombre,nivel, vidas, evolucion,  tipoTierra, rutaImagen);
 	}
 	
 	/**
@@ -24,9 +24,9 @@ public class Tierra extends Pokemon implements ITierra{
 	 * @param tipo
 	 * @param rutaImagen
 	 */
-	public Tierra(int id, String nombre, String genero, String tipo,String rutaImagen)
+	public Tierra(int id, String nombre, int evolucion, String tipo,String rutaImagen)
 	{
-		super(id, nombre,genero,  tipoTierra, rutaImagen);
+		super(id, nombre,evolucion,  tipoTierra, rutaImagen);
 		setVidasNivel(calcularNivel());
 	}
 	

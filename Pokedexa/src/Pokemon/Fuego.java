@@ -12,9 +12,9 @@ public class Fuego extends Pokemon implements IFuego {
      * @param genero
      * @param rutaImagen
      */
-    public Fuego (int id, String nombre,int nivel, int vidas, String genero,String rutaImagen)
+    public Fuego (int id, String nombre,int nivel, int vidas, int evolucion,String rutaImagen)
     {
-    	super(id, nombre,nivel, vidas, genero, tipoFuego, rutaImagen);
+    	super(id, nombre,nivel, vidas, evolucion, tipoFuego, rutaImagen);
     }
     
     /**
@@ -25,9 +25,9 @@ public class Fuego extends Pokemon implements IFuego {
      * @param tipo
      * @param rutaImagen
      */
-    public Fuego(int id, String nombre, String genero, String tipo,String rutaImagen)
+    public Fuego(int id, String nombre, int evolucion, String tipo,String rutaImagen)
     {
-    	super(id, nombre,genero, tipoFuego, rutaImagen);
+    	super(id, nombre,evolucion, tipoFuego, rutaImagen);
     	setVidasNivel(calcularNivel());
     }
     

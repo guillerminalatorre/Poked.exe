@@ -10,9 +10,9 @@ public class Fuego_Volador extends Pokemon implements IFuego, IVolador {
 	    * @param genero
 	    * @param rutaImagen
 	    */
-	   public Fuego_Volador  (int id, String nombre,int nivel, int vidas, String genero,String rutaImagen)
+	   public Fuego_Volador  (int id, String nombre,int nivel, int vidas, int evolucion,String rutaImagen)
 	   {
-	   	super(id, nombre,nivel, vidas, genero, tipoFuego + tipoVolador, rutaImagen);
+	   	super(id, nombre,nivel, vidas, evolucion, tipoFuego + tipoVolador, rutaImagen);
 	   }
 	   
 	   /**
@@ -23,9 +23,9 @@ public class Fuego_Volador extends Pokemon implements IFuego, IVolador {
 	    * @param tipo
 	    * @param rutaImagen
 	    */
-	   public Fuego_Volador  (int id, String nombre, String genero, String tipo,String rutaImagen)
+	   public Fuego_Volador  (int id, String nombre, int evolucion, String tipo,String rutaImagen)
 	   {
-	   	super(id, nombre,genero, tipoFuego + tipoVolador, rutaImagen);
+	   	super(id, nombre,evolucion, tipoFuego + tipoVolador, rutaImagen);
 	   	setVidasNivel(calcularNivel());
 	   }
 	   

@@ -10,9 +10,9 @@ public class Roca_Volador extends Pokemon implements IRoca , IVolador{
 	 * @param genero
 	 * @param rutaImagen
 	 */
-	public Roca_Volador (int id, String nombre,int nivel, int vidas, String genero,String rutaImagen)
+	public Roca_Volador (int id, String nombre,int nivel, int vidas, int evolucion,String rutaImagen)
 	{
-		super(id, nombre,nivel, vidas, genero, tipoRoca + tipoVolador, rutaImagen);
+		super(id, nombre,nivel, vidas, evolucion, tipoRoca + tipoVolador, rutaImagen);
 	}
 	
 	/**
@@ -23,9 +23,9 @@ public class Roca_Volador extends Pokemon implements IRoca , IVolador{
 	 * @param tipo
 	 * @param rutaImagen
 	 */
-	public Roca_Volador(int id, String nombre, String genero, String tipo,String rutaImagen)
+	public Roca_Volador(int id, String nombre, int evolucion, String tipo,String rutaImagen)
 	{
-		super(id, nombre,genero, tipoRoca + tipoVolador, rutaImagen);
+		super(id, nombre,evolucion, tipoRoca + tipoVolador, rutaImagen);
 		setVidasNivel(calcularNivel());
 	}
 	

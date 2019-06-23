@@ -10,9 +10,9 @@ public class Normal_Volador extends Pokemon implements INormal, IVolador {
     * @param genero
     * @param rutaImagen
     */
-   public Normal_Volador (int id, String nombre,int nivel, int vidas, String genero,String rutaImagen)
+   public Normal_Volador (int id, String nombre,int nivel, int vidas, int evolucion,String rutaImagen)
    {
-   	super(id, nombre,nivel, vidas, genero, tipoNormal + tipoVolador, rutaImagen);
+   	super(id, nombre,nivel, vidas, evolucion, tipoNormal + tipoVolador, rutaImagen);
    }
    
    /**
@@ -23,9 +23,9 @@ public class Normal_Volador extends Pokemon implements INormal, IVolador {
     * @param tipo
     * @param rutaImagen
     */
-   public Normal_Volador(int id, String nombre, String genero, String tipo,String rutaImagen)
+   public Normal_Volador(int id, String nombre, int evolucion, String tipo,String rutaImagen)
    {
-   	super(id, nombre,genero, tipoNormal + tipoVolador, rutaImagen);
+   	super(id, nombre,evolucion, tipoNormal + tipoVolador, rutaImagen);
    	setVidasNivel(calcularNivel());
    }
    

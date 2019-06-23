@@ -10,9 +10,9 @@ public class Tierra_Veneno extends Pokemon implements ITierra , IVeneno {
 	 * @param genero
 	 * @param rutaImagen
 	 */
-	public Tierra_Veneno (int id, String nombre,int nivel, int vidas, String genero,String rutaImagen)
+	public Tierra_Veneno (int id, String nombre,int nivel, int vidas, int evolucion,String rutaImagen)
 	{
-		super(id, nombre,nivel, vidas, genero,  tipoTierra + tipoVeneno, rutaImagen);
+		super(id, nombre,nivel, vidas, evolucion,  tipoTierra + tipoVeneno, rutaImagen);
 	}
 	
 	/**
@@ -23,9 +23,9 @@ public class Tierra_Veneno extends Pokemon implements ITierra , IVeneno {
 	 * @param tipo
 	 * @param rutaImagen
 	 */
-	public Tierra_Veneno (int id, String nombre, String genero, String tipo,String rutaImagen)
+	public Tierra_Veneno (int id, String nombre, int evolucion, String tipo,String rutaImagen)
 	{
-		super(id, nombre,genero,  tipoTierra + tipoVeneno, rutaImagen);
+		super(id, nombre,evolucion,  tipoTierra + tipoVeneno, rutaImagen);
 		setVidasNivel(calcularNivel());
 	}
 	

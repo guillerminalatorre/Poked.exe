@@ -1,3 +1,4 @@
+
 package Pokemon;
 
 public class Fantasma_Veneno extends Pokemon implements IFantasma , IVeneno{
@@ -10,9 +11,9 @@ public class Fantasma_Veneno extends Pokemon implements IFantasma , IVeneno{
     * @param genero
     * @param rutaImagen
     */
-   public Fantasma_Veneno (int id, String nombre,int nivel, int vidas, String genero,String rutaImagen)
+   public Fantasma_Veneno (int id, String nombre,int nivel, int vidas, int evolucion,String rutaImagen)
    {
-   	super(id, nombre,nivel, vidas, genero, tipoFantasma + tipoVeneno, rutaImagen);
+   	super(id, nombre,nivel, vidas, evolucion, tipoFantasma + tipoVeneno, rutaImagen);
    }
    
    /**
@@ -23,9 +24,9 @@ public class Fantasma_Veneno extends Pokemon implements IFantasma , IVeneno{
     * @param tipo
     * @param rutaImagen
     */
-   public Fantasma_Veneno (int id, String nombre, String genero, String tipo,String rutaImagen)
+   public Fantasma_Veneno (int id, String nombre, int evolucion, String tipo,String rutaImagen)
    {
-   	super(id, nombre,genero, tipoFantasma + tipoVeneno, rutaImagen);
+   	super(id, nombre,evolucion, tipoFantasma + tipoVeneno, rutaImagen);
    	setVidasNivel(calcularNivel());
    }
    
