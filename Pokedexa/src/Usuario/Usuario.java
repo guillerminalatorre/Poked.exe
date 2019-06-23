@@ -17,7 +17,7 @@ public class Usuario {
 	private String Genero;
 	private int Edad;
 	private int CantidadDeBatallas; // "NIVEL" DEL JUGADOR
-	private File archivoPokedex;
+	private File archivoPokedexUsuario;
 	private File archivoCapturados;
 	
 	// CONSTRUCTORES
@@ -28,7 +28,7 @@ public class Usuario {
 		Genero = genero;
 		Edad = edad;
 		CantidadDeBatallas = cantidadDeBatallas;
-		archivoPokedex = new File ("\\Pokedexa\\src\\Usuario", nombre);
+		archivoPokedexUsuario = new File ("\\Pokedexa\\src\\Usuario", nombre);
 		archivoCapturados = new File ("\\Pokedexa\\src\\Usuario",nombre);
 	}
 
@@ -55,18 +55,18 @@ public class Usuario {
 	 * @return retorna las ids de la pokedex de el usuario en un ArrayList.
 	 * @throws FileNotFoundException 
 	 */
-	public ArrayList<Integer> getArchivoPokedex() throws FileNotFoundException
+	public ArrayList<Integer> getArchivoPokedexUsuario() throws ExcepcionGenerica
 	{
 		ArrayList<Integer> idsPokedex = new ArrayList<Integer>();
 		
-		FileInputStream ids = null;
+		FileInputStream lecturaIds = null;
 		
 		int idCopia;
 		
 		try
 		{
-			ids = new FileInputStream(nombreArchivoPokedex());
-			while((idCopia = ids.read()) != -1)
+			lecturaIds = new FileInputStream(nombreArchivoPokedexUsuario());
+			while((idCopia = lecturaIds.read()) != -1)
 			{
 				idsPokedex.add(idCopia);
 			}
@@ -76,19 +76,22 @@ public class Usuario {
 		catch (FileNotFoundException exception) 
 		{
 			exception.printStackTrace();
+			throw new ExcepcionGenerica("Error abriendo archivo: " + nombreArchivoPokedexUsuario());
 		} 
 		catch (IOException exception) 
 		{
 			exception.printStackTrace();
+			throw new ExcepcionGenerica("Error accediendo archivo: " + nombreArchivoPokedexUsuario());
 		}
 		finally
 		{
 			try {
-				if (null != ids) {
-					ids.close();
+				if (null != lecturaIds) {
+					lecturaIds.close();
 				}
-			} catch (IOException ioe) {
-				ioe.printStackTrace();
+			} catch (IOException exception) {
+				exception.printStackTrace();
+				throw new ExcepcionGenerica("No se puede cerrar el archivo: " + nombreArchivoPokedexUsuario());
 			}
 		}
 		return idsPokedex;
@@ -102,14 +105,14 @@ public class Usuario {
 	public TreeMap<Integer, Pokemon> getArchivoCapturados()  throws ExcepcionGenerica
 	{
 		TreeMap <Integer, Pokemon> capturados = new TreeMap<Integer, Pokemon>();
-		FileInputStream pokemons;	
+		FileInputStream streamPokemons = null;	
 		ObjectInputStream lectorPokemons = null;
 		Pokemon copia;
 		
 		try
 		{
-			pokemons = new FileInputStream(nombreArchivoCapturados());
-			lectorPokemons= new ObjectInputStream(pokemons);
+			streamPokemons = new FileInputStream(nombreArchivoCapturados());
+			lectorPokemons= new ObjectInputStream(streamPokemons);
 			while((copia = (Pokemon)lectorPokemons.readObject()) != null)
 			{
 				capturados.put(copia.getId(), copia);
@@ -133,14 +136,25 @@ public class Usuario {
 		}
 		finally
 		{
+			
 			try {
 				if (lectorPokemons != null) {
 					lectorPokemons.close();
 				}
 			} catch (IOException exception) {
 				exception.printStackTrace();
-				throw new ExcepcionGenerica("No se puede cerrar el archivo " + nombreArchivoPokedex());
+				throw new ExcepcionGenerica("No se puede cerrar el archivo " + nombreArchivoCapturados());
 			}
+			/*finally {
+				try {
+					if (streamPokemons != null) {
+						streamPokemons.close();
+					}
+				} catch (IOException exception) {
+					exception.printStackTrace();
+					throw new ExcepcionGenerica("No se puede cerrar el archivo " + nombreArchivoCapturados());
+				}
+			}*/
 		}
 		return capturados;
 	}
@@ -154,14 +168,19 @@ public class Usuario {
 	
 	//METODOS 
 	
-	public String nombreArchivoPokedex()
+	public String nombreArchivoPokedexUsuario()
 	{
-		return archivoPokedex.getPath();
+		return archivoPokedexUsuario.getPath();
 	}
 	
 	public String nombreArchivoCapturados()
 	{
 		return archivoCapturados.getPath();
+	}
+	
+	public void sumarBatalla ()
+	{
+		setCantidadDeBatallas( getCantidadDeBatallas()+1 );
 	}
 	//METODOS OVERRIDE
 	
