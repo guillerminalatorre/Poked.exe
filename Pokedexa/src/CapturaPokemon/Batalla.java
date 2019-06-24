@@ -93,13 +93,15 @@ public class Batalla {
 	
 	/**
 	 * se acreditan los premios o las prendas al pokemon capturado
+	 * @throws ExcepcionGenerica 
 	 */
-	public void resultadoPelea()
+	public void resultadoPelea() throws ExcepcionGenerica
 	{
 		if(getGanador() == 1 || getGanador() == 3)//si gana el capturado
 		{
 			pokemonCapturado.setNivel( pokemonCapturado.getNivel() +1);//se le suma uno nivel
 			//capturarPokemon.
+			usuario.actualizarUnPokemon(pokemonCapturado);
 		}
 		
 		if(getGanador() < 0 )//si gana el salvaje 
@@ -107,10 +109,12 @@ public class Batalla {
 			if(( 0 - pokemonCapturado.getNivel()) > getGanador() )// si hay que restarle al pokemon capturado mas vidas de las que tiene 
 			{
 				pokemonCapturado.setVidas( 0 );
+				usuario.actualizarUnPokemon(pokemonCapturado);
 			}
 			else
 			{
 				pokemonCapturado.setNivel( pokemonCapturado.getNivel() - getGanador() );
+				usuario.actualizarUnPokemon(pokemonCapturado);
 			} 
 		} 
 		
