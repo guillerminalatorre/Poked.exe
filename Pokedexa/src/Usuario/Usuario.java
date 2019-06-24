@@ -9,7 +9,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.TreeMap;
 
 public class Usuario {
@@ -160,6 +159,7 @@ public class Usuario {
 	}
 	
 
+	
 	// SETTERS
 	
 	public void setCantidadDeBatallas(int cantidadDeBatallas) {
