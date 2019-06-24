@@ -15,7 +15,7 @@ import Usuario.Usuario;
 public class Ventana extends JFrame{
 	//ATRIBUTOS
 	JFrame ventana;
-	JLabel usuario;
+	JLabel textoUsuario;
 	JTextField cajaUsuario;
 	JButton aceptar;
 	JButton cerrar;
@@ -23,11 +23,12 @@ public class Ventana extends JFrame{
 	Sonido reproductor;
 	File fondoLogueo= new File("src\\Imagenes\\FondoLogueo.jpg");
 	File cancionLogueo= new File("src\\Sonidos\\CancionLogueo.mp3");
+	Usuario usuario;
+	
 	
 	//CONSTRUCTOR
 	public Ventana() throws ExcepcionGenerica{
 		ventana= new JFrame("Logueo");
-		ventana.setSize(1600,800);
 		ventana.setLocationRelativeTo(null);
 	    ventana.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	    ventana.setLayout(null);
@@ -35,8 +36,8 @@ public class Ventana extends JFrame{
 	    ventana.setUndecorated(true);
 	    ventana.setVisible(true);
 	    ventana.setContentPane(new JLabel(new ImageIcon(fondoLogueo.getAbsolutePath())));
-		usuario = new JLabel("Usuario: ");
-		usuario.setForeground(Color.white);
+		textoUsuario = new JLabel("Usuario: ");
+		textoUsuario.setForeground(Color.white);
 		cajaUsuario = new JTextField(20);
 		aceptar = new JButton("Aceptar");
 		cerrar= new JButton("Salir");
@@ -45,11 +46,11 @@ public class Ventana extends JFrame{
 		cerrar.addActionListener(new BotonCerrar());
 		aceptar.setBackground(Color.cyan);
 		aceptar.setForeground(Color.BLACK);
-		ventana.add(usuario);
+		ventana.add(textoUsuario);
 		ventana.add(cajaUsuario);
 		ventana.add(aceptar);
 		ventana.add(cerrar);
-		usuario.setBounds(575,302,50,10);
+		textoUsuario.setBounds(575,302,50,10);
 		cajaUsuario.setBounds(625, 300, 150, 20);
 		aceptar.setBounds(650, 330,100,20);
 		cerrar.setBounds(20, 700,100 , 20);
