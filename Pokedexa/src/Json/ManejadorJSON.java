@@ -24,7 +24,6 @@ public class ManejadorJSON {
 			pokemonJSON.put("Nombre", pokemonObj.getNombre());
 			pokemonJSON.put("Nivel", pokemonObj.getNivel());
 			pokemonJSON.put("Vidas", pokemonObj.getVidas());
-			pokemonJSON.put("Genero", pokemonObj.getGenero());
 			pokemonJSON.put("Tipo", pokemonObj.getTipo());
 			pokemonJSON.put("RutaImagen", pokemonObj.getRutaImagen());
 			pokemones.put(pokemonJSON);
@@ -44,7 +43,6 @@ public class ManejadorJSON {
 			pokemon.setNombre(pokemonJSON.getString("Nombre"));
 			pokemon.setNivel(pokemonJSON.getInt("Nivel"));
 			pokemon.setVidas(pokemonJSON.getInt("Vidas"));
-			pokemon.setGenero(pokemonJSON.getString("Genero"));
 			pokemon.setTipo(pokemonJSON.getString("Tipo"));
 			pokemon.setRutaImagen(pokemonJSON.getString("RutaImagen"));
 		}
