@@ -23,7 +23,7 @@ public class Agua_Hielo extends Pokemon implements IAgua , IHielo{
      * @param tipo
      * @param rutaImagen
      */
-    public Agua_Hielo(int id, String nombre, int evolucion, String tipo,String rutaImagen)
+    public Agua_Hielo(int id, String nombre, int evolucion,String tipo,String rutaImagen)
     {
     	super(id, nombre,evolucion, tipoAgua + tipoHielo, rutaImagen);
     	setVidasNivel(calcularNivel());

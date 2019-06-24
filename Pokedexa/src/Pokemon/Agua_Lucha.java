@@ -23,7 +23,7 @@ public class Agua_Lucha extends Pokemon implements IAgua, ILucha {
      * @param tipo
      * @param rutaImagen
      */
-    public Agua_Lucha (int id, String nombre, int evolucion, String tipo,String rutaImagen)
+    public Agua_Lucha (int id, String nombre, int evolucion,String tipo, String rutaImagen)
     {
     	super(id, nombre,evolucion, tipoAgua + tipoLucha, rutaImagen);
     	setVidasNivel(calcularNivel());
