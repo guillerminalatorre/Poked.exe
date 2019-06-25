@@ -1,5 +1,10 @@
 package Json;
 import Pokemon.*;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import ManejadorExcepciones.*;
 
 public class ManejadorJSON {

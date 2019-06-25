@@ -15,6 +15,7 @@ public class Usuario {
 	private File archivoPokedexUsuario;
 	private File archivoCapturados;
 	private File archiUsuario=new File("src\\Usuario","Usuarios");
+	private File archivoCapturadosCopia;
 	
 	// CONSTRUCTORES
 
@@ -24,8 +25,9 @@ public class Usuario {
 		Genero = genero;
 		Edad = edad;
 		CantidadDeBatallas = cantidadDeBatallas;
-		archivoPokedexUsuario = new File ("\\Pokedexa\\src\\Usuario", nombre);
-		archivoCapturados = new File ("\\Pokedexa\\src\\Usuario",nombre);
+		archivoPokedexUsuario = new File ("\\Pokedexa\\src\\Usuario", nombre+"Pokedex");
+		archivoCapturados = new File ("\\Pokedexa\\src\\Usuario",nombre+"Capturados");
+		archivoCapturadosCopia = null;
 	}
 
 	// GETTERS
@@ -44,6 +46,11 @@ public class Usuario {
 
 	public int getEdad() {
 		return Edad;
+	}
+	
+	public String getRutaArchivoCapturadosCopia()
+	{
+		return "\\Pokedexa\\src\\Usuario"+this.Nombre +"CapturadosCopia";
 	}
 	
 	/**
@@ -359,14 +366,17 @@ public class Usuario {
 	 */
 	private String copiarArchivoCapturados () throws ExcepcionGenerica
 	{
-        File destino = new File("\\Pokedexa\\src\\Usuario\\ArchivoCopias");
+		//hago un new del archivoCapturadosCopia,
+		
+		archivoCapturadosCopia = new File (getRutaArchivoCapturadosCopia());
+		
         ObjectInputStream lectura = null;
         try {
                 lectura = new ObjectInputStream (new FileInputStream(archivoCapturados));
                 ObjectOutputStream escritura = null;
                 try
                 {
-                	escritura = new ObjectOutputStream (new FileOutputStream(destino));
+                	escritura = new ObjectOutputStream (new FileOutputStream(archivoCapturadosCopia));
                 	Pokemon copia;
                 	while((copia = (Pokemon)lectura.readObject()) != null)
                 	{
@@ -376,17 +386,17 @@ public class Usuario {
                 catch (FileNotFoundException exception) 
         		{
         			exception.printStackTrace();
-        			throw new ExcepcionGenerica("Error abriendo archivo: " + destino.getPath());
+        			throw new ExcepcionGenerica("Error abriendo archivo: " + archivoCapturadosCopia.getPath());
         		} 
         		catch (IOException exception) 
         		{
         			exception.printStackTrace();
-        			throw new ExcepcionGenerica("Error accediendo al archivo: " + destino.getPath());
+        			throw new ExcepcionGenerica("Error accediendo al archivo: " + archivoCapturadosCopia.getPath());
         		}
                 catch (ClassNotFoundException exception) 
         		{
         			exception.printStackTrace();
-        			throw new ExcepcionGenerica("No se encuentra el objeto Pokemon en el archivo " + destino.getPath());
+        			throw new ExcepcionGenerica("No se encuentra el objeto Pokemon en el archivo " + archivoCapturadosCopia.getPath());
         		}
         		finally
         		{
@@ -397,7 +407,7 @@ public class Usuario {
         				}
         			} catch (IOException exception) {
         				exception.printStackTrace();
-        				throw new ExcepcionGenerica("No se puede cerrar el archivo " + destino.getPath());
+        				throw new ExcepcionGenerica("No se puede cerrar el archivo " + archivoCapturadosCopia.getPath());
         			}
         		}
         }
@@ -423,10 +433,15 @@ public class Usuario {
 				throw new ExcepcionGenerica("No se puede cerrar el archivo " + archivoCapturados.getPath());
 			}
 		}
-        return destino.getPath();     
+        return archivoCapturadosCopia.getPath();     
 	}
        
-           
+    /**
+     * sobreescribe los pokemon ya curados, que son pasados por parametro en el arrayList,  en el archivo.       
+     * @param curados
+     * @return
+     * @throws ExcepcionGenerica
+     */
 	public boolean restaurarVidas(ArrayList<Pokemon> curados)  throws ExcepcionGenerica
 	{
 		boolean rta = false;
@@ -437,7 +452,7 @@ public class Usuario {
 		String rutaCopia = copiarArchivoCapturados();
 		
 		
-		//elimino el archivo y lo vuelvo a crear, asi esta vacío
+		//elimino el archivo capturados y lo vuelvo a crear, así esta vacío
 		archivoCapturados.delete();
 		archivoCapturados = new File ("\\Pokedexa\\src\\Usuario",getNombre());
 		
@@ -448,21 +463,24 @@ public class Usuario {
 			
 			Iterator<Pokemon> iterador = curados.iterator();
 			
+			//para abrir el archivo donde tengo la copia
 			ObjectInputStream lecturaPokemonsCapturados = null;
 			
 			try
 			{
 				int pos=0;
 				
+				//abro el archivo donde tengo la copia
 				lecturaPokemonsCapturados = new ObjectInputStream( new FileInputStream ( rutaCopia ));
 				
 				Pokemon copiacopia = null;
 				
+				//mientras que el iterador tenga alguno o todavía tenga pokemons en el archivo de copia
 				while(iterador.hasNext() || ( copiacopia = (Pokemon) lecturaPokemonsCapturados.readObject()) != null)
 				{
 					Pokemon posarray = curados.get(pos);
 					
-					//si el las ids del araay de los curados y del archivo que copie
+					//si el las ids del araay de los curados y del archivo que copie el del array, porque son los que quiero pisar
 					if( iterador.hasNext() && posarray.getId() == copiacopia.getId())
 					{
 						pos ++;
@@ -493,15 +511,20 @@ public class Usuario {
 			}
 			finally
 			{
+				
 				try {
 					if (lecturaPokemonsCapturados != null) {
 						lecturaPokemonsCapturados.close();
 					}
+					
+					//elimino el archivoCopiaParaque no exista en el caso de una nuevacopia;
+					archivoCapturadosCopia.delete();
+					
 				} catch (IOException exception) {
 					exception.printStackTrace();
 					throw new ExcepcionGenerica("No se puede cerrar el archivo " + rutaCopia);
 				}
-				
+			
 			}
 		}
 		catch (FileNotFoundException exception) 
@@ -530,6 +553,116 @@ public class Usuario {
 		return rta;
 	}
 	
+	/**
+	 * elimina el pokemon que sea igual a la id pasada por parametro;
+	 * @param id
+	 * @throws ExcepcionGenerica 
+	 */
+	public void eliminarUnPokemonCapturado(int idAeliminar) throws ExcepcionGenerica
+	{
+		//Para el archivo de destino
+				ObjectOutputStream escrituraPokemons = null;
+				
+				//Para el archivo copia
+				String rutaCopia = copiarArchivoCapturados();
+				
+				
+				//elimino el archivo capturados y lo vuelvo a crear, así esta vacío
+				archivoCapturados.delete();
+				archivoCapturados = new File ("\\Pokedexa\\src\\Usuario",getNombre());
+				
+				try
+				{
+					
+					escrituraPokemons= new ObjectOutputStream(new FileOutputStream(nombreArchivoCapturados()));
+					
+					//para abrir el archivo donde tengo la copia
+					ObjectInputStream lecturaPokemonsCapturados = null;
+					
+					try
+					{
+						
+						//abro el archivo donde tengo la copia
+						lecturaPokemonsCapturados = new ObjectInputStream( new FileInputStream ( rutaCopia ));
+						
+						Pokemon copiacopia = null;
+						
+						int eliminado=0;
+						
+						//mientras que eliminado sea igual a 0 y el archivo copia siga teniendo pokemons pra copiar
+						while(eliminado == 0 || ( copiacopia = (Pokemon) lecturaPokemonsCapturados.readObject()) != null)
+						{
+							
+							//si la id pasada por parametro es igual a la del archivo que copia, creo un pokemon y copio el pokemon del archivoCopia sin pasarlo al archivoCapturados original 
+							if( eliminado == 0 &&idAeliminar  == copiacopia.getId())
+							{
+								eliminado = 1;
+								//no hago nada porque el lector de pokemons paso al otro pokemon que figuraba en el archivo.
+								
+							}
+							//si las ids no son iguales de copia el pokemon del archivo copia
+							else
+							{
+								escrituraPokemons.writeObject(copiacopia); 
+							}
+						}
+					}
+					catch (FileNotFoundException exception) 
+					{
+						exception.printStackTrace();
+						throw new ExcepcionGenerica("Error abriendo archivo: " + rutaCopia);
+					} 
+					catch (IOException exception) 
+					{
+						exception.printStackTrace();
+						throw new ExcepcionGenerica("Error accediendo al archivo: " + rutaCopia);
+					}
+					catch (ClassNotFoundException exception) 
+					{
+						exception.printStackTrace();
+						throw new ExcepcionGenerica("No se encontro la clase Pokemon en el archivo: " + rutaCopia);
+					}
+					finally
+					{
+						
+						try {
+							if (lecturaPokemonsCapturados != null) {
+								lecturaPokemonsCapturados.close();
+							}
+							
+							//elimino el archivoCopiaParaque no exista en el caso de una nuevacopia;
+							archivoCapturadosCopia.delete();
+							
+						} catch (IOException exception) {
+							exception.printStackTrace();
+							throw new ExcepcionGenerica("No se puede cerrar el archivo " + rutaCopia);
+						}
+					
+					}
+				}
+				catch (FileNotFoundException exception) 
+				{
+					exception.printStackTrace();
+					throw new ExcepcionGenerica("Error abriendo archivo: " + nombreArchivoCapturados());
+				} 
+				catch (IOException exception) 
+				{
+					exception.printStackTrace();
+					throw new ExcepcionGenerica("Error accediendo al archivo: " + nombreArchivoCapturados());
+				}
+				finally
+				{
+					try {
+						if (escrituraPokemons != null) {
+							escrituraPokemons.close();
+						}
+					} catch (IOException exception) {
+						exception.printStackTrace();
+						throw new ExcepcionGenerica("No se puede cerrar el archivo " + nombreArchivoCapturados());
+					}
+					
+				}
+	}
 	
 	public void actualizarUnPokemon(Pokemon pokemonCambiado)  throws ExcepcionGenerica
 	{
