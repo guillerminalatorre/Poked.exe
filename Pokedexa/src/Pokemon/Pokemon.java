@@ -176,11 +176,12 @@ public abstract class Pokemon
 		result = prime * result + vidas;
 		return result;
 	}
-
+	
+@Override
 	/**
 	 * compara si dos pokemons son iguales desde el objeto, la clase, la id, y el nombre.
 	 */
-	@Override
+	
 	public boolean equals(Object obj) 
 	{
 		boolean rta = false;

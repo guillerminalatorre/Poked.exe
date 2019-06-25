@@ -100,7 +100,14 @@ public class Usuario {
 		return idsPokedex;
 	}
 
-	public boolean ExisteNombre(String nombre) throws ExcepcionGenerica{
+	/**
+	 * verifica si el nuevo nombre de usuario ya existe en el archivo de usuarios
+	 * @param nombre
+	 * @return
+	 * @throws ExcepcionGenerica
+	 */
+	public boolean ExisteNombre(String nombre) throws ExcepcionGenerica
+	{
 		FileInputStream lector = null;
 		ObjectInputStream lectorObjeto = null;
 		Usuario usu;

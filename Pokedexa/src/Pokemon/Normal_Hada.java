@@ -30,11 +30,11 @@ public class Normal_Hada extends Pokemon implements INormal, IHada {
     }
     
   
-	
+	 @Override
 	/**
 	 * Metodo abstracto entre las clases solo cambia el "tipo" las evoluciones quedan igual.
 	 */
-    @Override
+   
 	protected int calcularNivel() 
 	{
 		return nivelNormal+nivelHada+nivelPrimeraEvolucion()+nivelSegundaEvolucion()+nivelTerceraEvolucion();
