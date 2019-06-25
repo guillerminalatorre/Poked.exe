@@ -1,5 +1,4 @@
 package Json;
-import org.json.*;
 import Pokemon.*;
 import ManejadorExcepciones.*;
 
@@ -11,7 +10,7 @@ public class ManejadorJSON {
 	
 	public ManejadorJSON() throws ExcepcionGenerica {
 		try {
-			pokemones=new JSONArray("pokemones");
+			pokemones = new JSONArray("pokemones");
 		}
 		catch(JSONException ErrorJson) {
 			ErrorJson.printStackTrace();
