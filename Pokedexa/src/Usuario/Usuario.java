@@ -14,6 +14,7 @@ public class Usuario {
 	private int CantidadDeBatallas; // "NIVEL" DEL JUGADOR
 	private File archivoPokedexUsuario;
 	private File archivoCapturados;
+	private File archiUsuario=new File("src\\Usuario","Usuarios");
 	
 	// CONSTRUCTORES
 
@@ -92,7 +93,48 @@ public class Usuario {
 		return idsPokedex;
 	}
 
-	
+	public boolean ExisteNombre(String nombre) throws ExcepcionGenerica{
+		FileInputStream lector = null;
+		ObjectInputStream lectorObjeto = null;
+		Usuario usu;
+		try {
+			lector= new FileInputStream(archiUsuario);
+			lectorObjeto= new ObjectInputStream(lector);
+		}
+		catch(FileNotFoundException error) {
+			error.printStackTrace();
+			throw new ExcepcionGenerica("Error al abrir el archivo");
+		}
+		catch(IOException error) {
+			error.printStackTrace();
+			throw new ExcepcionGenerica("Error al crear el lector de objetos");
+		}
+		finally {
+			try {
+				if(lectorObjeto!=null) {
+					lectorObjeto.close();
+				}
+			}
+			catch(IOException error) {
+				error.printStackTrace();
+				throw new ExcepcionGenerica("Error al crear el lector de objetos");
+			}
+		}
+		try {
+			while( (usu= (Usuario)lectorObjeto.readObject())!= null) {
+				if(usu.getNombre().equalsIgnoreCase(nombre)==true) return true;
+			}
+		}
+		catch(IOException error) {
+			error.printStackTrace();
+			throw new ExcepcionGenerica("Error al leer del archivo");
+		}
+		catch(ClassNotFoundException error) {
+			error.printStackTrace();
+			throw new ExcepcionGenerica("Error al leer del archivo");
+		}
+		return false;
+	}
 	/**
 	 * 
 	 * @return retorna un TreeMap<Integer, Pokemon> correspondiente a los pokemons capturados 
