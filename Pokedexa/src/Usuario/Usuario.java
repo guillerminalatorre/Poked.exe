@@ -9,8 +9,6 @@ import java.util.TreeMap;
 
 public class Usuario {
   	private String Nombre; //NOMBRE DE USUARIO CON EL QUE SE VA A LOGUEAR
-	private String Genero;
-	private int Edad;
 	private int CantidadDeBatallas; // "NIVEL" DEL JUGADOR
 	private File archivoPokedexUsuario;
 	private File archivoCapturados;
@@ -18,11 +16,20 @@ public class Usuario {
 	
 	// CONSTRUCTORES
 
-	public Usuario(String nombre, String genero, int edad, int cantidadDeBatallas) {
+	//defecto
+	public Usuario(String nombre) {
 		super();
 		Nombre = nombre;
-		Genero = genero;
-		Edad = edad;
+		CantidadDeBatallas = 0;
+		archivoPokedexUsuario = new File ("\\Pokedexa\\src\\Usuario", nombre+"Pokedex");
+		archivoCapturados = new File ("\\Pokedexa\\src\\Usuario",nombre+"Capturados");
+		archivoCapturadosCopia = null;
+	}
+	
+	//copia
+	public Usuario(String nombre, int cantidadDeBatallas) {
+		super();
+		Nombre = nombre;
 		CantidadDeBatallas = cantidadDeBatallas;
 		archivoPokedexUsuario = new File ("\\Pokedexa\\src\\Usuario", nombre+"Pokedex");
 		archivoCapturados = new File ("\\Pokedexa\\src\\Usuario",nombre+"Capturados");
@@ -39,13 +46,6 @@ public class Usuario {
 		return Nombre;
 	}
 
-	public String getGenero() {
-		return Genero;
-	}
-
-	public int getEdad() {
-		return Edad;
-	}
 	
 	public String getRutaArchivoCapturadosCopia()
 	{
@@ -837,7 +837,7 @@ public class Usuario {
 	
 	@Override
 	public String toString() {
-		return "\n-Nombre="+ Nombre +"\n-Genero=" + Genero + "\n-Edad=" + Edad + "\n-CantidadDeBatallas="
+		return "\n-Nombre="+ Nombre + "\n-CantidadDeBatallas="
 				+ CantidadDeBatallas;
 	}
 
