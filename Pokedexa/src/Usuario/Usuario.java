@@ -9,33 +9,23 @@ import java.util.TreeMap;
 
 public class Usuario {
   	private String Nombre; //NOMBRE DE USUARIO CON EL QUE SE VA A LOGUEAR
+	private String Genero;
+	private int Edad;
 	private int CantidadDeBatallas; // "NIVEL" DEL JUGADOR
 	private File archivoPokedexUsuario;
 	private File archivoCapturados;
 	private File archivoCapturadosCopia;
 	
 	// CONSTRUCTORES
-	
-	/*
-	 * Constructor para usuarios nuevos
-	 */
-	public Usuario(String nombre, String genero) {
+
+	public Usuario(String nombre, String genero, int edad, int cantidadDeBatallas) {
 		super();
 		Nombre = nombre;
-		CantidadDeBatallas = 0;
+		Genero = genero;
+		Edad = edad;
+		CantidadDeBatallas = cantidadDeBatallas;
 		archivoPokedexUsuario = new File ("\\Pokedexa\\src\\Usuario", nombre+"Pokedex");
 		archivoCapturados = new File ("\\Pokedexa\\src\\Usuario",nombre+"Capturados");
-		archivoCapturadosCopia = null;
-	}	
-	/*
-	 * Constructor de copia
-	 */
-	public Usuario(String nombre, int cantBat , File archiPokedex, File archiCapturados) {
-		super();
-		Nombre = nombre;
-		CantidadDeBatallas = cantBat;
-		archivoPokedexUsuario = archiPokedex;
-		archivoCapturados = archiCapturados;
 		archivoCapturadosCopia = null;
 	}
 
@@ -109,7 +99,6 @@ public class Usuario {
 		return idsPokedex;
 	}
 
-	
 	/**
 	 * 
 	 * @return retorna un TreeMap<Integer, Pokemon> correspondiente a los pokemons capturados 
@@ -173,13 +162,13 @@ public class Usuario {
 	
 	
 	/**
-	 * retorna en un TreeMap los pokemons daÃ±ados (vidas != nivel)
+	 * retorna en un TreeMap los pokemons dañados (vidas != nivel)
 	 * @return
 	 * @throws ExcepcionGenerica
 	 */
-	public ArrayList<Pokemon> getPokemonsDaÃ±ados()  throws ExcepcionGenerica
+	public ArrayList<Pokemon> getPokemonsDañados()  throws ExcepcionGenerica
 	{
-		ArrayList < Pokemon> daÃ±ados = new ArrayList <Pokemon>();
+		ArrayList < Pokemon> dañados = new ArrayList <Pokemon>();
 		FileInputStream streamPokemons = null;	
 		ObjectInputStream lectorPokemons = null;
 		Pokemon copia;
@@ -190,7 +179,7 @@ public class Usuario {
 			lectorPokemons= new ObjectInputStream(streamPokemons);
 			while((copia = (Pokemon)lectorPokemons.readObject()) != null)
 			{
-				if(copia.getNivel() != copia.getVidas()) daÃ±ados.add(copia);
+				if(copia.getNivel() != copia.getVidas()) dañados.add(copia);
 			}
 			
 		}
@@ -231,7 +220,7 @@ public class Usuario {
 				}
 			}*/
 		}
-		return daÃ±ados;
+		return dañados;
 	}
 	
 	/**
@@ -285,7 +274,7 @@ public class Usuario {
 	
 	
 	/**
-	 * mÃ©todo publico para guardar el nuevo pokemon en el archivo binario
+	 * método publico para guardar el nuevo pokemon en el archivo binario
 	 * @param pokemonNuevo
 	 * @throws ExcepcionGenerica
 	 */
@@ -420,7 +409,7 @@ public class Usuario {
 		String rutaCopia = copiarArchivoCapturados();
 		
 		
-		//elimino el archivo capturados y lo vuelvo a crear, asÃ­ esta vacÃ­o
+		//elimino el archivo capturados y lo vuelvo a crear, así esta vacío
 		archivoCapturados.delete();
 		archivoCapturados = new File ("\\Pokedexa\\src\\Usuario",getNombre());
 		
@@ -443,7 +432,7 @@ public class Usuario {
 				
 				Pokemon copiacopia = null;
 				
-				//mientras que el iterador tenga alguno o todavÃ­a tenga pokemons en el archivo de copia
+				//mientras que el iterador tenga alguno o todavía tenga pokemons en el archivo de copia
 				while(iterador.hasNext() || ( copiacopia = (Pokemon) lecturaPokemonsCapturados.readObject()) != null)
 				{
 					Pokemon posarray = curados.get(pos);
@@ -535,7 +524,7 @@ public class Usuario {
 				String rutaCopia = copiarArchivoCapturados();
 				
 				
-				//elimino el archivo capturados y lo vuelvo a crear, asÃ­ esta vacÃ­o
+				//elimino el archivo capturados y lo vuelvo a crear, así esta vacío
 				archivoCapturados.delete();
 				archivoCapturados = new File ("\\Pokedexa\\src\\Usuario",getNombre());
 				
@@ -641,7 +630,7 @@ public class Usuario {
 		String rutaCopia = copiarArchivoCapturados();
 		
 		
-		//elimino el archivo y lo vuelvo a crear, asi esta vacÃ­o
+		//elimino el archivo y lo vuelvo a crear, asi esta vacío
 		archivoCapturados.delete();
 		archivoCapturados = new File ("\\Pokedexa\\src\\Usuario",getNombre());
 		
@@ -780,7 +769,7 @@ public class Usuario {
 	}
 	
 	/**
-	 * mÃ©todo para guarda una id en el archivo binario de pokemons vistos (pokedex)
+	 * método para guarda una id en el archivo binario de pokemons vistos (pokedex)
 	 * @param pokemon
 	 * @throws ExcepcionGenerica
 	 */
