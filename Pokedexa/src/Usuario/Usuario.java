@@ -21,8 +21,8 @@ public class Usuario {
 		super();
 		Nombre = nombre;
 		CantidadDeBatallas = 0;
-		archivoPokedexUsuario = new File ("\\Pokedexa\\src\\Usuario", nombre+"Pokedex");
-		archivoCapturados = new File ("\\Pokedexa\\src\\Usuario",nombre+"Capturados");
+		archivoPokedexUsuario = new File ("src\\Usuario", nombre+"Pokedex");
+		archivoCapturados = new File ("src\\Usuario",nombre+"Capturados");
 		archivoCapturadosCopia = null;
 	}
 	
@@ -31,8 +31,8 @@ public class Usuario {
 		super();
 		Nombre = nombre;
 		CantidadDeBatallas = cantidadDeBatallas;
-		archivoPokedexUsuario = new File ("\\Pokedexa\\src\\Usuario", nombre+"Pokedex");
-		archivoCapturados = new File ("\\Pokedexa\\src\\Usuario",nombre+"Capturados");
+		archivoPokedexUsuario = new File ("src\\Usuario", nombre+"Pokedex");
+		archivoCapturados = new File ("\\src\\Usuario",nombre+"Capturados");
 		archivoCapturadosCopia = null;
 	}
 
@@ -49,7 +49,7 @@ public class Usuario {
 	
 	public String getRutaArchivoCapturadosCopia()
 	{
-		return "\\Pokedexa\\src\\Usuario"+this.Nombre +"CapturadosCopia";
+		return "src\\Usuario"+this.Nombre +"CapturadosCopia";
 	}
 	
 	/**

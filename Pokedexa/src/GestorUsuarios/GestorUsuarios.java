@@ -32,7 +32,7 @@ public class GestorUsuarios
 	
 	public String getRutaArchivoUsuariosCopia()
 	{
-		return archivoUsuariosCopia.getPath();
+		return "src\\GestorUsuarios\\ArchivoUsuariosCopia";
 	}
 	
 	/**
