@@ -20,13 +20,13 @@ public class GestorPokedex
 		
 		Pokemon pokemonRandom = null;
 		
-		id = (int) (Math.random() * 150) + 1;
+		id = (int) (Math.random() * 18) + 1;
 		
-		if(cantidadDeBatallas < 15)
+		if(cantidadDeBatallas < 18)
 		{
 			while((pokemonRandom = manejador.SacarPokemonJSON(id)).getEvolucion() != 1)
 			{
-				id = (int) (Math.random() * 150) + 1;
+				id = (int) (Math.random() * 18) + 1;
 			}
 		}
 		
@@ -34,13 +34,13 @@ public class GestorPokedex
 		{
 			while((pokemonRandom = manejador.SacarPokemonJSON(id)).getEvolucion() == 3)
 			{
-				id = (int) (Math.random() * 150) + 1;
+				id = (int) (Math.random() * 18) + 1;
 			}
 		}
 		
 		else
 		{
-			id = (int) (Math.random() * 150) + 1;
+			id = (int) (Math.random() * 18) + 1;
 		}
 		
 		return pokemonRandom;
