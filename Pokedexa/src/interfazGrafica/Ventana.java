@@ -14,16 +14,15 @@ import Usuario.Usuario;
  */
 public class Ventana extends JFrame{
 	//ATRIBUTOS
-	JFrame ventana;
-	JLabel textoUsuario;
-	JTextField cajaUsuario;
-	JButton aceptar;
-	JButton cerrar;
-	JPanel contenedor;
-	Sonido reproductor;
-	File fondoLogueo= new File("src\\Imagenes\\FondoLogueo.jpg");
-	File cancionLogueo= new File("src\\Sonidos\\CancionLogueo.mp3");
-	Usuario usuario;
+	private JFrame ventana;
+	private JLabel textoUsuario;
+	private JTextField cajaUsuario;
+	private JButton aceptar;
+	private JButton cerrar;
+	private Sonido reproductor;
+	private File fondoLogueo= new File("src\\Imagenes\\FondoLogueo.jpg");
+	private File cancionLogueo= new File("src\\Sonidos\\CancionLogueo.mp3");
+	private Usuario usuario;
 	
 	
 	//CONSTRUCTOR
@@ -32,7 +31,6 @@ public class Ventana extends JFrame{
 		ventana.setLocationRelativeTo(null);
 	    ventana.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	    ventana.setLayout(null);
-	    ventana.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 	    ventana.setUndecorated(true);
 	    ventana.setVisible(true);
 	    ventana.setContentPane(new JLabel(new ImageIcon(fondoLogueo.getAbsolutePath())));
@@ -50,12 +48,11 @@ public class Ventana extends JFrame{
 		ventana.add(cajaUsuario);
 		ventana.add(aceptar);
 		ventana.add(cerrar);
-		textoUsuario.setBounds(575,302,50,10);
-		cajaUsuario.setBounds(625, 300, 150, 20);
-		aceptar.setBounds(650, 330,100,20);
-		cerrar.setBounds(20, 700,100 , 20);
-		ventana.setSize(1559,799);
-		ventana.setSize(1600,800);
+		textoUsuario.setBounds(675,402,50,10);
+		cajaUsuario.setBounds(725, 400, 150, 20);
+		aceptar.setBounds(750, 430,100,20);
+		cerrar.setBounds(20, 850,100 , 20);
+	    ventana.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		try {
 			reproductor=new Sonido(cancionLogueo.getAbsolutePath());
 			reproductor.Reproducir();

@@ -28,7 +28,6 @@ public class Sonido {
 		}
 		catch(Exception error) {
 			error.printStackTrace();
-			throw new ExcepcionGenerica("Error al reproducir sonido");
 		}
 	}
 	public void Parar() throws ExcepcionGenerica{
