@@ -184,17 +184,17 @@ public class GestorUsuarios
                 catch (FileNotFoundException exception) 
         		{
         			exception.printStackTrace();
-        			throw new ExcepcionGenerica("Error abriendo archivo: " + archivoUsuariosCopia.getPath());
+        			throw new ExcepcionGenerica("Error abriendo archivo: " + archivoUsuariosCopia.getAbsolutePath());
         		} 
         		catch (IOException exception) 
         		{
         			exception.printStackTrace();
-        			throw new ExcepcionGenerica("Error accediendo al archivo: " + archivoUsuariosCopia.getPath());
+        			throw new ExcepcionGenerica("Error accediendo al archivo: " + archivoUsuariosCopia.getAbsolutePath());
         		}
                 catch (ClassNotFoundException exception) 
         		{
         			exception.printStackTrace();
-        			throw new ExcepcionGenerica("No se encuentra el objeto Usuario en el archivo " + archivoUsuariosCopia.getPath());
+        			throw new ExcepcionGenerica("No se encuentra el objeto Usuario en el archivo " + archivoUsuariosCopia.getAbsolutePath());
         		}
         		finally
         		{

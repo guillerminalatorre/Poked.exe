@@ -166,6 +166,40 @@ public class Usuario {
 	 * @return
 	 * @throws ExcepcionGenerica
 	 */
+	public boolean HayDebilitados() throws ExcepcionGenerica{
+		Pokemon nuevo;
+		FileInputStream lector;
+		ObjectInputStream lectorObjeto=null;
+		boolean flag=false;
+		try {
+			lector= new FileInputStream(archivoCapturados);
+			lectorObjeto= new ObjectInputStream(lector);
+			while((nuevo = (Pokemon)lectorObjeto.readObject()) != null) {
+				if(nuevo.getVidas()==0) {
+					flag=true;
+				}
+				else flag=false;
+			}
+		}
+		catch(IOException error) {
+			error.printStackTrace();
+			throw new ExcepcionGenerica(error.getMessage());
+		}
+		catch(ClassNotFoundException error) {
+			error.printStackTrace();
+			throw new ExcepcionGenerica(error.getMessage());
+		}
+		
+
+			try {
+				lectorObjeto.close();
+			}
+			catch(IOException error) {
+				error.printStackTrace();
+				throw new ExcepcionGenerica(error.getMessage());
+			}
+			return flag;
+	}
 	public ArrayList<Pokemon> getPokemonsDañados()  throws ExcepcionGenerica
 	{
 		ArrayList < Pokemon> dañados = new ArrayList <Pokemon>();

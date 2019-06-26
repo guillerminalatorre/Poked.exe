@@ -1,6 +1,9 @@
 package Json;
 import Pokemon.*;
 
+import java.io.FileWriter;
+import java.io.IOException;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -8,21 +11,25 @@ import org.json.JSONObject;
 import ManejadorExcepciones.*;
 
 public class ManejadorJSON {
-	JSONArray pokemones;
-	JSONObject pokemonJSON;
-	Pokemon pokemon=null;
+	private JSONArray pokemones;
+	private JSONObject pokemonJSON;
+	private Pokemon pokemon=null;
+	FileWriter archivoJson;
+
+
+	
+	
 	//Pokemon pokemonObj;
 	
-	public ManejadorJSON() throws ExcepcionGenerica 
+	public ManejadorJSON() 
 	{
-		try 
-		{
-			pokemones = new JSONArray("pokemones");
+		try {
+			archivoJson= new FileWriter("Pokemones.json");
+			pokemonJSON= new JSONObject ();
+			pokemones = new JSONArray();
 		}
-		catch(JSONException ErrorJson)
-		{
-			ErrorJson.printStackTrace();
-			throw new ExcepcionGenerica("Error al crear el JSONArray");
+		catch(IOException error) {
+			error.printStackTrace();
 		}
 	}
 	

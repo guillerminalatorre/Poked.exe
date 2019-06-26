@@ -1,10 +1,14 @@
 package Ejecucion;
 import java.io.File;
 
+import CentroPokemon.CentroPokemon;
+import GestorPokedex.GestorPokedex;
+import GestorUsuarios.GestorUsuarios;
 import Json.*; 
 import Pokemon.*;
+import Usuario.Usuario;
 import ManejadorExcepciones.ExcepcionGenerica;
-import interfazGrafica.*;
+
 
 public class Main 
 {
@@ -84,14 +88,14 @@ public class Main
 		} catch (ExcepcionGenerica error) {
 			System.out.println(error.MensajeError());
 		}
-
 		
-		try {
-			Ventana Juego= new Ventana();
-		}
-		catch(ExcepcionGenerica error) {
-			System.out.println(error.MensajeError());
-		}
+		Usuario usu= new Usuario("carlos");
+		CentroPokemon centro= new CentroPokemon(usu);
+		GestorUsuarios gestorusu= new GestorUsuarios();
+		gestorusu.cargarPrimerPokemon(usu, 3);
+		centro.mostrarPokemonsDañados();
+		centro.curarPokemonsDañados();
+		
 
 	}
 
