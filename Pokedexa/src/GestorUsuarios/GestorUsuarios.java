@@ -240,7 +240,7 @@ public class GestorUsuarios
      * @return
      * @throws ExcepcionGenerica
      */
-	public boolean sobreescribirUsuario(Usuario usuarioAsobreescribir)  throws ExcepcionGenerica
+	private boolean sobreescribirUsuario(Usuario usuarioAsobreescribir)  throws ExcepcionGenerica
 	{
 		boolean rta = false;
 		//Para el archivo de destino
@@ -351,5 +351,10 @@ public class GestorUsuarios
 		return rta;
 	}
 	
+	
+	public boolean checkOutUsuario (Usuario usuarioActual) throws ExcepcionGenerica
+	{
+		return sobreescribirUsuario(usuarioActual);
+	}
 
 }

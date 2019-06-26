@@ -15,7 +15,7 @@ public class Batalla {
 	{
 		this.pokemonCapturado = pokemonCapturado;
 		this.pokemonSalvaje = pokemonSalvaje;
-		setGanador(0);
+		definirGanador();
 		this.usuario = usuario;
 	}
 
@@ -57,7 +57,7 @@ public class Batalla {
 	 * 
 	 * @return
 	 */
-	public int calcularGanador()
+	private int calcularGanador()
 	{
 		
 		int nivel_ganador = 0;
@@ -74,7 +74,7 @@ public class Batalla {
 	/**
 	 * si el resultado de calcularGanador() es mayor a 0 gana el capturado, si es menos a 0 gana el salvaje, si es igual a cero es random.
 	 */
-	public void definirGanador() 
+	private void definirGanador() 
 	{
 		
 		int x = calcularGanador();
@@ -92,16 +92,26 @@ public class Batalla {
 	}
 	
 	/**
-	 * se acreditan los premios o las prendas al pokemon capturado
+	 * se acreditan los premios o las prendas al pokemon capturado, premio al usuario, y captura pokemon.
 	 * @throws ExcepcionGenerica 
 	 */
 	public void resultadoPelea() throws ExcepcionGenerica
 	{
+		agregarNuevoPokemonPokedex();
+		
 		if(getGanador() == 1 || getGanador() == 3)//si gana el capturado
 		{
 			pokemonCapturado.setNivel( pokemonCapturado.getNivel() +1);//se le suma uno nivel
 			//capturarPokemon.
 			usuario.actualizarUnPokemon(pokemonCapturado);
+			
+			//cambios en el usuario
+			usuario.sumarBatalla();
+			
+			//le resto vidas al pokemon salvaje y lo capturo
+			pokemonSalvaje.setVidas( pokemonSalvaje.getVidas() / 4);
+			
+			agregarNuevoPokemonCapturado( pokemonSalvaje );
 		}
 		
 		if(getGanador() < 0 )//si gana el salvaje 
@@ -110,11 +120,18 @@ public class Batalla {
 			{
 				pokemonCapturado.setVidas( 0 );
 				usuario.actualizarUnPokemon(pokemonCapturado);
+				
+				//cambios en el usuario
+				usuario.sumarBatalla();
+				
 			}
 			else
 			{
 				pokemonCapturado.setNivel( pokemonCapturado.getNivel() - getGanador() );
 				usuario.actualizarUnPokemon(pokemonCapturado);
+				
+				//cambios en el usuario
+				usuario.sumarBatalla();
 			} 
 		} 
 		
@@ -129,11 +146,11 @@ public class Batalla {
 	 * @param pokemon
 	 * @throws ExcepcionGenerica
 	 */
-	public void agregarNuevoPokemonPokedex ( Pokemon pokemon ) throws ExcepcionGenerica
+	private void agregarNuevoPokemonPokedex () throws ExcepcionGenerica
 	{
-		if(! usuario.ElPokemonFueVisto(pokemon))
+		if(! usuario.ElPokemonFueVisto(pokemonSalvaje))
 		{
-			usuario.cargarNuevoPokemonVisto(pokemon);
+			usuario.cargarNuevoPokemonVisto(pokemonSalvaje);
 		}
 	}
 	
@@ -143,7 +160,7 @@ public class Batalla {
 	 * @param pokemon
 	 * @return
 	 */
-	public void agregarNuevoPokemonCapturado ( Pokemon pokemon ) throws ExcepcionGenerica
+	private void agregarNuevoPokemonCapturado ( Pokemon pokemon ) throws ExcepcionGenerica
 	{
 
 		if (pokemon instanceof Agua_Hielo) {

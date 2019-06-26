@@ -13,16 +13,21 @@ public class ManejadorJSON {
 	Pokemon pokemon=null;
 	//Pokemon pokemonObj;
 	
-	public ManejadorJSON() throws ExcepcionGenerica {
-		try {
+	public ManejadorJSON() throws ExcepcionGenerica 
+	{
+		try 
+		{
 			pokemones = new JSONArray("pokemones");
 		}
-		catch(JSONException ErrorJson) {
+		catch(JSONException ErrorJson)
+		{
 			ErrorJson.printStackTrace();
-			throw new ExcepcionGenerica("Error al realizar al crear el JSONArray");
+			throw new ExcepcionGenerica("Error al crear el JSONArray");
 		}
 	}
-	public void CargarPokemon(Pokemon pokemonObj) throws ExcepcionGenerica{
+	
+	public void CargarPokemon(Pokemon pokemonObj) throws ExcepcionGenerica
+	{
 		try {
 			pokemonJSON.put("Id", pokemonObj.getId());
 			pokemonJSON.put("Nombre", pokemonObj.getNombre());
@@ -32,16 +37,19 @@ public class ManejadorJSON {
 			pokemonJSON.put("RutaImagen", pokemonObj.getRutaImagen());
 			pokemones.put(pokemonJSON);
 		}
-		catch(JSONException ErrorJSON) {
+		catch(JSONException ErrorJSON) 
+		{
 			ErrorJSON.printStackTrace();
 			throw new ExcepcionGenerica("Error al cargar pokemon"+pokemonObj.getNombre()+" en archivo JSON");
 		}
 	}
 	
 	@SuppressWarnings("finally")
-	public Pokemon SacarPokemonJSON(int id) throws ExcepcionGenerica{
+	public Pokemon SacarPokemonJSON(int id) throws ExcepcionGenerica
+	{
 
-		try {
+		try 
+		{
 			pokemonJSON=pokemones.getJSONObject(id);
 			pokemon.setId(pokemonJSON.getInt("Id"));
 			pokemon.setNombre(pokemonJSON.getString("Nombre"));
@@ -50,11 +58,13 @@ public class ManejadorJSON {
 			pokemon.setTipo(pokemonJSON.getString("Tipo"));
 			pokemon.setRutaImagen(pokemonJSON.getString("RutaImagen"));
 		}
-			catch(JSONException ErrorJSON) {
-				ErrorJSON.printStackTrace();
-				throw new ExcepcionGenerica("Error al abrir el archivo JSON");
-			}
-		finally {
+		catch(JSONException ErrorJSON) 
+		{
+			ErrorJSON.printStackTrace();
+			throw new ExcepcionGenerica("Error al abrir el archivo JSON");
+		}
+		finally 
+		{
 			return pokemon;
 		}
 	}
