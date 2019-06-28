@@ -1,6 +1,6 @@
 package Pokemon;
 
-public class PlantaVeneno extends Pokemon implements IPlanta, IVeneno
+public class PlantaVeneno extends Pokemon implements IPlanta, IVeneno 
 {
 
 

@@ -8,12 +8,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
 import ManejadorExcepciones.ExcepcionGenerica;
 import Usuario.Usuario;
 
-public class GestorUsuarios 
+public class GestorUsuarios implements Serializable
 {
-	private File archivoUsuarios=new File("src\\GestorUsuarios","Usuarios");
+	private File archivoUsuarios=new File("src\\GestorUsuarios\\Usuarios.dat");
 	private File archivoUsuariosCopia;
 	
 	
@@ -27,12 +29,12 @@ public class GestorUsuarios
 	
 	public String getRutaArchivoUsuarios()
 	{
-		return archivoUsuarios.getPath();
+		return archivoUsuarios.getAbsolutePath();
 	}
 	
 	public String getRutaArchivoUsuariosCopia()
 	{
-		return "src\\GestorUsuarios\\ArchivoUsuariosCopia";
+		return archivoUsuariosCopia.getAbsolutePath();
 	}
 	
 	/**
@@ -43,10 +45,10 @@ public class GestorUsuarios
 	public Usuario cargarUnUsuario(String nombre) throws ExcepcionGenerica
 	{
 		Usuario nuevo = null;
-		if( !ExisteNombre (nombre) )
-		{
+		//if( !ExisteNombre (nombre) )
+		//{
 			nuevo = guardarNuevoUsuario( new Usuario (nombre));
-		}
+		//}
 		return nuevo;
 	}
 	
@@ -124,12 +126,11 @@ public class GestorUsuarios
 		
 		try
 		{
-			streamUsuarios = new FileOutputStream(getRutaArchivoUsuarios());
-			
+			streamUsuarios = new FileOutputStream(archivoUsuarios);
+
 			escrituraUsuarios= new ObjectOutputStream(streamUsuarios);
-			
+
 			escrituraUsuarios.writeObject(usuarioNuevo);
-			
 		}
 		catch (FileNotFoundException exception) 
 		{

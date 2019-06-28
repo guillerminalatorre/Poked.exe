@@ -7,33 +7,44 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.TreeMap;
 
-public class Usuario {
+public class Usuario implements Serializable {
   	private String Nombre; //NOMBRE DE USUARIO CON EL QUE SE VA A LOGUEAR
 	private int CantidadDeBatallas; // "NIVEL" DEL JUGADOR
-	private File archivoPokedexUsuario;
-	private File archivoCapturados;
-	private File archivoCapturadosCopia;
-	
+	private File archivoPokedexUsuario= new File ("src\\Usuario", getNombre()+"Pokedex.dat");
+	private File archivoCapturados=new File ("src\\Usuario",getNombre()+"Capturados.dat");
+	private File archivoCapturadosCopia=new File ("src\\Usuario",getNombre()+"CapturadosCopia.dat");;
+	private FileWriter cargadorArchivos;
 	// CONSTRUCTORES
 
 	//defecto
 	public Usuario(String nombre) {
 		super();
 		Nombre = nombre;
+		archivoPokedexUsuario= new File ("src\\Usuario", getNombre()+"Pokedex.dat");
+		archivoCapturados=new File ("src\\Usuario",getNombre()+"Capturados.dat");
+		archivoCapturadosCopia=new File ("src\\Usuario",getNombre()+"CapturadosCopia.dat");;
 		CantidadDeBatallas = 0;
-		archivoPokedexUsuario = new File ("src\\Usuario", nombre+"Pokedex");
-		archivoCapturados = new File ("src\\Usuario",nombre+"Capturados");
-		archivoCapturadosCopia = null;
+		try {
+			if(archivoPokedexUsuario.exists()== false) {
+				archivoPokedexUsuario.createNewFile();
+			}
+			if(archivoCapturados.exists()== false) {
+				archivoCapturados.createNewFile();
+			}
+		}
+		catch(IOException error) {
+			error.printStackTrace();
+		}
 	}
 	
 	//copia
-	public Usuario(String nombre, int cantidadDeBatallas) {
+	public Usuario(Usuario usu) {
 		super();
-		Nombre = nombre;
-		CantidadDeBatallas = cantidadDeBatallas;
-		archivoPokedexUsuario = new File ("src\\Usuario", nombre+"Pokedex");
-		archivoCapturados = new File ("\\src\\Usuario",nombre+"Capturados");
-		archivoCapturadosCopia = null;
+		Nombre = usu.getNombre();
+		CantidadDeBatallas = usu.getCantidadDeBatallas();
+		archivoPokedexUsuario = new File (usu.getRutaArchivoPokedexUsuario());
+		archivoCapturados = new File (usu.getRutaArchivoCapturados());
+		archivoCapturadosCopia = new File (usu.getRutaArchivoCapturadosCopia());
 	}
 
 	// GETTERS
@@ -49,7 +60,15 @@ public class Usuario {
 	
 	public String getRutaArchivoCapturadosCopia()
 	{
-		return "src\\Usuario"+this.Nombre +"CapturadosCopia";
+		return archivoCapturadosCopia.getAbsolutePath();
+	}
+	public String getRutaArchivoPokedexUsuario()
+	{
+		return archivoPokedexUsuario.getAbsolutePath();
+	}
+	public String getRutaArchivoCapturados()
+	{
+		return archivoCapturados.getAbsolutePath();
 	}
 	
 	/**
@@ -855,12 +874,12 @@ public class Usuario {
 	
 	public String nombreArchivoPokedexUsuario()
 	{
-		return archivoPokedexUsuario.getPath();
+		return archivoPokedexUsuario.getAbsolutePath();
 	}
 	
 	public String nombreArchivoCapturados()
 	{
-		return archivoCapturados.getPath();
+		return archivoCapturados.getAbsolutePath();
 	}
 	
 	public void sumarBatalla ()
