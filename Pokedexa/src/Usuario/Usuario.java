@@ -8,14 +8,22 @@ import java.util.Iterator;
 import java.util.TreeMap;
 
 public class Usuario implements Serializable {
-  	private String Nombre; //NOMBRE DE USUARIO CON EL QUE SE VA A LOGUEAR
+  	private String Nombre=" "; //NOMBRE DE USUARIO CON EL QUE SE VA A LOGUEAR
 	private int CantidadDeBatallas; // "NIVEL" DEL JUGADOR
 	private File archivoPokedexUsuario= new File ("src\\Usuario", getNombre()+"Pokedex.dat");
 	private File archivoCapturados=new File ("src\\Usuario",getNombre()+"Capturados.dat");
-	private File archivoCapturadosCopia=new File ("src\\Usuario",getNombre()+"CapturadosCopia.dat");;
+	private File archivoCapturadosCopia=new File ("src\\Usuario",getNombre()+"CapturadosCopia.dat");
 	private FileWriter cargadorArchivos;
 	// CONSTRUCTORES
-
+	//vacio
+	public Usuario() {
+		super();
+		Nombre = "null";
+		archivoPokedexUsuario= new File ("src\\Usuario", getNombre()+"Pokedex.dat");
+		archivoCapturados=new File ("src\\Usuario",getNombre()+"Capturados.dat");
+		archivoCapturadosCopia=new File ("src\\Usuario",getNombre()+"CapturadosCopia.dat");
+		CantidadDeBatallas =0;
+	}
 	//defecto
 	public Usuario(String nombre) {
 		super();
@@ -40,11 +48,12 @@ public class Usuario implements Serializable {
 	//copia
 	public Usuario(Usuario usu) {
 		super();
-		Nombre = usu.getNombre();
-		CantidadDeBatallas = usu.getCantidadDeBatallas();
-		archivoPokedexUsuario = new File (usu.getRutaArchivoPokedexUsuario());
-		archivoCapturados = new File (usu.getRutaArchivoCapturados());
-		archivoCapturadosCopia = new File (usu.getRutaArchivoCapturadosCopia());
+
+		this.Nombre = usu.getNombre();
+		this.CantidadDeBatallas = usu.getCantidadDeBatallas();
+		this.archivoPokedexUsuario = new File (usu.getRutaArchivoPokedexUsuario());
+		this.archivoCapturados = new File (usu.getRutaArchivoCapturados());
+		this.archivoCapturadosCopia = new File (usu.getRutaArchivoCapturadosCopia());
 	}
 
 	// GETTERS

@@ -90,7 +90,8 @@ public class Main
 		}
 		
 		GestorUsuarios gestorusu= new GestorUsuarios();
-		Usuario usu= new Usuario(gestorusu.cargarUnUsuario("Carlos"));
+		Usuario usu= new Usuario(gestorusu.sacarUsuario("Admin"));
+		System.out.println(usu.getNombre());
 
 		/*CentroPokemon centro= new CentroPokemon(usu);
 		gestorusu.cargarPrimerPokemon(usu, 3);

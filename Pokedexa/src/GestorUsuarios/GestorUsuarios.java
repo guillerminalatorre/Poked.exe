@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.TreeMap;
 
 import ManejadorExcepciones.ExcepcionGenerica;
 import Usuario.Usuario;
@@ -17,7 +19,8 @@ public class GestorUsuarios implements Serializable
 {
 	private File archivoUsuarios=new File("src\\GestorUsuarios\\Usuarios.dat");
 	private File archivoUsuariosCopia;
-	
+	@SuppressWarnings("unused")
+	private TreeMap<String,Usuario> usuarios= new TreeMap<String,Usuario>();
 	
 	/**
 	 * Constructor de la clase;
@@ -45,10 +48,11 @@ public class GestorUsuarios implements Serializable
 	public Usuario cargarUnUsuario(String nombre) throws ExcepcionGenerica
 	{
 		Usuario nuevo = null;
-		//if( !ExisteNombre (nombre) )
-		//{
+		if( ExisteNombre (nombre) == false )
+		{
 			nuevo = guardarNuevoUsuario( new Usuario (nombre));
-		//}
+			
+		}
 		return nuevo;
 	}
 	
@@ -69,11 +73,13 @@ public class GestorUsuarios implements Serializable
 	 * @return
 	 * @throws ExcepcionGenerica
 	 */
+	@SuppressWarnings("unchecked")
 	public boolean ExisteNombre(String nombre) throws ExcepcionGenerica
 	{
+		boolean flag=false;
 		FileInputStream lector = null;
 		ObjectInputStream lectorObjeto = null;
-		Usuario usu;
+		TreeMap<String,Usuario> copia=new TreeMap<String,Usuario> ();
 		try {
 			lector= new FileInputStream(archivoUsuarios);
 			lectorObjeto= new ObjectInputStream(lector);
@@ -86,6 +92,21 @@ public class GestorUsuarios implements Serializable
 			error.printStackTrace();
 			throw new ExcepcionGenerica("Error al crear el lector de objetos");
 		}
+
+		try {
+			copia.putAll((TreeMap<String,Usuario>)lectorObjeto.readObject());
+			if(copia.get(nombre)!=null) {
+				flag=true;
+			}
+		}
+		catch(IOException error) {
+			error.printStackTrace();
+			throw new ExcepcionGenerica("Error al leer del archivo");
+		}
+		catch(ClassNotFoundException error) {
+			error.printStackTrace();
+			throw new ExcepcionGenerica("Error al leer del archivo");
+		}
 		finally {
 			try {
 				if(lectorObjeto!=null) {
@@ -97,40 +118,34 @@ public class GestorUsuarios implements Serializable
 				throw new ExcepcionGenerica("Error al crear el lector de objetos");
 			}
 		}
-		try {
-			while( (usu= (Usuario)lectorObjeto.readObject())!= null) {
-				if(usu.getNombre().equalsIgnoreCase(nombre)==true) return true;
-			}
-		}
-		catch(IOException error) {
-			error.printStackTrace();
-			throw new ExcepcionGenerica("Error al leer del archivo");
-		}
-		catch(ClassNotFoundException error) {
-			error.printStackTrace();
-			throw new ExcepcionGenerica("Error al leer del archivo");
-		}
-		return false;
-	}
+		return flag;
 	
+	}
+
 	
 	/**
 	 *Privado, solo accesible desde  Agrega un nuevo usuario a final del archivo de usuarios.
 	 * @param usuarioNuevo
 	 * @throws ExcepcionGenerica
 	 */
+	@SuppressWarnings("unchecked")
 	private Usuario guardarNuevoUsuario (Usuario usuarioNuevo)  throws ExcepcionGenerica
 	{
 		FileOutputStream streamUsuarios = null;	
 		ObjectOutputStream escrituraUsuarios = null;
+		FileInputStream lector = null;	
+		ObjectInputStream lectorUsuarios = null;
+		TreeMap<String,Usuario> usuarios;
 		
 		try
 		{
+			lector = new FileInputStream(archivoUsuarios);
+			lectorUsuarios= new ObjectInputStream(lector);
+			usuarios=new TreeMap<String,Usuario>((TreeMap<String,Usuario>)lectorUsuarios.readObject());
+			usuarios.put(usuarioNuevo.getNombre(), usuarioNuevo);
 			streamUsuarios = new FileOutputStream(archivoUsuarios);
-
 			escrituraUsuarios= new ObjectOutputStream(streamUsuarios);
-
-			escrituraUsuarios.writeObject(usuarioNuevo);
+			escrituraUsuarios.writeObject(usuarios);
 		}
 		catch (FileNotFoundException exception) 
 		{
@@ -142,11 +157,19 @@ public class GestorUsuarios implements Serializable
 			exception.printStackTrace();
 			throw new ExcepcionGenerica("Error accediendo al archivo: " + getRutaArchivoUsuarios());
 		}
+		catch (ClassNotFoundException exception) 
+		{
+			exception.printStackTrace();
+			throw new ExcepcionGenerica("Error accediendo al archivo: " + getRutaArchivoUsuarios());
+		}
 		finally
 		{
 			try {
 				if (escrituraUsuarios != null) {
 					escrituraUsuarios.close();
+				}
+				if (lectorUsuarios != null) {
+					lectorUsuarios.close();
 				}
 			} catch (IOException exception) {
 				exception.printStackTrace();
@@ -241,90 +264,54 @@ public class GestorUsuarios implements Serializable
      * @return
      * @throws ExcepcionGenerica
      */
-	private boolean sobreescribirUsuario(Usuario usuarioAsobreescribir)  throws ExcepcionGenerica
+	@SuppressWarnings("unchecked")
+	private TreeMap<String,Usuario> sacarMapa(){
+		FileInputStream lector = null;	
+		ObjectInputStream lectorUsuarios = null;
+		TreeMap<String,Usuario> usuarios=null;
+		try
+		{
+			lector = new FileInputStream(archivoUsuarios);
+			lectorUsuarios= new ObjectInputStream(lector);
+			usuarios= new TreeMap <String,Usuario>((TreeMap<String,Usuario>)lectorUsuarios.readObject());
+		}
+		catch (FileNotFoundException exception) 
+		{
+			exception.printStackTrace();
+		} 
+		catch (IOException exception) 
+		{
+			exception.printStackTrace();
+		}
+		catch (ClassNotFoundException exception) 
+		{
+			exception.printStackTrace();
+		}
+		finally
+		{
+			try {
+				if (lectorUsuarios != null) {
+					lectorUsuarios.close();
+				}
+			} catch (IOException exception) {
+				exception.printStackTrace();
+			}
+		}
+		return usuarios;
+	}
+	private void sobreescribirUsuario(Usuario usu)  throws ExcepcionGenerica
 	{
-		boolean rta = false;
-		//Para el archivo de destino
+		FileOutputStream escribir=null;
 		ObjectOutputStream escrituraUsuarios = null;
-		
-		//Para el archivo copia
-		String rutaCopia = copiarArchivoUsuarios();
-		
-		
-		//elimino el archivo usuarios y lo vuelvo a crear, así esta vacío
-		archivoUsuarios.delete();
-		archivoUsuarios = new File ("src\\GestorUsuarios","Usuarios");
+		TreeMap<String,Usuario> usuarios= new TreeMap<String,Usuario>(sacarMapa());
 		
 		try
 		{
-			
-			escrituraUsuarios= new ObjectOutputStream(new FileOutputStream(getRutaArchivoUsuarios()));
-			
-			//para abrir el archivo donde tengo la copia
-			ObjectInputStream lecturaUsuarios = null;
-			
-			try
-			{
-				
-				
-				//abro el archivo donde tengo la copia
-				lecturaUsuarios = new ObjectInputStream( new FileInputStream ( rutaCopia ));
-				
-				Usuario copiacopia = null;
-				
-				int sobreescrito = 0;
-				
-				//mientras que no haya sobreescrito el usario O no tenga mas usuarios el archivo copia
-				while(sobreescrito == 0 || ( copiacopia = (Usuario) lecturaUsuarios.readObject()) != null)
-				{
-					
-					//si elnombre del usuario es igual al siguiente en el archivo de copia, se guarda el pasado por parametro
-					if( sobreescrito ==0 && usuarioAsobreescribir.getNombre() == copiacopia.getNombre())
-					{
-						sobreescrito = 1;
-						
-						escrituraUsuarios.writeObject( usuarioAsobreescribir ); 
-					}
-					
-					//si los nombres no son iguales se sigue guardando los del archivo de copia
-					else
-					{
-						escrituraUsuarios.writeObject(copiacopia); 
-					}
-				}
-			}
-			catch (FileNotFoundException exception) 
-			{
-				exception.printStackTrace();
-				throw new ExcepcionGenerica("Error abriendo archivo: " + rutaCopia);
-			} 
-			catch (IOException exception) 
-			{
-				exception.printStackTrace();
-				throw new ExcepcionGenerica("Error accediendo al archivo: " + rutaCopia);
-			}
-			catch (ClassNotFoundException exception) 
-			{
-				exception.printStackTrace();
-				throw new ExcepcionGenerica("No se encontro la clase Usuario en el archivo: " + rutaCopia);
-			}
-			finally
-			{
-				
-				try {
-					if (lecturaUsuarios != null) {
-						lecturaUsuarios.close();
-					}
-					
-					//elimino el archivoCopia Para que no exista en el caso de una nuevacopia;
-					archivoUsuariosCopia.delete();
-					
-				} catch (IOException exception) {
-					exception.printStackTrace();
-					throw new ExcepcionGenerica("No se puede cerrar el archivo " + rutaCopia);
-				}
-			
-			}
+			usuarios.remove(usu.getNombre());
+			usuarios.put(usu.getNombre(), usu);
+			escribir = new FileOutputStream(archivoUsuarios);
+			escrituraUsuarios= new ObjectOutputStream(escribir);
+			escrituraUsuarios.writeObject(usuarios);
 		}
 		catch (FileNotFoundException exception) 
 		{
@@ -336,26 +323,30 @@ public class GestorUsuarios implements Serializable
 			exception.printStackTrace();
 			throw new ExcepcionGenerica("Error accediendo al archivo: " + getRutaArchivoUsuarios());
 		}
-		finally
-		{
+		finally{
 			try {
 				if (escrituraUsuarios != null) {
 					escrituraUsuarios.close();
 				}
-			} catch (IOException exception) {
-				exception.printStackTrace();
-				throw new ExcepcionGenerica("No se puede cerrar el archivo " + getRutaArchivoUsuarios());
 			}
-			
+			catch (IOException exception) 
+			{
+				exception.printStackTrace();
+				throw new ExcepcionGenerica("Error accediendo al archivo: " + getRutaArchivoUsuarios());
+			}
 		}
-		rta=true;
-		return rta;
+	}
+	public Usuario sacarUsuario(String nombre) {
+		TreeMap<String,Usuario> usuarios=null;
+		try {		
+			if(ExisteNombre(nombre)==true) {
+				usuarios= new TreeMap<String,Usuario>(sacarMapa());
+			}
+		}
+		catch(ExcepcionGenerica error) {
+			error.printStackTrace();
+		}
+		return usuarios.get(nombre);
 	}
 	
-	
-	public boolean checkOutUsuario (Usuario usuarioActual) throws ExcepcionGenerica
-	{
-		return sobreescribirUsuario(usuarioActual);
-	}
-
 }
