@@ -13,6 +13,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
+import Json.ManejadorJSON;
 import ManejadorExcepciones.ExcepcionGenerica;
 import Usuario.Usuario;
 
@@ -71,7 +72,11 @@ public class GestorUsuarios implements Serializable
 	
 	public Pokemon cargarPrimerPokemon ( Usuario usuario, int id ) throws ExcepcionGenerica
 	{
-		Pokemon primero = usuario.encontrarPokemon(id);
+		//Pokemon primero = usuario.encontrarPokemon(id);
+		
+		ManejadorJSON manejadorJSON = new ManejadorJSON();
+		
+		Pokemon primero = manejadorJSON.leerPokemonJSON(id);
 		
 		usuario.cargarNuevoPokemonVisto(primero);
 		

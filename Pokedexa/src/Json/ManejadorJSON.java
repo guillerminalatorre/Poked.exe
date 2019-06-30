@@ -69,7 +69,7 @@ public class ManejadorJSON {
 			}
 		}
 	}
-	public Pokemon SacarPokemonJSON(int id) throws ExcepcionGenerica
+	public Pokemon leerPokemonJSON(int id) throws ExcepcionGenerica
 	{
 		Pokemon pokemon=new Pokemon();
 		JSONObject pokemonJSON= new JSONObject ();

@@ -24,7 +24,7 @@ public class GestorPokedex
 		
 		if(cantidadDeBatallas < 18)
 		{
-			while((pokemonRandom = manejador.SacarPokemonJSON(id)).getEvolucion() != 1)
+			while((pokemonRandom = manejador.leerPokemonJSON(id)).getEvolucion() != 1)
 			{
 				id = (int) (Math.random() * 18) + 1;
 			}
@@ -32,7 +32,7 @@ public class GestorPokedex
 		
 		if(cantidadDeBatallas > 15 && cantidadDeBatallas < 30)
 		{
-			while((pokemonRandom = manejador.SacarPokemonJSON(id)).getEvolucion() == 3)
+			while((pokemonRandom = manejador.leerPokemonJSON(id)).getEvolucion() == 3)
 			{
 				id = (int) (Math.random() * 18) + 1;
 			}

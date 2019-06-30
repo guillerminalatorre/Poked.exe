@@ -1,6 +1,8 @@
 package Pokemon;
 
-public class Pokemon 
+import java.io.Serializable;
+
+public class Pokemon implements Serializable 
 {
 	private int id;
 	private String nombre;
