@@ -91,6 +91,11 @@ public class Main
 			System.out.println(error.MensajeError());
 		}
 		*/
+		
+		GestorUsuarios gestorusu= new GestorUsuarios();
+		Usuario usu= new Usuario(gestorusu.leerUsuario("Admin"));
+		System.out.println(usu.getNombre());
+		
 		Pokemon ejem;
 		ejem= new Pokemon(manejador.SacarPokemonJSON(0));
 		System.out.println(ejem.getNombre()+"         ESTE ");
