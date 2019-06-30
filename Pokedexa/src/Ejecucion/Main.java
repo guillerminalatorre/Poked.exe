@@ -91,14 +91,9 @@ public class Main
 			System.out.println(error.MensajeError());
 		}
 		*/
-		
-		GestorUsuarios gestorusu= new GestorUsuarios();
-		Usuario usu= new Usuario(gestorusu.leerUsuario("Admin"));
-		System.out.println(usu.getNombre());
-		
-		Pokemon ejem;
-		ejem= new Pokemon(manejador.SacarPokemonJSON(0));
-		System.out.println(ejem.getNombre()+"         ESTE ");
+		GestorUsuarios usu= new GestorUsuarios();
+		Usuario nuevo=new Usuario(usu.cargarUnUsuario("carlos"));
+		System.out.println(nuevo.getNombre());
 		/*CentroPokemon centro= new CentroPokemon(usu);
 		gestorusu.cargarPrimerPokemon(usu, 3);
 		centro.mostrarPokemonsDañados();
