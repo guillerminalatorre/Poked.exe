@@ -98,6 +98,9 @@ public class Main
 		}
 		*/
 		
+		//NO VA A ANDAR SI EXISTEN LOS .DAT
+		
+		
 		//CARGA DE USUARIOS ANDANDO
 		GestorUsuarios usu= new GestorUsuarios();
 		
@@ -122,8 +125,7 @@ public class Main
 		
 		
 		
-		//Imprimir Pokedex de cada usuario.
-		
+		//MPRIMIR POKEDEX DE CADA USUARIO
 		System.out.println("POKEDEX DE CARLOS");
 		
 		ArrayList<Integer> nuevoPokedex = new ArrayList<Integer>();
@@ -153,12 +155,12 @@ public class Main
 
 
 
-		//Imprimir Capturados de cada usuario.
-
+		//IMPRIMIR CAPTURADOS DE CADA USUARIO
 
 		System.out.println("CAPTURADOS DE CARLOS");
 
 		//se rompe en el getArchivoCapturados();
+		
 		TreeMap<Integer, Pokemon> nuevoCapturados = nuevo.getArchivoCapturados();
 
 		Collection<Pokemon> collectionNuevoCapturados = nuevoCapturados.values();
@@ -169,9 +171,6 @@ public class Main
 		{
 			System.out.println(iteradorNuevoCapturados.next().toString());
 		}
-		
-		
-		
 		
 		
 
