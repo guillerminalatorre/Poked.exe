@@ -14,7 +14,15 @@ public class Roca_Agua extends Pokemon implements IRoca , IAgua{
 	{
 		super(id, nombre,nivel, vidas, evolucion, tipoRoca + tipoAgua, rutaImagen);
 	}
-	
+	/**
+	   * Constructor COPIA2
+	   * @param Pokemon
+	   */
+	   public Roca_Agua(Pokemon poke)
+	   {
+	   	super(poke.getId(), poke.getNombre(),poke.getEvolucion(), tipoRoca + tipoAgua, poke.getRutaImagen());
+	   	setVidasNivel(calcularNivel());
+	   }
 	/**
 	 * Constructor DEFECTO
 	 * @param id

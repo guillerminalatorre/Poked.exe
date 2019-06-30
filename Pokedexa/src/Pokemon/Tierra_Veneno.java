@@ -14,7 +14,15 @@ public class Tierra_Veneno extends Pokemon implements ITierra , IVeneno {
 	{
 		super(id, nombre,nivel, vidas, evolucion,  tipoTierra + tipoVeneno, rutaImagen);
 	}
-	
+	/**
+	   * Constructor COPIA2
+	   * @param Pokemon
+	   */
+	   public Tierra_Veneno(Pokemon poke)
+	   {
+	   	super(poke.getId(), poke.getNombre(),poke.getEvolucion(), tipoTierra + tipoVeneno, poke.getRutaImagen());
+	   	setVidasNivel(calcularNivel());
+	   }
 	/**
 	 * Constructor DEFECTO
 	 * @param id

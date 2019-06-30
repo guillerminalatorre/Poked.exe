@@ -14,7 +14,15 @@ public class Dragon_Volador extends Pokemon implements IDragon , IVolador{
     {
     	super(id, nombre,nivel, vidas, evolucion, tipoDragon + tipoVolador, rutaImagen);
     }
-    
+	/**
+     * Constructor COPIA2
+     * @param Pokemon
+     */
+    public Dragon_Volador(Pokemon poke)
+    {
+    	super(poke.getId(), poke.getNombre(),poke.getEvolucion(), tipoDragon + tipoVolador, poke.getRutaImagen());
+    	setVidasNivel(calcularNivel());
+    }
     /**
      * Constructor DEFECTO
      * @param id

@@ -14,7 +14,15 @@ public class Veneno extends Pokemon implements  IVeneno {
 	{
 		super(id, nombre,nivel, vidas, evolucion,  tipoVeneno, rutaImagen);
 	}
-	
+	/**
+	   * Constructor COPIA2
+	   * @param Pokemon
+	   */
+	   public Veneno(Pokemon poke)
+	   {
+	   	super(poke.getId(), poke.getNombre(),poke.getEvolucion(),tipoVeneno, poke.getRutaImagen());
+	   	setVidasNivel(calcularNivel());
+	   }
 	/**
 	 * Constructor DEFECTO
 	 * @param id

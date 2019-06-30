@@ -14,7 +14,15 @@ public class Roca_Volador extends Pokemon implements IRoca , IVolador{
 	{
 		super(id, nombre,nivel, vidas, evolucion, tipoRoca + tipoVolador, rutaImagen);
 	}
-	
+	/**
+	   * Constructor COPIA2
+	   * @param Pokemon
+	   */
+	   public Roca_Volador(Pokemon poke)
+	   {
+	   	super(poke.getId(), poke.getNombre(),poke.getEvolucion(), tipoRoca + tipoVolador, poke.getRutaImagen());
+	   	setVidasNivel(calcularNivel());
+	   }
 	/**
 	 * Constructor DEFECTO
 	 * @param id

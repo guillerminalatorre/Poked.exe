@@ -14,7 +14,15 @@ public class Normal_Volador extends Pokemon implements INormal, IVolador {
    {
    	super(id, nombre,nivel, vidas, evolucion, tipoNormal + tipoVolador, rutaImagen);
    }
-   
+	/**
+	   * Constructor COPIA2
+	   * @param Pokemon
+	   */
+	   public Normal_Volador(Pokemon poke)
+	   {
+	   	super(poke.getId(), poke.getNombre(),poke.getEvolucion(), tipoNormal + tipoVolador, poke.getRutaImagen());
+	   	setVidasNivel(calcularNivel());
+	   }
    /**
     * Constructor DEFECTO
     * @param id

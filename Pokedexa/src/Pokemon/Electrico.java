@@ -14,7 +14,15 @@ public class Electrico extends Pokemon implements IElectrico {
     {
     	super(id, nombre,nivel, vidas, evolucion, tipoElectrico, rutaImagen);
     }
-    
+	/**
+     * Constructor COPIA2
+     * @param Pokemon
+     */
+    public Electrico(Pokemon poke)
+    {
+    	super(poke.getId(), poke.getNombre(),poke.getEvolucion(), tipoElectrico , poke.getRutaImagen());
+    	setVidasNivel(calcularNivel());
+    }
     /**
      * Constructor DEFECTO
      * @param id

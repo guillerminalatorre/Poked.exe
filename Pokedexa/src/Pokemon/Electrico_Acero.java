@@ -14,7 +14,15 @@ public class Electrico_Acero extends Pokemon implements IElectrico , IAcero{
     {
     	super(id, nombre,nivel, vidas, evolucion, tipoElectrico + tipoAcero, rutaImagen);
     }
-    
+	/**
+     * Constructor COPIA2
+     * @param Pokemon
+     */
+    public Electrico_Acero(Pokemon poke)
+    {
+    	super(poke.getId(), poke.getNombre(),poke.getEvolucion(), tipoElectrico + tipoAcero, poke.getRutaImagen());
+    	setVidasNivel(calcularNivel());
+    }
     /**
      * Constructor DEFECTO
      * @param id

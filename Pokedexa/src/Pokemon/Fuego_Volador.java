@@ -14,7 +14,15 @@ public class Fuego_Volador extends Pokemon implements IFuego, IVolador {
 	   {
 	   	super(id, nombre,nivel, vidas, evolucion, tipoFuego + tipoVolador, rutaImagen);
 	   }
-	   
+		/**
+	    * Constructor COPIA2
+	    * @param Pokemon
+	    */
+	   public Fuego_Volador(Pokemon poke)
+	   {
+	   	super(poke.getId(), poke.getNombre(),poke.getEvolucion(),  tipoFuego + tipoVolador, poke.getRutaImagen());
+	   	setVidasNivel(calcularNivel());
+	   }
 	   /**
 	    * Constructor DEFECTO
 	    * @param id

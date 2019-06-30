@@ -14,6 +14,15 @@ public class Agua_Hielo extends Pokemon implements IAgua , IHielo{
     {
     	super(id, nombre,nivel, vidas, evolucion, tipoAgua + tipoHielo, rutaImagen);
     }
+	/**
+     * Constructor COPIA2
+     * @param Pokemon
+     */
+    public Agua_Hielo(Pokemon poke)
+    {
+    	super(poke.getId(), poke.getNombre(),poke.getEvolucion(), tipoAgua + tipoHielo, poke.getRutaImagen());
+    	setVidasNivel(calcularNivel());
+    }
     
     /**
      * Constructor DEFECTO
@@ -28,8 +37,9 @@ public class Agua_Hielo extends Pokemon implements IAgua , IHielo{
     	super(id, nombre,evolucion, tipoAgua + tipoHielo, rutaImagen);
     	setVidasNivel(calcularNivel());
     }
+
     
-  
+    
 	@Override
 	/**
 	 * Metodo abstracto entre las clases solo cambia el "tipo" las evoluciones quedan igual.

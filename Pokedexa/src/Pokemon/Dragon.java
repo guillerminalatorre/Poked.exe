@@ -14,7 +14,15 @@ public class Dragon extends Pokemon implements IDragon {
     {
     	super(id, nombre,nivel, vidas, evolucion, tipoDragon , rutaImagen);
     }
-    
+	/**
+     * Constructor COPIA2
+     * @param Pokemon
+     */
+    public Dragon(Pokemon poke)
+    {
+    	super(poke.getId(), poke.getNombre(),poke.getEvolucion(), tipoDragon, poke.getRutaImagen());
+    	setVidasNivel(calcularNivel());
+    }
     /**
      * Constructor DEFECTO
      * @param id

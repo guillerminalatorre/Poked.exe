@@ -16,7 +16,15 @@ public class Fuego extends Pokemon implements IFuego {
     {
     	super(id, nombre,nivel, vidas, evolucion, tipoFuego, rutaImagen);
     }
-    
+	/**
+	    * Constructor COPIA2
+	    * @param Pokemon
+	    */
+	   public Fuego(Pokemon poke)
+	   {
+	   	super(poke.getId(), poke.getNombre(),poke.getEvolucion(),  tipoFuego , poke.getRutaImagen());
+	   	setVidasNivel(calcularNivel());
+	   }
     /**
      * Constructor DEFECTO
      * @param id

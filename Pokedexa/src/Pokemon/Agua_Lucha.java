@@ -14,7 +14,15 @@ public class Agua_Lucha extends Pokemon implements IAgua, ILucha {
     {
     	super(id, nombre,nivel, vidas, evolucion, tipoAgua + tipoLucha, rutaImagen);
     }
-    
+	/**
+     * Constructor COPIA2
+     * @param Pokemon
+     */
+    public Agua_Lucha(Pokemon poke)
+    {
+    	super(poke.getId(), poke.getNombre(),poke.getEvolucion(), tipoAgua + tipoLucha, poke.getRutaImagen());
+    	setVidasNivel(calcularNivel());
+    }
     /**
      * Constructor DEFECTO
      * @param id
@@ -23,6 +31,7 @@ public class Agua_Lucha extends Pokemon implements IAgua, ILucha {
      * @param tipo
      * @param rutaImagen
      */
+    
     public Agua_Lucha (int id, String nombre, int evolucion,String tipo, String rutaImagen)
     {
     	super(id, nombre,evolucion, tipoAgua + tipoLucha, rutaImagen);

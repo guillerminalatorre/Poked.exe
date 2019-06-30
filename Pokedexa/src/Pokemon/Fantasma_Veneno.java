@@ -15,7 +15,15 @@ public class Fantasma_Veneno extends Pokemon implements IFantasma , IVeneno{
    {
    	super(id, nombre,nivel, vidas, evolucion, tipoFantasma + tipoVeneno, rutaImagen);
    }
-   
+	/**
+    * Constructor COPIA2
+    * @param Pokemon
+    */
+   public Fantasma_Veneno(Pokemon poke)
+   {
+   	super(poke.getId(), poke.getNombre(),poke.getEvolucion(), tipoFantasma + tipoVeneno, poke.getRutaImagen());
+   	setVidasNivel(calcularNivel());
+   }
    /**
     * Constructor DEFECTO
     * @param id

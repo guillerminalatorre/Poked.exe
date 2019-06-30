@@ -14,7 +14,15 @@ public class Psiquico extends Pokemon implements  IPsiquico{
     {
     	super(id, nombre,nivel, vidas, evolucion, tipoPsiquico, rutaImagen);
     }
-    
+	/**
+	   * Constructor COPIA2
+	   * @param Pokemon
+	   */
+	   public Psiquico(Pokemon poke)
+	   {
+	   	super(poke.getId(), poke.getNombre(),poke.getEvolucion(), tipoPsiquico, poke.getRutaImagen());
+	   	setVidasNivel(calcularNivel());
+	   }
     /**
      * Constructor DEFECTO
      * @param id

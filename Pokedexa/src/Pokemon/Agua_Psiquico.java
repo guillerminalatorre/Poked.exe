@@ -15,7 +15,15 @@ public class Agua_Psiquico extends Pokemon implements IAgua , IPsiquico {
 	    {
 	    	super(id, nombre,nivel, vidas, evolucion, tipoAgua + tipoPsiquico, rutaImagen);
 	    }
-	    
+		/**
+	     * Constructor COPIA2
+	     * @param Pokemon
+	     */
+	    public Agua_Psiquico(Pokemon poke)
+	    {
+	    	super(poke.getId(), poke.getNombre(),poke.getEvolucion(), tipoAgua + tipoPsiquico, poke.getRutaImagen());
+	    	setVidasNivel(calcularNivel());
+	    }
 	    /**
 	     * Constructor DEFECTO
 	     * @param id

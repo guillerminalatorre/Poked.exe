@@ -14,7 +14,15 @@ public class Lucha extends Pokemon implements ILucha {
 	   {
 	   	super(id, nombre,nivel, vidas, evolucion, tipoLucha, rutaImagen);
 	   }
-	   
+		/**
+		   * Constructor COPIA2
+		   * @param Pokemon
+		   */
+		   public Lucha(Pokemon poke)
+		   {
+		   	super(poke.getId(), poke.getNombre(),poke.getEvolucion(), tipoLucha, poke.getRutaImagen());
+		   	setVidasNivel(calcularNivel());
+		   }
 	   /**
 	    * Constructor DEFECTO
 	    * @param id

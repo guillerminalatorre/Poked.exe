@@ -14,7 +14,15 @@ public class Electrico_Volador extends Pokemon implements IElectrico , IVolador{
     {
     	super(id, nombre,nivel, vidas, evolucion, tipoElectrico + tipoVolador, rutaImagen);
     }
-    
+	/**
+     * Constructor COPIA2
+     * @param Pokemon
+     */
+    public Electrico_Volador(Pokemon poke)
+    {
+    	super(poke.getId(), poke.getNombre(),poke.getEvolucion(), tipoElectrico + tipoVolador, poke.getRutaImagen());
+    	setVidasNivel(calcularNivel());
+    }
     /**
      * Constructor DEFECTO
      * @param id

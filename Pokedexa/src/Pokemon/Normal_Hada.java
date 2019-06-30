@@ -14,7 +14,15 @@ public class Normal_Hada extends Pokemon implements INormal, IHada {
     {
     	super(id, nombre,nivel, vidas, evolucion, tipoNormal + tipoHada, rutaImagen);
     }
-    
+	/**
+	   * Constructor COPIA2
+	   * @param Pokemon
+	   */
+	   public Normal_Hada(Pokemon poke)
+	   {
+	   	super(poke.getId(), poke.getNombre(),poke.getEvolucion(), tipoNormal + tipoHada, poke.getRutaImagen());
+	   	setVidasNivel(calcularNivel());
+	   }
     /**
      * Constructor DEFECTO
      * @param id

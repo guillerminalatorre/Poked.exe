@@ -14,7 +14,15 @@ public class Planta_Psiquico extends Pokemon implements IPlanta , IPsiquico{
     {
     	super(id, nombre,nivel, vidas, evolucion, tipoPlanta + tipoPsiquico, rutaImagen);
     }
-    
+	/**
+	   * Constructor COPIA2
+	   * @param Pokemon
+	   */
+	   public Planta_Psiquico(Pokemon poke)
+	   {
+	   	super(poke.getId(), poke.getNombre(),poke.getEvolucion(), tipoPlanta + tipoPsiquico, poke.getRutaImagen());
+	   	setVidasNivel(calcularNivel());
+	   }
     /**
      * Constructor DEFECTO
      * @param id

@@ -14,7 +14,15 @@ public class Psiquico_Hada extends Pokemon implements  IPsiquico , IHada{
     {
     	super(id, nombre,nivel, vidas, evolucion, tipoPsiquico + tipoHada, rutaImagen);
     }
-    
+	/**
+	   * Constructor COPIA2
+	   * @param Pokemon
+	   */
+	   public Psiquico_Hada(Pokemon poke)
+	   {
+	   	super(poke.getId(), poke.getNombre(),poke.getEvolucion(), tipoPsiquico + tipoHada, poke.getRutaImagen());
+	   	setVidasNivel(calcularNivel());
+	   }
     /**
      * Constructor DEFECTO
      * @param id

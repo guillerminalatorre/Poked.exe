@@ -14,7 +14,15 @@ public class Bicho extends Pokemon implements IBicho {
     {
     	super(id, nombre,nivel, vidas, evolucion, tipoBicho, rutaImagen);
     }
-    
+	/**
+     * Constructor COPIA2
+     * @param Pokemon
+     */
+    public Bicho(Pokemon poke)
+    {
+    	super(poke.getId(), poke.getNombre(),poke.getEvolucion(), tipoBicho, poke.getRutaImagen());
+    	setVidasNivel(calcularNivel());
+    }
     /**
      * Constructor DEFECTO
      * @param id

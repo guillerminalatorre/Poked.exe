@@ -16,7 +16,15 @@ public class Hielo_Volador extends Pokemon implements IHielo , IVolador{
     {
     	super(id, nombre,nivel, vidas, evolucion , tipoHielo + tipoVolador, rutaImagen);
     }
-    
+	/**
+	   * Constructor COPIA2
+	   * @param Pokemon
+	   */
+	   public Hielo_Volador(Pokemon poke)
+	   {
+	   	super(poke.getId(), poke.getNombre(),poke.getEvolucion(), tipoHielo + tipoVolador, poke.getRutaImagen());
+	   	setVidasNivel(calcularNivel());
+	   }
     /**
      * Constructor DEFECTO
      * @param id

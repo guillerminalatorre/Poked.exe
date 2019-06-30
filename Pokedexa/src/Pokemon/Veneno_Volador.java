@@ -14,7 +14,15 @@ public class Veneno_Volador extends Pokemon implements IVeneno, IVolador {
 	{
 		super(id, nombre,nivel, vidas, evolucion,  tipoVeneno + tipoVolador, rutaImagen);
 	}
-	
+	/**
+	   * Constructor COPIA2
+	   * @param Pokemon
+	   */
+	   public Veneno_Volador(Pokemon poke)
+	   {
+	   	super(poke.getId(), poke.getNombre(),poke.getEvolucion(),tipoVeneno + tipoVolador, poke.getRutaImagen());
+	   	setVidasNivel(calcularNivel());
+	   }
 	/**
 	 * Constructor DEFECTO
 	 * @param id

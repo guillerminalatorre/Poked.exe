@@ -16,7 +16,15 @@ public class Hada extends Pokemon implements IHada {
     {
     	super(id, nombre,nivel, vidas, evolucion, tipoHada, rutaImagen);
     }
-    
+		/**
+	   * Constructor COPIA2
+	   * @param Pokemon
+	   */
+	   public Hada(Pokemon poke)
+	   {
+	   	super(poke.getId(), poke.getNombre(),poke.getEvolucion(),  tipoHada, poke.getRutaImagen());
+	   	setVidasNivel(calcularNivel());
+	   }
     /**
      * Constructor DEFECTO
      * @param id

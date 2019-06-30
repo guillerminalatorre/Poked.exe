@@ -14,6 +14,15 @@ public class Agua extends Pokemon implements IAgua {
     public Agua (int id, String nombre,int nivel, int vidas, int evolucion,String rutaImagen)
     {
     	super(id, nombre,nivel, vidas, evolucion, tipoAgua, rutaImagen);
+    }    
+	/**
+     * Constructor COPIA2
+     * @param Pokemon
+     */
+    public Agua(Pokemon poke)
+    {
+    	super(poke.getId(), poke.getNombre(),poke.getEvolucion(), tipoAgua , poke.getRutaImagen());
+    	setVidasNivel(calcularNivel());
     }
     
     /**

@@ -15,7 +15,15 @@ public class Tierra extends Pokemon implements ITierra{
 	{
 		super(id, nombre,nivel, vidas, evolucion,  tipoTierra, rutaImagen);
 	}
-	
+	/**
+	   * Constructor COPIA2
+	   * @param Pokemon
+	   */
+	   public Tierra(Pokemon poke)
+	   {
+	   	super(poke.getId(), poke.getNombre(),poke.getEvolucion(), tipoTierra, poke.getRutaImagen());
+	   	setVidasNivel(calcularNivel());
+	   }
 	/**
 	 * Constructor DEFECTO
 	 * @param id

@@ -14,7 +14,15 @@ public class Agua_Volador extends Pokemon implements  IAgua , IVolador{
     {
     	super(id, nombre,nivel, vidas, evolucion, tipoAgua+tipoVolador, rutaImagen);
     }
-    
+	/**
+     * Constructor COPIA2
+     * @param Pokemon
+     */
+    public Agua_Volador(Pokemon poke)
+    {
+    	super(poke.getId(), poke.getNombre(),poke.getEvolucion(), tipoAgua + tipoVolador, poke.getRutaImagen());
+    	setVidasNivel(calcularNivel());
+    }
     /**
      * Constructor DEFECTO
      * @param id

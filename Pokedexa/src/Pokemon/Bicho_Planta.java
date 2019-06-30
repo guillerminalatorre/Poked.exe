@@ -12,9 +12,17 @@ public class Bicho_Planta extends Pokemon implements IBicho, IPlanta {
      */
     public Bicho_Planta (int id, String nombre,int nivel, int vidas, int evolucion,String rutaImagen)
     {
-    	super(id, nombre,nivel, vidas, evolucion, tipoPlanta + tipoBicho, rutaImagen);
+    	super(id, nombre,nivel, vidas, evolucion, tipoBicho + tipoPlanta, rutaImagen);
     }
-    
+	/**
+     * Constructor COPIA2
+     * @param Pokemon
+     */
+    public Bicho_Planta(Pokemon poke)
+    {
+    	super(poke.getId(), poke.getNombre(),poke.getEvolucion(), tipoBicho + tipoPlanta, poke.getRutaImagen());
+    	setVidasNivel(calcularNivel());
+    }
     /**
      * Constructor DEFECTO
      * @param id
@@ -25,7 +33,7 @@ public class Bicho_Planta extends Pokemon implements IBicho, IPlanta {
      */
     public Bicho_Planta(int id, String nombre, int evolucion, String tipo,String rutaImagen)
     {
-    	super(id, nombre,evolucion, tipoPlanta + tipoBicho, rutaImagen);
+    	super(id, nombre,evolucion, tipoBicho + tipoPlanta, rutaImagen);
     	setVidasNivel(calcularNivel());
     }
     

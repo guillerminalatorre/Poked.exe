@@ -15,7 +15,15 @@ public class Roca_Tierra extends Pokemon implements IRoca , ITierra{
 	{
 		super(id, nombre,nivel, vidas, evolucion, tipoRoca + tipoTierra, rutaImagen);
 	}
-	
+	/**
+	   * Constructor COPIA2
+	   * @param Pokemon
+	   */
+	   public Roca_Tierra(Pokemon poke)
+	   {
+	   	super(poke.getId(), poke.getNombre(),poke.getEvolucion(), tipoRoca + tipoTierra, poke.getRutaImagen());
+	   	setVidasNivel(calcularNivel());
+	   }
 	/**
 	 * Constructor DEFECTO
 	 * @param id

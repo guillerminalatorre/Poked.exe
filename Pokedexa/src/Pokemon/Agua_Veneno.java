@@ -15,7 +15,15 @@ public class Agua_Veneno extends Pokemon implements IAgua , IVeneno{
     {
     	super(id, nombre,nivel, vidas, evolucion, tipoAgua + tipoVeneno, rutaImagen);
     }
-    
+	/**
+     * Constructor COPIA2
+     * @param Pokemon
+     */
+    public Agua_Veneno(Pokemon poke)
+    {
+    	super(poke.getId(), poke.getNombre(),poke.getEvolucion(), tipoAgua + tipoVeneno, poke.getRutaImagen());
+    	setVidasNivel(calcularNivel());
+    }
     /**
      * Constructor DEFECTO
      * @param id

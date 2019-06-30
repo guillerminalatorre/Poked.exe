@@ -14,7 +14,15 @@ public class Normal extends Pokemon implements INormal {
     {
     	super(id, nombre,nivel, vidas, evolucion, tipoNormal, rutaImagen);
     }
-    
+	/**
+	   * Constructor COPIA2
+	   * @param Pokemon
+	   */
+	   public Normal(Pokemon poke)
+	   {
+	   	super(poke.getId(), poke.getNombre(),poke.getEvolucion(), tipoNormal , poke.getRutaImagen());
+	   	setVidasNivel(calcularNivel());
+	   }
     /**
      * Constructor DEFECTO
      * @param id

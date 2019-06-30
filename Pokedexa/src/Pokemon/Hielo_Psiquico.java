@@ -16,7 +16,15 @@ public class Hielo_Psiquico extends Pokemon implements IHielo , IPsiquico{
     {
     	super(id, nombre,nivel, vidas, evolucion, tipoHielo + tipoPsiquico, rutaImagen);
     }
-    
+	/**
+	   * Constructor COPIA2
+	   * @param Pokemon
+	   */
+	   public Hielo_Psiquico(Pokemon poke)
+	   {
+	   	super(poke.getId(), poke.getNombre(),poke.getEvolucion(), tipoHielo + tipoPsiquico, poke.getRutaImagen());
+	   	setVidasNivel(calcularNivel());
+	   }
     /**
      * Constructor DEFECTO
      * @param id

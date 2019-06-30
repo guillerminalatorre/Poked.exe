@@ -17,7 +17,15 @@ public class PlantaVeneno extends Pokemon implements IPlanta, IVeneno
     {
     	super(id, nombre,nivel, vidas, evolucion, tipoPlanta + tipoVeneno, rutaImagen);
     }
-    
+	/**
+	   * Constructor COPIA2
+	   * @param Pokemon
+	   */
+	   public PlantaVeneno(Pokemon poke)
+	   {
+	   	super(poke.getId(), poke.getNombre(),poke.getEvolucion(), tipoPlanta + tipoVeneno, poke.getRutaImagen());
+	   	setVidasNivel(calcularNivel());
+	   }
     /**
      * Constructor DEFECTO
      * @param id
