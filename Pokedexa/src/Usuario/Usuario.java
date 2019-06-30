@@ -389,10 +389,19 @@ public class Usuario implements Serializable {
 		
 		archivoCapturadosCopia = new File (getRutaArchivoCapturadosCopia());
 		
+		
         ObjectInputStream lectura = null;
         try {
+        	
+        		if(!archivoCapturadosCopia.exists()) 
+        		{
+        			archivoCapturadosCopia.createNewFile();
+        		}
+        	
                 lectura = new ObjectInputStream (new FileInputStream(archivoCapturados));
                 ObjectOutputStream escritura = null;
+                
+                
                 try
                 {
                 	escritura = new ObjectOutputStream (new FileOutputStream(archivoCapturadosCopia));
