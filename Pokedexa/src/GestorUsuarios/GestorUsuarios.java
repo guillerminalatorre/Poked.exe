@@ -265,7 +265,7 @@ public class GestorUsuarios implements Serializable
      * @throws ExcepcionGenerica
      */
 	@SuppressWarnings("unchecked")
-	private TreeMap<String,Usuario> sacarMapa(){
+	private TreeMap<String,Usuario> leerMapa(){
 		FileInputStream lector = null;	
 		ObjectInputStream lectorUsuarios = null;
 		TreeMap<String,Usuario> usuarios=null;
@@ -303,7 +303,7 @@ public class GestorUsuarios implements Serializable
 	{
 		FileOutputStream escribir=null;
 		ObjectOutputStream escrituraUsuarios = null;
-		TreeMap<String,Usuario> usuarios= new TreeMap<String,Usuario>(sacarMapa());
+		TreeMap<String,Usuario> usuarios= new TreeMap<String,Usuario>(leerMapa());
 		
 		try
 		{
@@ -336,11 +336,11 @@ public class GestorUsuarios implements Serializable
 			}
 		}
 	}
-	public Usuario sacarUsuario(String nombre) {
+	public Usuario leerUsuario(String nombre) {
 		TreeMap<String,Usuario> usuarios=null;
 		try {		
 			if(ExisteNombre(nombre)==true) {
-				usuarios= new TreeMap<String,Usuario>(sacarMapa());
+				usuarios= new TreeMap<String,Usuario>(leerMapa());
 			}
 		}
 		catch(ExcepcionGenerica error) {

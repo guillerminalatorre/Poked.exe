@@ -10,37 +10,56 @@ import java.util.TreeMap;
 public class Usuario implements Serializable {
   	private String Nombre=" "; //NOMBRE DE USUARIO CON EL QUE SE VA A LOGUEAR
 	private int CantidadDeBatallas; // "NIVEL" DEL JUGADOR
-	private File archivoPokedexUsuario= new File ("src\\Usuario", getNombre()+"Pokedex.dat");
-	private File archivoCapturados=new File ("src\\Usuario",getNombre()+"Capturados.dat");
-	private File archivoCapturadosCopia=new File ("src\\Usuario",getNombre()+"CapturadosCopia.dat");
+	private File archivoPokedexUsuario= new File ("Pokedexa\\src\\Usuario", getNombre()+"Pokedex.dat");
+	private File archivoCapturados=new File ("Pokedexa\\src\\Usuario",getNombre()+"Capturados.dat");
+	private File archivoCapturadosCopia=new File ("Pokedexa\\src\\Usuario",getNombre()+"CapturadosCopia.dat");
 	private FileWriter cargadorArchivos;
+	
 	// CONSTRUCTORES
 	//vacio
-	public Usuario() {
+	public Usuario() 
+	{
 		super();
 		Nombre = "null";
-		archivoPokedexUsuario= new File ("src\\Usuario", getNombre()+"Pokedex.dat");
-		archivoCapturados=new File ("src\\Usuario",getNombre()+"Capturados.dat");
-		archivoCapturadosCopia=new File ("src\\Usuario",getNombre()+"CapturadosCopia.dat");
+		try {
+				if(archivoPokedexUsuario.exists()== false) 
+				{
+					archivoPokedexUsuario.createNewFile();
+				}
+				if(archivoCapturados.exists()== false) 
+				{
+					archivoCapturados.createNewFile();
+				}
+		}	
+		catch(IOException error) 	
+		{
+			error.printStackTrace();
+		}
 		CantidadDeBatallas =0;
 	}
+	
 	//defecto
-	public Usuario(String nombre) {
+	public Usuario(String nombre) 
+	{
 		super();
 		Nombre = nombre;
-		archivoPokedexUsuario= new File ("src\\Usuario", getNombre()+"Pokedex.dat");
-		archivoCapturados=new File ("src\\Usuario",getNombre()+"Capturados.dat");
-		archivoCapturadosCopia=new File ("src\\Usuario",getNombre()+"CapturadosCopia.dat");;
+		//archivoPokedexUsuario= new File ("src\\Usuario", getNombre()+"Pokedex.dat");
+		//archivoCapturados=new File ("src\\Usuario",getNombre()+"Capturados.dat");
+		//archivoCapturadosCopia=new File ("src\\Usuario",getNombre()+"CapturadosCopia.dat");;
 		CantidadDeBatallas = 0;
+		
 		try {
-			if(archivoPokedexUsuario.exists()== false) {
-				archivoPokedexUsuario.createNewFile();
-			}
-			if(archivoCapturados.exists()== false) {
-				archivoCapturados.createNewFile();
-			}
-		}
-		catch(IOException error) {
+				if(archivoPokedexUsuario.exists()== false) 
+				{
+					archivoPokedexUsuario.createNewFile();
+				}
+				if(archivoCapturados.exists()== false) 
+				{
+					archivoCapturados.createNewFile();
+				}
+		}	
+		catch(IOException error) 	
+		{
 			error.printStackTrace();
 		}
 	}
