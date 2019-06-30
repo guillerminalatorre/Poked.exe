@@ -1,6 +1,6 @@
 package Pokemon;
 
-public abstract class Pokemon 
+public class Pokemon 
 {
 	private int id;
 	private String nombre;
@@ -30,7 +30,20 @@ public abstract class Pokemon
 		this.tipo = tipo;
 		this.rutaImagen = rutaImagen;
 	}
-
+	/**
+	   * Constructor COPIA2
+	   * @param Pokemon
+	   */
+	public Pokemon(Pokemon poke)
+	{
+	   	id=poke.getId();
+	   	nombre=poke.getNombre();
+	   	setVidas(poke.getVidas());
+	   	setNivel(poke.getNivel());
+	   	tipo=poke.getTipo();
+	   	evolucion= poke.getEvolucion();
+	   	rutaImagen=poke.getRutaImagen();
+	}
 	/**
 	 * Constructor por DEFECTO, para pokemons nuevos.
 	 * @param id
@@ -44,8 +57,26 @@ public abstract class Pokemon
 		this.nombre = nombre;
 		setVidas(0);
 		setNivel(0);
+		this.tipo=tipo;
 		this.evolucion = evolucion;
 		this.rutaImagen = rutaImagen;
+	}
+	/**
+	 * Constructor por DEFECTO2, para pokemons nuevos.
+	 * @param id
+	 * @param nombre
+	 * @param nivel
+	 * @param evolucion
+	 */
+	public Pokemon ()
+	{
+		this.id = 0;
+		this.nombre = " ";
+		setVidas(0);
+		setNivel(0);
+		this.tipo=" ";
+		this.evolucion =0;
+		this.rutaImagen = " ";
 	}
 	
 	//SETTERS
@@ -115,7 +146,10 @@ public abstract class Pokemon
 		return rutaImagen;
 	}
 	
-	protected abstract int calcularNivel();
+	protected int calcularNivel()
+	{
+		return nivel+nivelPrimeraEvolucion()+nivelSegundaEvolucion()+nivelTerceraEvolucion();
+	}
 	
 	protected int nivelPrimeraEvolucion()
 	{	

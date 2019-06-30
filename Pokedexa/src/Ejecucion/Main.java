@@ -15,8 +15,9 @@ public class Main
 
 	public static void main(String[] args) throws ExcepcionGenerica 
 	{
-		try {
-			ManejadorJSON manejador = new ManejadorJSON();
+		ManejadorJSON manejador = new ManejadorJSON();
+		/*try {
+			
 
 			File imagenID1 = new File("src\\Imagenes\\1.jpg");
 			manejador.CargarPokemon(new PlantaVeneno(1, "Bulbasur", 1, " ", imagenID1.getAbsolutePath()));
@@ -84,14 +85,19 @@ public class Main
 
 			File imagenID19 = new File("src\\Imagenes\\19.jpg");
 			manejador.CargarPokemon(new PlantaVeneno(19, "Rattata", 1, " ", imagenID19.getAbsolutePath()));
+			manejador.cargarArchivoJSON();
 			
 		} catch (ExcepcionGenerica error) {
 			System.out.println(error.MensajeError());
-		}
+		}*/
 		
 		GestorUsuarios gestorusu= new GestorUsuarios();
 		Usuario usu= new Usuario(gestorusu.leerUsuario("Admin"));
 		System.out.println(usu.getNombre());
+
+		Pokemon ejem;
+		ejem= new Pokemon(manejador.SacarPokemonJSON(0));
+		System.out.println(ejem.getNombre()+"         ESTE ");
 
 		/*CentroPokemon centro= new CentroPokemon(usu);
 		gestorusu.cargarPrimerPokemon(usu, 3);
