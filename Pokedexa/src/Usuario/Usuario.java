@@ -4,6 +4,7 @@ import java.io.*;
 import ManejadorExcepciones.*;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.TreeMap;
 
@@ -133,19 +134,22 @@ public class Usuario implements Serializable {
 	 */
 	public TreeMap<Integer, Pokemon> getArchivoCapturados()  throws ExcepcionGenerica
 	{
-		TreeMap <Integer, Pokemon> capturados = new TreeMap<Integer, Pokemon>();
+		TreeMap <Integer,  Pokemon> capturados = new TreeMap<Integer,Pokemon>();
 		FileInputStream streamPokemons = null;	
 		ObjectInputStream lectorPokemons = null;
 		Pokemon copia;
 		
 		try
 		{
-			streamPokemons = new FileInputStream(nombreArchivoCapturados());
+			streamPokemons = new FileInputStream(archivoCapturados.getAbsolutePath());
 			lectorPokemons= new ObjectInputStream(streamPokemons);
-			while((copia = (Pokemon)lectorPokemons.readObject()) != null)
+			
+			//PROBLEMA, se carga el treemap desntro del while, luego se borra, para entenderlo descomentar los siguientes comentarios
+			while((copia = new Pokemon((Pokemon)lectorPokemons.readObject())) != null)
 			{
-				capturados.put(copia.getId(), copia);
+				capturados.put(copia.getId(),copia);//System.out.println(capturados.get(1).getNombre());
 			}
+			//System.out.println(capturados.get(1).getNombre());
 			
 		}
 		catch (FileNotFoundException exception) 
@@ -174,17 +178,9 @@ public class Usuario implements Serializable {
 				exception.printStackTrace();
 				throw new ExcepcionGenerica("No se puede cerrar el archivo " + nombreArchivoCapturados());
 			}
-			/*finally {
-				try {
-					if (streamPokemons != null) {
-						streamPokemons.close();
-					}
-				} catch (IOException exception) {
-					exception.printStackTrace();
-					throw new ExcepcionGenerica("No se puede cerrar el archivo " + nombreArchivoCapturados());
-				}
-			}*/
 		}
+		
+		
 		return capturados;
 	}
 	
@@ -850,7 +846,7 @@ public class Usuario implements Serializable {
 		
 		try
 		{
-			escrituraIds = new FileOutputStream(nombreArchivoCapturados());
+			escrituraIds = new FileOutputStream(archivoPokedexUsuario.getAbsolutePath());
 			
 			escrituraIds.write(pokemon.getId());
 			
