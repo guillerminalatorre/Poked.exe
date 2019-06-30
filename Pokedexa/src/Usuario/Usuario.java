@@ -19,18 +19,18 @@ public class Usuario implements Serializable {
 	public Usuario() {
 		super();
 		Nombre = "null";
-		archivoPokedexUsuario= new File ("src\\Usuario\\Pokedex Usuarios", getNombre()+"Pokedex.dat");
-		archivoCapturados=new File ("src\\Usuario\\Capturados Usuarios",getNombre()+"Capturados.dat");
-		archivoCapturadosCopia=new File ("src\\Usuario\\Capturados copia Usuarios",getNombre()+"CapturadosCopia.dat");
+		archivoPokedexUsuario= new File ("src\\Usuario\\Pokedex Usuarios\\"+ getNombre()+"Pokedex.dat");
+		archivoCapturados=new File ("src\\Usuario\\Capturados Usuarios\\"+getNombre()+"Capturados.dat");
+		archivoCapturadosCopia=new File ("src\\Usuario\\Capturados copia Usuarios\\"+getNombre()+"CapturadosCopia.dat");
 		CantidadDeBatallas =0;
 	}
 	//defecto
 	public Usuario(String nombre) {
 		super();
 		Nombre = nombre;
-		archivoPokedexUsuario= new File ("src\\Usuario\\Pokedex Usuarios", getNombre()+"Pokedex.dat");
-		archivoCapturados=new File ("src\\Usuario\\Capturados Usuarios",getNombre()+"Capturados.dat");
-		archivoCapturadosCopia=new File ("src\\Usuario\\Capturados copia Usuarios",getNombre()+"CapturadosCopia.dat");;
+		archivoPokedexUsuario= new File ("src\\Usuario\\Pokedex Usuarios\\"+ getNombre()+"Pokedex.dat");
+		archivoCapturados=new File ("src\\Usuario\\Capturados Usuarios\\"+getNombre()+"Capturados.dat");
+		archivoCapturadosCopia=new File ("src\\Usuario\\Capturados copia Usuarios\\"+getNombre()+"CapturadosCopia.dat");;
 		CantidadDeBatallas = 0;
 		try {
 			if(archivoPokedexUsuario.exists()== false) {

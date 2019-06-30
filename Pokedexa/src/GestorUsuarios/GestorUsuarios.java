@@ -18,7 +18,7 @@ import Usuario.Usuario;
 
 public class GestorUsuarios implements Serializable
 {
-	private File archivoUsuarios=new File("src\\GestorUsuarios","Usuarios.dat");
+	private File archivoUsuarios=new File("src\\GestorUsuarios\\Usuarios.dat");
 	private File archivoUsuariosCopia;
 	@SuppressWarnings("unused")
 	private TreeMap<String,Usuario> usuarios= new TreeMap<String,Usuario>();
@@ -28,14 +28,6 @@ public class GestorUsuarios implements Serializable
 	 */
 	public GestorUsuarios()
 	{
-		try {
-			if(archivoUsuarios.exists()==false) {//SI EL ARCHIVO NO EXISTE LO CREA
-				archivoUsuarios.createNewFile();
-			}
-		}
-		catch(IOException error){
-			error.printStackTrace();
-		}
 		
 		archivoUsuariosCopia = null;
 	}
@@ -58,14 +50,21 @@ public class GestorUsuarios implements Serializable
 	public Usuario cargarUnUsuario(String nombre) throws ExcepcionGenerica
 	{
 		Usuario nuevo = null;
-		if(archivoUsuarios.length()>0) { //SI EL ARCHIVO ESTA CARGADO HACE LA COMPROBACION
-			if( ExisteNombre (nombre) == false )
-			{
+		try {
+			if(archivoUsuarios.exists()==false) {//SI EL ARCHIVO NO EXISTE LO CREA
+				archivoUsuarios.createNewFile();
 				nuevo = guardarNuevoUsuario( new Usuario (nombre));	
 			}
-		}
-		else { //SI EL ARCHIVO ESTA VACIO CREA EL USUARIO SIN COMPROBAR
-			nuevo = guardarNuevoUsuario( new Usuario (nombre));
+			else
+			{
+				if( ExisteNombre (nombre) == false )
+				{
+					nuevo = guardarNuevoUsuario( new Usuario (nombre));	
+				}
+			}
+			}
+		catch(IOException error){
+			error.printStackTrace();
 		}
 		return nuevo;
 	}

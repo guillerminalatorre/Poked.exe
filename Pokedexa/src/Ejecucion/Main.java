@@ -92,8 +92,12 @@ public class Main
 		}
 		*/
 		GestorUsuarios usu= new GestorUsuarios();
+		
 		Usuario nuevo=new Usuario(usu.cargarUnUsuario("carlos"));
 		System.out.println(nuevo.getNombre());
+		
+		Usuario nuevo1=new Usuario(usu.cargarUnUsuario("ariel"));
+		System.out.println(nuevo1.getNombre());
 		/*CentroPokemon centro= new CentroPokemon(usu);
 		gestorusu.cargarPrimerPokemon(usu, 3);
 		centro.mostrarPokemonsDañados();
