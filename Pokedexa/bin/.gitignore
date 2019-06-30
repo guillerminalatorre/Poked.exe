@@ -1,11 +1,12 @@
 /CapturaPokemon/
 /CentroPokemon/
 /Ejecucion/
+/GestorPokedex/
+/GestorUsuarios/
+/Imagenes/
 /Json/
 /ManejadorExcepciones/
 /Pokemon/
+/Sonidos/
 /Usuario/
 /interfazGrafica/
-/GestorUsuarios/
-/GestorPokedex/
-/Imagenes/
