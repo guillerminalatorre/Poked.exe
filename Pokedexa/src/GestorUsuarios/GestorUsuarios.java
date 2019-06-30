@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -17,7 +18,7 @@ import Usuario.Usuario;
 
 public class GestorUsuarios implements Serializable
 {
-	private File archivoUsuarios=new File("src\\GestorUsuarios\\Usuarios.dat");
+	private File archivoUsuarios=new File("src\\GestorUsuarios","Usuarios.dat");
 	private File archivoUsuariosCopia;
 	@SuppressWarnings("unused")
 	private TreeMap<String,Usuario> usuarios= new TreeMap<String,Usuario>();
@@ -27,6 +28,15 @@ public class GestorUsuarios implements Serializable
 	 */
 	public GestorUsuarios()
 	{
+		try {
+			if(archivoUsuarios.exists()==false) {//SI EL ARCHIVO NO EXISTE LO CREA
+				archivoUsuarios.createNewFile();
+			}
+		}
+		catch(IOException error){
+			error.printStackTrace();
+		}
+		
 		archivoUsuariosCopia = null;
 	}
 	
@@ -48,10 +58,14 @@ public class GestorUsuarios implements Serializable
 	public Usuario cargarUnUsuario(String nombre) throws ExcepcionGenerica
 	{
 		Usuario nuevo = null;
-		if( ExisteNombre (nombre) == false )
-		{
+		if(archivoUsuarios.length()>0) { //SI EL ARCHIVO ESTA CARGADO HACE LA COMPROBACION
+			if( ExisteNombre (nombre) == false )
+			{
+				nuevo = guardarNuevoUsuario( new Usuario (nombre));	
+			}
+		}
+		else { //SI EL ARCHIVO ESTA VACIO CREA EL USUARIO SIN COMPROBAR
 			nuevo = guardarNuevoUsuario( new Usuario (nombre));
-			
 		}
 		return nuevo;
 	}
@@ -139,9 +153,14 @@ public class GestorUsuarios implements Serializable
 		
 		try
 		{
-			lector = new FileInputStream(archivoUsuarios);
-			lectorUsuarios= new ObjectInputStream(lector);
-			usuarios=new TreeMap<String,Usuario>((TreeMap<String,Usuario>)lectorUsuarios.readObject());
+			if(archivoUsuarios.length()>0) { //SI EL ARCHIVO NO ESTA VACIO EL TREEMAP SE CARGA CON EL QUE YA ESTA ADENTRO DEL ARCHIVO
+				lector = new FileInputStream(archivoUsuarios);
+				lectorUsuarios= new ObjectInputStream(lector);
+				usuarios=new TreeMap<String,Usuario>((TreeMap<String,Usuario>)lectorUsuarios.readObject());
+			}
+			else { //SI EL ARCHIVO ESTA VACIO CREA ELTREEMAP DESDE 0
+				usuarios= new TreeMap<String,Usuario>();
+			}
 			usuarios.put(usuarioNuevo.getNombre(), usuarioNuevo);
 			streamUsuarios = new FileOutputStream(archivoUsuarios);
 			escrituraUsuarios= new ObjectOutputStream(streamUsuarios);
