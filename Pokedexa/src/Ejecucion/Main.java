@@ -97,17 +97,17 @@ public class Main
 		}
 		*/
 		
-		
+	
 		
 		//NO VA A ANDAR SI EXISTEN LOS .DAT
 		//CARGA DE USUARIOS ANDANDO
 		GestorUsuarios usu= new GestorUsuarios();
 		
-		Usuario nuevo=new Usuario(usu.cargarUnUsuario("carlos"));
-		System.out.println(nuevo.getNombre());
+		Usuario carlos=new Usuario(usu.cargarUnUsuario("carlos"));
+		System.out.println(carlos.getNombre());
 		
-		Usuario nuevo1=new Usuario(usu.cargarUnUsuario("ariel"));
-		System.out.println(nuevo1.getNombre());
+		Usuario ariel=new Usuario(usu.cargarUnUsuario("ariel"));
+		System.out.println(ariel.getNombre());
 		
 		
 		//CARGA DE PRIMER POKEMON
@@ -116,33 +116,34 @@ public class Main
 		
 		ManejadorJSON manejadorJSON = new ManejadorJSON();
 		
-		Pokemon squirtle = usu.cargarPrimerPokemon(nuevo, 0);
+		Pokemon squirtle = usu.cargarPrimerPokemon(carlos, 0);
 		System.out.println("pokemon Bulvasaur cargado a el usuario carlos");
 		
-		Pokemon charmander = usu.cargarPrimerPokemon(nuevo1, 3);
+		Pokemon charmander = usu.cargarPrimerPokemon(ariel, 3);
 		System.out.println("pokemon Charmander cargado a el usuario ariel");
 	
 		
 		
 		/*
+		
 		//TRABAJAR CON LOS ARCHIVOS YA CARGADOS Y CREADOS
 
 		GestorUsuarios usu = new GestorUsuarios();
 		
-		Usuario nuevo = usu.sacarUsuario("carlos");
+		Usuario carlos = usu.sacarUsuario("carlos");
 		
-		Usuario nuevo1 = usu.sacarUsuario("ariel");		
+		Usuario ariel = usu.sacarUsuario("ariel");*/		
 				
-			*/	
+			
 				
 		//MPRIMIR POKEDEX DE CADA USUARIO
 		System.out.println("POKEDEX DE CARLOS");
 		
-		System.out.println(nuevo.listarPokemonsPokedex());
+		System.out.println(carlos.listarPokemonsPokedex());
 		
 		System.out.println("POKEDEX DE ARIEL");
 		
-		System.out.println(nuevo1.listarPokemonsPokedex());
+		System.out.println(ariel.listarPokemonsPokedex());
 	
 
 
@@ -151,22 +152,62 @@ public class Main
 
 		System.out.println("CAPTURADOS DE CARLOS");
 		
-		System.out.println(nuevo.listarPokemonsCapturados());
+		System.out.println(carlos.listarPokemonsCapturados());
 		
 		
 
 		System.out.println("CAPTURADOS DE ARIEL");
 
-		System.out.println(nuevo1.listarPokemonsCapturados());
+		System.out.println(ariel.listarPokemonsCapturados());
+		
+		
+		
 
 		//CARGAR OTRO POKEMON A LA POKEDEX
-		System.out.println("Cargando un pokemon nuevo a carlitoh... charmander");
-		nuevo.cargarNuevoPokemonVisto(manejador.leerPokemonJSON(3));
 		
-		System.out.println("POKEDEX DE CARLOS");
+		System.out.println("CARGANDO POKEMON NUEVO A CADA USUARIO\n");
+		//carlos.cargarNuevoPokemonVisto(manejador.leerPokemonJSON(3));
 		
-		System.out.println(nuevo.listarPokemonsPokedex());
 		
+		System.out.println(carlos.listarPokemonsPokedex());
+		
+		System.out.println("\n");
+		//ariel.cargarNuevoPokemonVisto(manejador.leerPokemonJSON(6));
+		
+		System.out.println("POKEDEX DE ARIEL");
+		
+		System.out.println(ariel.listarPokemonsPokedex());
+		
+		
+		//CARGAR UN POKEMON QUE YA EXISTE DENTRO DE LA POKEDEX
+		
+		System.out.println("CARGANDO UN POKEMON QUE YA EXISTE, EN LA POKEDEX (NO LO DEBERIA CARGAR)\n Cargarndo id 1 en carlos...");
+		
+		carlos.cargarNuevoPokemonVisto(manejador.leerPokemonJSON(3));
+		System.out.println(carlos.listarPokemonsPokedex());
+		
+		System.out.println("\nCargando id 4 en ariel...");
+		
+		ariel.cargarNuevoPokemonVisto(manejador.leerPokemonJSON(6));
+		System.out.println(ariel.listarPokemonsPokedex());
+		
+		
+		//CARGAR UN POKEMON EN CAPTURADOS DE CADA USUARIO
+		
+		System.out.println("\nCARGANDO UN NUEVO POKEMON CAPTURADO PARA CADA USUARIO\n");
+		
+		carlos.cargarNuevoPokemonCapturado(manejador.leerPokemonJSON(3));
+		System.out.println(carlos.listarPokemonsCapturados());
+		
+		ariel.cargarNuevoPokemonCapturado(manejador.leerPokemonJSON(0));
+		System.out.println(ariel.listarPokemonsCapturados());
+
+		
+		//ELIMINAR UN POKEMON CAPTURADO
+		
+		System.out.println("Eliminando el pokemon Bulvasaur de carlos");
+		carlos.eliminarUnPokemonCapturado(1);
+		System.out.println(carlos.listarPokemonsCapturados());
 		
 		/*CentroPokemon centro= new CentroPokemon(usu);
 		gestorusu.cargarPrimerPokemon(usu, 3);
