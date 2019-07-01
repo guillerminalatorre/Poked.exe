@@ -97,7 +97,7 @@ public class Main
 		}
 		*/
 		
-	
+	/*
 		
 		//NO VA A ANDAR SI EXISTEN LOS .DAT
 		//CARGA DE USUARIOS ANDANDO
@@ -122,9 +122,9 @@ public class Main
 		Pokemon charmander = usu.cargarPrimerPokemon(ariel, 3);
 		System.out.println("pokemon Charmander cargado a el usuario ariel");
 	
+		*/
 		
 		
-		/*
 		
 		//TRABAJAR CON LOS ARCHIVOS YA CARGADOS Y CREADOS
 
@@ -132,7 +132,7 @@ public class Main
 		
 		Usuario carlos = usu.sacarUsuario("carlos");
 		
-		Usuario ariel = usu.sacarUsuario("ariel");*/		
+		Usuario ariel = usu.sacarUsuario("ariel");	
 				
 			
 				
@@ -208,6 +208,10 @@ public class Main
 		System.out.println("Eliminando el pokemon Bulvasaur de carlos");
 		carlos.eliminarUnPokemonCapturado(1);
 		System.out.println(carlos.listarPokemonsCapturados());
+		
+		
+		//¿HAY POKEMON
+		
 		
 		/*CentroPokemon centro= new CentroPokemon(usu);
 		gestorusu.cargarPrimerPokemon(usu, 3);

@@ -24,14 +24,16 @@ public class GestorUsuarios implements Serializable
 	@SuppressWarnings("unused")
 	private TreeMap<String,Usuario> usuarios= new TreeMap<String,Usuario>();
 	
-	/**
-	 * Constructor de la clase;
-	 */
+	
+	//CONSTRUCTOR
+	
 	public GestorUsuarios()
 	{
 		
 		archivoUsuariosCopia = null;
 	}
+	
+	//GETTERS 
 	
 	public String getRutaArchivoUsuarios()
 	{
@@ -42,6 +44,12 @@ public class GestorUsuarios implements Serializable
 	{
 		return archivoUsuariosCopia.getAbsolutePath();
 	}
+	
+	
+	
+	
+	//METODOS DE CARGA
+	
 	
 	/**
 	 * @param nombre
@@ -85,60 +93,10 @@ public class GestorUsuarios implements Serializable
 		return primero;
 	}
 	
-	/**
-	 * verifica si el nuevo nombre de usuario ya existe en el archivo de usuarios
-	 * @param nombre
-	 * @return
-	 * @throws ExcepcionGenerica
-	 */
-	@SuppressWarnings("unchecked")
-	public boolean ExisteNombre(String nombre) throws ExcepcionGenerica
-	{
-		boolean flag=false;
-		FileInputStream lector = null;
-		ObjectInputStream lectorObjeto = null;
-		TreeMap<String,Usuario> copia=new TreeMap<String,Usuario> ();
-		try {
-			lector= new FileInputStream(archivoUsuarios);
-			lectorObjeto= new ObjectInputStream(lector);
-		}
-		catch(FileNotFoundException error) {
-			error.printStackTrace();
-			throw new ExcepcionGenerica("Error al abrir el archivo");
-		}
-		catch(IOException error) {
-			error.printStackTrace();
-			throw new ExcepcionGenerica("Error al crear el lector de objetos");
-		}
-
-		try {
-			copia.putAll((TreeMap<String,Usuario>)lectorObjeto.readObject());
-			if(copia.get(nombre)!=null) {
-				flag=true;
-			}
-		}
-		catch(IOException error) {
-			error.printStackTrace();
-			throw new ExcepcionGenerica("Error al leer del archivo");
-		}
-		catch(ClassNotFoundException error) {
-			error.printStackTrace();
-			throw new ExcepcionGenerica("Error al leer del archivo");
-		}
-		finally {
-			try {
-				if(lectorObjeto!=null) {
-					lectorObjeto.close();
-				}
-			}
-			catch(IOException error) {
-				error.printStackTrace();
-				throw new ExcepcionGenerica("Error al crear el lector de objetos");
-			}
-		}
-		return flag;
 	
-	}
+	
+	//METODOS DE GUARDADO
+
 
 	
 	/**
@@ -204,82 +162,12 @@ public class GestorUsuarios implements Serializable
 		return usuarioNuevo;
 	}
 	
-	/**
-	 * Privado, Se realiza una copia del Archivo de usuarios para poder sobreescribirlo con cambioc, cuando sea necesario.
-	 * @return
-	 * @throws ExcepcionGenerica
-	 */
-	private String copiarArchivoUsuarios () throws ExcepcionGenerica
-	{
-		//hago un new del archivoUsuariosCopia,
-		
-		archivoUsuariosCopia = new File (getRutaArchivoUsuariosCopia());
-		
-        ObjectInputStream lectura = null;
-        try {
-                lectura = new ObjectInputStream (new FileInputStream(archivoUsuarios));
-                ObjectOutputStream escritura = null;
-                try
-                {
-                	escritura = new ObjectOutputStream (new FileOutputStream(archivoUsuariosCopia));
-                	Usuario copia;
-                	while((copia = (Usuario)lectura.readObject()) != null)
-                	{
-                		escritura.writeObject(copia);
-                	}
-                }
-                catch (FileNotFoundException exception) 
-        		{
-        			exception.printStackTrace();
-        			throw new ExcepcionGenerica("Error abriendo archivo: " + archivoUsuariosCopia.getAbsolutePath());
-        		} 
-        		catch (IOException exception) 
-        		{
-        			exception.printStackTrace();
-        			throw new ExcepcionGenerica("Error accediendo al archivo: " + archivoUsuariosCopia.getAbsolutePath());
-        		}
-                catch (ClassNotFoundException exception) 
-        		{
-        			exception.printStackTrace();
-        			throw new ExcepcionGenerica("No se encuentra el objeto Usuario en el archivo " + archivoUsuariosCopia.getAbsolutePath());
-        		}
-        		finally
-        		{
-        			
-        			try {
-        				if (escritura != null) {
-        					escritura.close();
-        				}
-        			} catch (IOException exception) {
-        				exception.printStackTrace();
-        				throw new ExcepcionGenerica("No se puede cerrar el archivo " + archivoUsuariosCopia.getPath());
-        			}
-        		}
-        }
-        catch (FileNotFoundException exception) 
-		{
-			exception.printStackTrace();
-			throw new ExcepcionGenerica("Error abriendo archivo: " + archivoUsuarios.getPath());
-		} 
-		catch (IOException exception) 
-		{
-			exception.printStackTrace();
-			throw new ExcepcionGenerica("Error accediendo al archivo: " + archivoUsuarios.getPath());
-		}
-		finally
-		{
-			
-			try {
-				if (lectura != null) {
-					lectura.close();
-				}
-			} catch (IOException exception) {
-				exception.printStackTrace();
-				throw new ExcepcionGenerica("No se puede cerrar el archivo " + archivoUsuarios.getPath());
-			}
-		}
-        return archivoUsuariosCopia.getPath();     
-	}
+	
+	
+	
+	//METODOS DE OBTENCION DE USUARIOS 
+	
+	
        
     /**
      * sobreescribe un asuario en el archivo
@@ -322,6 +210,83 @@ public class GestorUsuarios implements Serializable
 		}
 		return usuarios;
 	}
+	
+	public Usuario sacarUsuario(String nombre) {
+		TreeMap<String,Usuario> usuarios=null;
+		try {		
+			if(ExisteNombre(nombre)==true) {
+				usuarios= new TreeMap<String,Usuario>(sacarMapa());
+			}
+		}
+		catch(ExcepcionGenerica error) {
+			error.printStackTrace();
+		}
+		return usuarios.get(nombre);
+	}
+	
+	
+	
+	
+	//METODOS DE CONTROL
+	
+	
+	
+
+	/**
+	 * verifica si el nuevo nombre de usuario ya existe en el archivo de usuarios
+	 * @param nombre
+	 * @return
+	 * @throws ExcepcionGenerica
+	 */
+	@SuppressWarnings("unchecked")
+	public boolean ExisteNombre(String nombre) throws ExcepcionGenerica
+	{
+		boolean flag=false;
+		FileInputStream lector = null;
+		ObjectInputStream lectorObjeto = null;
+		TreeMap<String,Usuario> copia=new TreeMap<String,Usuario> ();
+		try {
+			lector= new FileInputStream(archivoUsuarios);
+			lectorObjeto= new ObjectInputStream(lector);
+		}
+		catch(FileNotFoundException error) {
+			error.printStackTrace();
+			throw new ExcepcionGenerica("Error al abrir el archivo");
+		}
+		catch(IOException error) {
+			error.printStackTrace();
+			throw new ExcepcionGenerica("Error al crear el lector de objetos");
+		}
+
+		try {
+			copia.putAll((TreeMap<String,Usuario>)lectorObjeto.readObject());
+			if(copia.get(nombre)!=null) {
+				flag=true;
+			}
+		}
+		catch(IOException error) {
+			error.printStackTrace();
+			throw new ExcepcionGenerica("Error al leer del archivo");
+		}
+		catch(ClassNotFoundException error) {
+			error.printStackTrace();
+			throw new ExcepcionGenerica("Error al leer del archivo");
+		}
+		finally {
+			try {
+				if(lectorObjeto!=null) {
+					lectorObjeto.close();
+				}
+			}
+			catch(IOException error) {
+				error.printStackTrace();
+				throw new ExcepcionGenerica("Error al crear el lector de objetos");
+			}
+		}
+		return flag;
+	
+	}
+	
 	private void sobreescribirUsuario(Usuario usu)  throws ExcepcionGenerica
 	{
 		FileOutputStream escribir=null;
@@ -359,17 +324,7 @@ public class GestorUsuarios implements Serializable
 			}
 		}
 	}
-	public Usuario sacarUsuario(String nombre) {
-		TreeMap<String,Usuario> usuarios=null;
-		try {		
-			if(ExisteNombre(nombre)==true) {
-				usuarios= new TreeMap<String,Usuario>(sacarMapa());
-			}
-		}
-		catch(ExcepcionGenerica error) {
-			error.printStackTrace();
-		}
-		return usuarios.get(nombre);
-	}
+	
+	
 	
 }
