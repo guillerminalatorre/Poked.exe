@@ -125,24 +125,21 @@ public class Usuario implements Serializable {
 	/**
 	 * 
 	 * @return retorna las ids de la pokedex de el usuario en un ArrayList.
+	 * @throws  
 	 * @throws FileNotFoundException 
 	 */
 	public ArrayList<Integer> getArchivoPokedexUsuario() throws ExcepcionGenerica
 	{
 		ArrayList<Integer> idsPokedex = new ArrayList<Integer>();
 		
-		FileInputStream lecturaIds = null;
+		ObjectInputStream lecturaids= null;
 		
 		int idCopia;
 		
 		try
 		{
-			lecturaIds = new FileInputStream(nombreArchivoPokedexUsuario());
-			while((idCopia = lecturaIds.read()) != -1)
-			{
-				idsPokedex.add(idCopia);
-			}
-			
+			lecturaids = new ObjectInputStream (new FileInputStream(archivoPokedexUsuario));
+			idsPokedex= new ArrayList<Integer>((ArrayList<Integer>)lecturaids.readObject());		
 	
 		} 
 		catch (FileNotFoundException exception) 
@@ -155,11 +152,16 @@ public class Usuario implements Serializable {
 			exception.printStackTrace();
 			throw new ExcepcionGenerica("Error accediendo archivo: " + nombreArchivoPokedexUsuario());
 		}
+		catch(ClassNotFoundException exception)
+		{
+			exception.printStackTrace();
+			throw new ExcepcionGenerica("Error encontrando la clase en el archivo : " + nombreArchivoPokedexUsuario());
+		}
 		finally
 		{
 			try {
-				if (null != lecturaIds) {
-					lecturaIds.close();
+				if (null != lecturaids) {
+					lecturaids.close();
 				}
 			} catch (IOException exception) {
 				exception.printStackTrace();
@@ -923,6 +925,7 @@ public class Usuario implements Serializable {
 				streamPokedex = new FileOutputStream(archivoPokedexUsuario);
 				escrituraPokedex= new ObjectOutputStream(streamPokedex);
 				escrituraPokedex.writeObject(pokedex);	
+				escrituraPokedex.flush();
 			}
 			catch (FileNotFoundException exception) 
 			{

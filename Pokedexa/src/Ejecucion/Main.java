@@ -97,7 +97,7 @@ public class Main
 		}
 		*/
 		
-		/*
+		
 		
 		//NO VA A ANDAR SI EXISTEN LOS .DAT
 		//CARGA DE USUARIOS ANDANDO
@@ -123,8 +123,8 @@ public class Main
 		System.out.println("pokemon Charmander cargado a el usuario ariel");
 	
 		
-		*/
 		
+		/*
 		//TRABAJAR CON LOS ARCHIVOS YA CARGADOS Y CREADOS
 
 		GestorUsuarios usu = new GestorUsuarios();
@@ -133,7 +133,7 @@ public class Main
 		
 		Usuario nuevo1 = usu.sacarUsuario("ariel");		
 				
-				
+			*/	
 				
 		//MPRIMIR POKEDEX DE CADA USUARIO
 		System.out.println("POKEDEX DE CARLOS");
@@ -161,7 +161,6 @@ public class Main
 
 		//CARGAR OTRO POKEMON A LA POKEDEX
 		System.out.println("Cargando un pokemon nuevo a carlitoh... charmander");
-		manejador.leerPokemonJSON(1);
 		nuevo.cargarNuevoPokemonVisto(manejador.leerPokemonJSON(3));
 		
 		System.out.println("POKEDEX DE CARLOS");
