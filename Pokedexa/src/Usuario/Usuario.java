@@ -340,93 +340,7 @@ public class Usuario implements Serializable {
 	
 	
 	
-	
-	
-	
-	
-	//METODOS VARIOS
-	
-	
-	/**
-	 * retorna en un TreeMap los pokemons dañados (vidas != nivel)
-	 * @return
-	 * @throws ExcepcionGenerica
-	 */
 
-	
-	/**
-	 * retorna True si el pokemon fue visto, false si no lo fue.
-	 * @param pokemonNuevo
-	 * @return
-	 * @throws ExcepcionGenerica
-	 */
-	@SuppressWarnings("unchecked")
-	public boolean ElPokemonFueVisto(Pokemon pokemonNuevo) throws ExcepcionGenerica
-	{
-		boolean visto = false;
-		
-		if(archivoPokedexUsuario.length()>0)
-		{
-	
-		FileInputStream lector = null;	
-		ObjectInputStream lectorPokedex = null;
-		ArrayList<Integer> pokedex;
-		
-		try
-		{
-			
-				lector = new FileInputStream(archivoPokedexUsuario);
-				lectorPokedex= new ObjectInputStream(lector);
-				pokedex = new ArrayList<Integer> ((ArrayList<Integer>)lectorPokedex.readObject());
-			
-				Iterator<Integer> iterador = pokedex.iterator();
-				
-				while(iterador.hasNext() && visto==false)
-				{
-					if(pokemonNuevo.getId() == iterador.next())
-					{
-						visto = true;
-					}
-				}
-				
-		}
-		catch (FileNotFoundException exception) 
-		{
-			exception.printStackTrace();
-			throw new ExcepcionGenerica("Error abriendo archivo: " + archivoPokedexUsuario.getAbsolutePath());
-		} 
-		catch (IOException exception) 
-		{
-			exception.printStackTrace();
-			throw new ExcepcionGenerica("Error accediendo archivo: " + archivoPokedexUsuario.getAbsolutePath());
-		}
-		catch(ClassNotFoundException exception)
-		{
-			exception.printStackTrace();
-			throw new ExcepcionGenerica("No se ha encontrado la clase en  " + archivoPokedexUsuario.getAbsolutePath());
-		}
-		finally
-		{
-			try {
-				if (null != lectorPokedex) {
-					lectorPokedex.close();
-				}
-			} catch (IOException exception) {
-				exception.printStackTrace();
-				throw new ExcepcionGenerica("No se puede cerrar el archivo: " + archivoPokedexUsuario.getAbsolutePath());
-			}
-		}
-		}
-
-		return visto;
-	}
-	
-
-	
-	
-	
-	
-	
 	
 	
 	
@@ -577,10 +491,6 @@ public class Usuario implements Serializable {
 	
 	
 	
-	
-	
-	
-	
 	//CARGA DE POKEMON VISTO
 	
 	
@@ -653,23 +563,79 @@ public class Usuario implements Serializable {
 	
 	
 	
+	//METODOS VARIOS
 	
 	
+		/**
+		 * retorna True si el pokemon fue visto, false si no lo fue.
+		 * @param pokemonNuevo
+		 * @return
+		 * @throws ExcepcionGenerica
+		 */
+		@SuppressWarnings("unchecked")
+		public boolean ElPokemonFueVisto(Pokemon pokemonNuevo) throws ExcepcionGenerica
+		{
+			boolean visto = false;
+			
+			if(archivoPokedexUsuario.length()>0)
+			{
+		
+			FileInputStream lector = null;	
+			ObjectInputStream lectorPokedex = null;
+			ArrayList<Integer> pokedex;
+			
+			try
+			{
+				
+					lector = new FileInputStream(archivoPokedexUsuario);
+					lectorPokedex= new ObjectInputStream(lector);
+					pokedex = new ArrayList<Integer> ((ArrayList<Integer>)lectorPokedex.readObject());
+				
+					Iterator<Integer> iterador = pokedex.iterator();
+					
+					while(iterador.hasNext() && visto==false)
+					{
+						if(pokemonNuevo.getId() == iterador.next())
+						{
+							visto = true;
+						}
+					}
+					
+			}
+			catch (FileNotFoundException exception) 
+			{
+				exception.printStackTrace();
+				throw new ExcepcionGenerica("Error abriendo archivo: " + archivoPokedexUsuario.getAbsolutePath());
+			} 
+			catch (IOException exception) 
+			{
+				exception.printStackTrace();
+				throw new ExcepcionGenerica("Error accediendo archivo: " + archivoPokedexUsuario.getAbsolutePath());
+			}
+			catch(ClassNotFoundException exception)
+			{
+				exception.printStackTrace();
+				throw new ExcepcionGenerica("No se ha encontrado la clase en  " + archivoPokedexUsuario.getAbsolutePath());
+			}
+			finally
+			{
+				try {
+					if (null != lectorPokedex) {
+						lectorPokedex.close();
+					}
+				} catch (IOException exception) {
+					exception.printStackTrace();
+					throw new ExcepcionGenerica("No se puede cerrar el archivo: " + archivoPokedexUsuario.getAbsolutePath());
+				}
+			}
+			}
+
+			return visto;
+		}
+		
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	//A PARTIR DE ACA SE DEBEN PROBAR LOS METODOS
+
 	
 	 /**
      * sobreescribe los pokemon ya curados, que son pasados por parametro en el arrayList,  en el archivo.       
@@ -807,6 +773,71 @@ public class Usuario implements Serializable {
 		}
 		
 		return retorno;
+	}
+	
+	
+	public void actualizarUnPokemon (Pokemon pokemon)  throws ExcepcionGenerica
+	{
+		FileOutputStream streamCapturados = null;	
+		ObjectOutputStream escrituraCapturados = null;
+		FileInputStream lector = null;	
+		ObjectInputStream lectorCapturados = null;
+		TreeMap<Integer,Pokemon> capturados;
+		
+		
+		try
+		{
+			if(archivoCapturados.length()>0) { //SI EL ARCHIVO NO ESTA VACIO EL TREEMAP SE CARGA CON EL QUE YA ESTA ADENTRO DEL ARCHIVO
+				lector = new FileInputStream(archivoCapturados);
+				lectorCapturados= new ObjectInputStream(lector);
+				capturados=new TreeMap<Integer, Pokemon>((TreeMap<Integer,Pokemon>)lectorCapturados.readObject());
+				
+				//primero elimina el pokemon
+				capturados.remove(pokemon.getId());
+				
+				//luego lo carga nuevamente
+				capturados.put(pokemon.getId(), pokemon);
+					
+				streamCapturados = new FileOutputStream(archivoCapturados);
+				escrituraCapturados= new ObjectOutputStream(streamCapturados);
+				
+				//guarda el TreeMap actualizado en el archivo
+				
+				escrituraCapturados.writeObject(capturados);
+			}
+
+		}
+		catch (FileNotFoundException exception) 
+		{
+			exception.printStackTrace();
+			throw new ExcepcionGenerica("Error abriendo archivo: " + archivoCapturados.getAbsolutePath());
+		} 
+		catch (IOException exception) 
+		{
+			exception.printStackTrace();
+			throw new ExcepcionGenerica("Error accediendo al archivo: " + archivoCapturados.getAbsolutePath());
+		}
+		catch (ClassNotFoundException exception) 
+		{
+			exception.printStackTrace();
+			throw new ExcepcionGenerica("Error accediendo al archivo: " + archivoCapturados.getAbsolutePath());
+		}
+		finally
+		{
+			try {
+				if (escrituraCapturados != null) {
+					escrituraCapturados.close();
+				}
+				if (lectorCapturados!= null) {
+					lectorCapturados.close();
+				}
+			} catch (IOException exception) {
+				exception.printStackTrace();
+				throw new ExcepcionGenerica("No se puede cerrar el archivo " + archivoCapturados.getAbsolutePath());
+			}
+			
+		}
+		
 	}
 	
 	public boolean estanTodosDebilitados() throws ExcepcionGenerica
