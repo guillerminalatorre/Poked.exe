@@ -127,60 +127,41 @@ public class Usuario implements Serializable {
 		}
 		return idsPokedex;
 	}
-
-	/**
-	 * 
-	 * @return retorna un TreeMap<Integer, Pokemon> correspondiente a los pokemons capturados 
-	 */
-	public TreeMap<Integer, Pokemon> getArchivoCapturados()  throws ExcepcionGenerica
+	
+	@SuppressWarnings("unchecked")
+	public TreeMap<Integer,Pokemon> leerMapaCapturados()
 	{
-		TreeMap <Integer,  Pokemon> capturados = new TreeMap<Integer,Pokemon>();
-		FileInputStream streamPokemons = null;	
-		ObjectInputStream lectorPokemons = null;
-		Pokemon copia;
-		
+		FileInputStream lector = null;	
+		ObjectInputStream lectorCapturados = null;
+		TreeMap<Integer,Pokemon> capturados=null;
 		try
 		{
-			streamPokemons = new FileInputStream(archivoCapturados.getAbsolutePath());
-			lectorPokemons= new ObjectInputStream(streamPokemons);
-			
-			//PROBLEMA, se carga el treemap desntro del while, luego se borra, para entenderlo descomentar los siguientes comentarios
-			while((copia = new Pokemon((Pokemon)lectorPokemons.readObject())) != null)
-			{
-				capturados.put(copia.getId(),copia);//System.out.println(capturados.get(1).getNombre());
-			}
-			//System.out.println(capturados.get(1).getNombre());
-			
+			lector = new FileInputStream(archivoCapturados);
+			lectorCapturados= new ObjectInputStream(lector);
+			capturados= new TreeMap <Integer,Pokemon>((TreeMap<Integer,Pokemon>)lectorCapturados.readObject());
 		}
 		catch (FileNotFoundException exception) 
 		{
 			exception.printStackTrace();
-			throw new ExcepcionGenerica("Error abriendo archivo: " + nombreArchivoCapturados());
 		} 
 		catch (IOException exception) 
 		{
 			exception.printStackTrace();
-			throw new ExcepcionGenerica("Error accediendo al archivo: " + nombreArchivoCapturados());
 		}
 		catch (ClassNotFoundException exception) 
 		{
 			exception.printStackTrace();
-			throw new ExcepcionGenerica("Clase no encontrada para leer del archivo ");
 		}
 		finally
 		{
-			
 			try {
-				if (lectorPokemons != null) {
-					lectorPokemons.close();
+				if (lectorCapturados != null) {
+					lectorCapturados.close();
 				}
 			} catch (IOException exception) {
 				exception.printStackTrace();
-				throw new ExcepcionGenerica("No se puede cerrar el archivo " + nombreArchivoCapturados());
 			}
 		}
-		
-		
 		return capturados;
 	}
 	
@@ -336,39 +317,57 @@ public class Usuario implements Serializable {
 	 * @param pokemonNuevo
 	 * @throws ExcepcionGenerica
 	 */
+	@SuppressWarnings("unchecked")
 	public void cargarNuevoPokemonCapturado(Pokemon pokemonNuevo)  throws ExcepcionGenerica
 	{
-		FileOutputStream streamPokemons = null;	
-		ObjectOutputStream escrituraPokemons = null;
+		FileOutputStream streamCapturados = null;	
+		ObjectOutputStream escrituraCapturados = null;
+		FileInputStream lector = null;	
+		ObjectInputStream lectorCapturados = null;
+		TreeMap<Integer,Pokemon> capturados;
 		
 		try
 		{
-			streamPokemons = new FileOutputStream(nombreArchivoCapturados());
-			
-			escrituraPokemons= new ObjectOutputStream(streamPokemons);
-			
-			escrituraPokemons.writeObject(pokemonNuevo);
-			
+			if(archivoCapturados.length()>0) { //SI EL ARCHIVO NO ESTA VACIO EL TREEMAP SE CARGA CON EL QUE YA ESTA ADENTRO DEL ARCHIVO
+				lector = new FileInputStream(archivoCapturados);
+				lectorCapturados= new ObjectInputStream(lector);
+				capturados=new TreeMap<Integer, Pokemon>((TreeMap<Integer,Pokemon>)lectorCapturados.readObject());
+			}
+			else { //SI EL ARCHIVO ESTA VACIO CREA ELTREEMAP DESDE 0
+				capturados= new TreeMap<Integer, Pokemon>();
+			}
+			capturados.put(pokemonNuevo.getId(), pokemonNuevo);
+			streamCapturados = new FileOutputStream(archivoCapturados);
+			escrituraCapturados= new ObjectOutputStream(streamCapturados);
+			escrituraCapturados.writeObject(capturados);
 		}
 		catch (FileNotFoundException exception) 
 		{
 			exception.printStackTrace();
-			throw new ExcepcionGenerica("Error abriendo archivo: " + nombreArchivoCapturados());
+			throw new ExcepcionGenerica("Error abriendo archivo: " + archivoCapturados.getAbsolutePath());
 		} 
 		catch (IOException exception) 
 		{
 			exception.printStackTrace();
-			throw new ExcepcionGenerica("Error accediendo al archivo: " + nombreArchivoCapturados());
+			throw new ExcepcionGenerica("Error accediendo al archivo: " + archivoCapturados.getAbsolutePath());
+		}
+		catch (ClassNotFoundException exception) 
+		{
+			exception.printStackTrace();
+			throw new ExcepcionGenerica("Error accediendo al archivo: " + archivoCapturados.getAbsolutePath());
 		}
 		finally
 		{
 			try {
-				if (escrituraPokemons != null) {
-					escrituraPokemons.close();
+				if (escrituraCapturados != null) {
+					escrituraCapturados.close();
+				}
+				if (lectorCapturados!= null) {
+					lectorCapturados.close();
 				}
 			} catch (IOException exception) {
 				exception.printStackTrace();
-				throw new ExcepcionGenerica("No se puede cerrar el archivo " + nombreArchivoCapturados());
+				throw new ExcepcionGenerica("No se puede cerrar el archivo " + archivoCapturados.getAbsolutePath());
 			}
 			
 		}
@@ -884,6 +883,122 @@ public class Usuario implements Serializable {
 		CantidadDeBatallas = cantidadDeBatallas;
 	}
 	
+	public String toStringDeLaClasePokemonCorrespondiente(Pokemon pokemon)
+	{
+		String respuesta = null;
+		Pokemon pokemoncito = null;
+		
+		if (pokemon instanceof Agua_Hielo) {
+			pokemoncito = (Pokemon) new Agua_Hielo(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen());
+			respuesta = pokemoncito.toString();
+		}
+		if (pokemon instanceof Agua_Lucha) {
+			usuario.cargarNuevoPokemonCapturado(new Agua_Lucha(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen()));
+		}
+		if (pokemon instanceof Agua_Psiquico) {
+			usuario.cargarNuevoPokemonCapturado(new Agua_Psiquico(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen()));
+		}
+		if (pokemon instanceof Agua_Veneno) {
+			usuario.cargarNuevoPokemonCapturado(new Agua_Veneno(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen()));
+		}
+		if (pokemon instanceof Agua_Volador) {
+			usuario.cargarNuevoPokemonCapturado(new Agua_Volador(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen()));
+		}
+		if (pokemon instanceof Agua) {
+			usuario.cargarNuevoPokemonCapturado(new Agua(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen()));
+		}
+		if (pokemon instanceof Bicho_Planta) {
+			usuario.cargarNuevoPokemonCapturado(new Bicho_Veneno(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen()));
+		}
+		if (pokemon instanceof Bicho_Veneno) {
+			usuario.cargarNuevoPokemonCapturado(new Bicho_Veneno(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen()));
+		}
+		if (pokemon instanceof Bicho_Volador) {
+			usuario.cargarNuevoPokemonCapturado(new Bicho_Volador(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen()));
+		}
+		if (pokemon instanceof Bicho ) {
+			usuario.cargarNuevoPokemonCapturado(new Bicho(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen()));
+		}
+		if (pokemon instanceof Dragon_Volador) {
+			usuario.cargarNuevoPokemonCapturado(new Dragon_Volador(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen()));
+		}
+		if (pokemon instanceof Dragon) {
+			usuario.cargarNuevoPokemonCapturado(new Dragon(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen()));
+		} 
+		if (pokemon instanceof Electrico_Acero) {
+			usuario.cargarNuevoPokemonCapturado(new Electrico_Volador(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen()));
+		} 
+		if (pokemon instanceof Electrico_Volador) {
+			usuario.cargarNuevoPokemonCapturado(new Electrico(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen()));
+		} 
+		if (pokemon instanceof Electrico) {
+			usuario.cargarNuevoPokemonCapturado(new Electrico(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen()));
+		} 
+		if (pokemon instanceof Fantasma_Veneno) {
+			usuario.cargarNuevoPokemonCapturado(new Fantasma_Veneno(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen()));
+		}
+		if (pokemon instanceof Fuego_Volador) {
+			usuario.cargarNuevoPokemonCapturado(new Fuego_Volador(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen()));
+		}
+		if (pokemon instanceof Fuego) {
+			usuario.cargarNuevoPokemonCapturado(new Fuego(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen()));
+		} 
+		if (pokemon instanceof Hada) {
+			usuario.cargarNuevoPokemonCapturado(new Hada(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen()));
+		} 
+		if (pokemon instanceof Hielo_Psiquico) {
+			usuario.cargarNuevoPokemonCapturado(new Hielo_Psiquico(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen()));
+		} 
+		if (pokemon instanceof Hielo_Volador) {
+			usuario.cargarNuevoPokemonCapturado(new Hielo_Volador(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen()));
+		} 
+		if (pokemon instanceof Lucha) {
+			usuario.cargarNuevoPokemonCapturado(new Lucha(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen()));
+		} 
+		if (pokemon instanceof Normal_Hada) {
+			usuario.cargarNuevoPokemonCapturado(new Normal_Hada(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen()));
+		} 
+		if (pokemon instanceof Normal_Volador) {
+			usuario.cargarNuevoPokemonCapturado(new Normal_Volador(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen()));
+		} 
+		if (pokemon instanceof Normal) {
+			usuario.cargarNuevoPokemonCapturado(new Normal(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen()));
+		} 
+		if (pokemon instanceof Planta_Psiquico) {
+			usuario.cargarNuevoPokemonCapturado(new Planta_Psiquico(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen()));
+		} 
+		if (pokemon instanceof PlantaVeneno) {
+			usuario.cargarNuevoPokemonCapturado(new PlantaVeneno(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen()));
+		} 
+		if (pokemon instanceof Psiquico_Hada) {
+			usuario.cargarNuevoPokemonCapturado(new Psiquico_Hada(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen()));
+		} 
+		if (pokemon instanceof Psiquico) {
+			usuario.cargarNuevoPokemonCapturado(new Psiquico(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen()));
+		} 
+		if (pokemon instanceof Roca_Agua) {
+			usuario.cargarNuevoPokemonCapturado(new Roca_Agua(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen()));
+		} 
+		if (pokemon instanceof Roca_Tierra) {
+			usuario.cargarNuevoPokemonCapturado(new Roca_Tierra(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen()));
+		} 
+		if (pokemon instanceof Roca_Volador) {
+			usuario.cargarNuevoPokemonCapturado(new Roca_Volador(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen()));
+		} 
+		if (pokemon instanceof Tierra_Veneno) {
+			usuario.cargarNuevoPokemonCapturado(new Tierra_Veneno(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen()));
+		} 
+		if (pokemon instanceof Tierra) {
+			usuario.cargarNuevoPokemonCapturado(new Tierra(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen()));
+		} 
+		if (pokemon instanceof Veneno_Volador) {
+			usuario.cargarNuevoPokemonCapturado(new Veneno_Volador(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen()));
+		} 
+		if (pokemon instanceof Veneno) {
+			usuario.cargarNuevoPokemonCapturado(new Veneno(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen()));
+		} 
+	}
+	
 	//METODOS 
 	
 	public String nombreArchivoPokedexUsuario()
@@ -900,6 +1015,7 @@ public class Usuario implements Serializable {
 	{
 		setCantidadDeBatallas( getCantidadDeBatallas()+1 );
 	}
+	
 	//METODOS OVERRIDE
 	
 	@Override

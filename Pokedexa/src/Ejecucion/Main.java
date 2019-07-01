@@ -97,10 +97,8 @@ public class Main
 			System.out.println(error.MensajeError());
 		}
 		*/
-		
+		/*
 		//NO VA A ANDAR SI EXISTEN LOS .DAT
-		
-		
 		//CARGA DE USUARIOS ANDANDO
 		GestorUsuarios usu= new GestorUsuarios();
 		
@@ -121,10 +119,18 @@ public class Main
 		System.out.println("pokemon Bulvasaur cargado a el usuario carlos");
 		
 		Pokemon charmander = usu.cargarPrimerPokemon(nuevo1, 3);
-		System.out.println("pokemon Charmander cargado a el usuario ariel");
+		System.out.println("pokemon Charmander cargado a el usuario ariel");*/
 		
+		//TRABAJAR CON LOS ARCHIVOS YA CARGADOS Y CREADOS
 		
+		GestorUsuarios usu = new GestorUsuarios();
 		
+		Usuario nuevo = usu.sacarUsuario("carlos");
+		
+		Usuario nuevo1 = usu.sacarUsuario("ariel");		
+				
+				
+				
 		//MPRIMIR POKEDEX DE CADA USUARIO
 		System.out.println("POKEDEX DE CARLOS");
 		
@@ -161,7 +167,7 @@ public class Main
 
 		//se rompe en el getArchivoCapturados();
 		
-		TreeMap<Integer, Pokemon> nuevoCapturados = nuevo.getArchivoCapturados();
+		TreeMap<Integer, Pokemon> nuevoCapturados = nuevo.leerMapaCapturados();
 
 		Collection<Pokemon> collectionNuevoCapturados = nuevoCapturados.values();
 
@@ -178,7 +184,7 @@ public class Main
 
 		TreeMap<Integer, Pokemon> nuevo1Capturados = new TreeMap<Integer, Pokemon>();
 
-		nuevo1Capturados = nuevo.getArchivoCapturados();
+		nuevo1Capturados = nuevo1.leerMapaCapturados();
 
 		Collection<Pokemon> collectionNuevo1Capturados = nuevo1Capturados.values();
 
