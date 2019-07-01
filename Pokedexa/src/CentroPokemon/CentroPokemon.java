@@ -22,7 +22,7 @@ public class CentroPokemon
 
 	public String mostrarPokemonsDañados() throws ExcepcionGenerica
 	{
-		ArrayList <Pokemon> pokemonsDañados = usuario.getPokemonsDañados();
+		ArrayList <Pokemon> pokemonsDañados = usuario.getPokemonsDanados();
 		
 		String dañados = "";
 		
@@ -39,7 +39,7 @@ public class CentroPokemon
 	{
 		boolean rta=false;
 		
-		if(usuario.restaurarVidas(usuario.getPokemonsDañados()));
+		if(usuario.restaurarVidas(usuario.getPokemonsDanados()));
 		
 		else rta=true;
 		

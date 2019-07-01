@@ -1,4 +1,4 @@
-pckage Usuario;
+package Usuario;
 import Pokemon.*;
 import java.io.*;
 import ManejadorExcepciones.*;
@@ -56,7 +56,7 @@ public class Usuario implements Serializable {
 		this.archivoCapturados = new File (usu.getRutaArchivoCapturados());
 		this.archivoCapturadosCopia = new File (usu.getRutaArchivoCapturadosCopia());
 	}
-
+ 
 	// GETTERS
 	
 	public int getCantidadDeBatallas() {
@@ -79,6 +79,47 @@ public class Usuario implements Serializable {
 	public String getRutaArchivoCapturados()
 	{
 		return archivoCapturados.getAbsolutePath();
+	}
+	
+	public String listarPokemonsPokedex() throws ExcepcionGenerica
+	{
+		StringBuilder listado = new StringBuilder ("Pokemons Pokedex de " + getNombre()+ ": \n");
+		
+		ArrayList<Integer> nuevoPokedex = new ArrayList<Integer>();
+		try {
+			nuevoPokedex = getArchivoPokedexUsuario();
+		}
+		catch(ExcepcionGenerica exception)
+		{
+			
+		}
+		Iterator<Integer> iteradorNuevoPokedex = nuevoPokedex.iterator();
+		
+		while( iteradorNuevoPokedex.hasNext())
+		{
+			listado.append(iteradorNuevoPokedex.next()+", ");
+		}
+		
+		return listado.toString();
+		
+	}
+	
+	public String listarPokemonsCapturados()
+	{
+		StringBuilder listado = new StringBuilder("Pokemons Capturados de " + getNombre()+ ": \n");
+		
+		TreeMap<Integer, Pokemon> nuevoCapturados = leerMapaCapturados();
+
+		Collection<Pokemon> collectionNuevoCapturados = nuevoCapturados.values();
+
+		Iterator<Pokemon> iteradorNuevoCapturados = collectionNuevoCapturados.iterator();
+
+		while( iteradorNuevoCapturados.hasNext())
+		{
+			listado.append(iteradorNuevoCapturados.next().toString() +"\n");
+		}
+		
+		return listado.toString();
 	}
 	
 	/**
@@ -205,9 +246,9 @@ public class Usuario implements Serializable {
 			}
 			return flag;
 	}
-	public ArrayList<Pokemon> getPokemonsDañados()  throws ExcepcionGenerica
+	public ArrayList<Pokemon> getPokemonsDanados()  throws ExcepcionGenerica
 	{
-		ArrayList < Pokemon> dañados = new ArrayList <Pokemon>();
+		ArrayList < Pokemon> danados = new ArrayList <Pokemon>();
 		FileInputStream streamPokemons = null;	
 		ObjectInputStream lectorPokemons = null;
 		Pokemon copia;
@@ -218,7 +259,7 @@ public class Usuario implements Serializable {
 			lectorPokemons= new ObjectInputStream(streamPokemons);
 			while((copia = (Pokemon)lectorPokemons.readObject()) != null)
 			{
-				if(copia.getNivel() != copia.getVidas()) dañados.add(copia);
+				if(copia.getNivel() != copia.getVidas()) danados.add(copia);
 			}
 			
 		}
@@ -259,7 +300,7 @@ public class Usuario implements Serializable {
 				}
 			}*/
 		}
-		return dañados;
+		return danados;
 	}
 	
 	/**
@@ -268,45 +309,64 @@ public class Usuario implements Serializable {
 	 * @return
 	 * @throws ExcepcionGenerica
 	 */
+	@SuppressWarnings("unchecked")
 	public boolean ElPokemonFueVisto(Pokemon pokemonNuevo) throws ExcepcionGenerica
 	{
 		boolean visto = false;
 		
-		FileInputStream lecturaIds = null;
-		
-		int idVisto;
+		if(archivoPokedexUsuario.length()>0)
+		{
+	
+		FileInputStream lector = null;	
+		ObjectInputStream lectorPokedex = null;
+		ArrayList<Integer> pokedex;
 		
 		try
 		{
-			lecturaIds = new FileInputStream(nombreArchivoPokedexUsuario());
-			while((idVisto = lecturaIds.read()) != -1  && visto==false)
-			{
-				if(pokemonNuevo.getId() == idVisto) visto = true;
-			}
 			
-	
-		} 
+				lector = new FileInputStream(archivoPokedexUsuario);
+				lectorPokedex= new ObjectInputStream(lector);
+				pokedex = new ArrayList<Integer> ((ArrayList<Integer>)lectorPokedex.readObject());
+			
+				Iterator<Integer> iterador = pokedex.iterator();
+				
+				while(iterador.hasNext() && visto==false)
+				{
+					if(pokemonNuevo.getId() == iterador.next())
+					{
+						visto = true;
+					}
+				}
+				
+		}
 		catch (FileNotFoundException exception) 
 		{
 			exception.printStackTrace();
-			throw new ExcepcionGenerica("Error abriendo archivo: " + nombreArchivoPokedexUsuario());
+			throw new ExcepcionGenerica("Error abriendo archivo: " + archivoPokedexUsuario.getAbsolutePath());
 		} 
 		catch (IOException exception) 
 		{
 			exception.printStackTrace();
-			throw new ExcepcionGenerica("Error accediendo archivo: " + nombreArchivoPokedexUsuario());
+			throw new ExcepcionGenerica("Error accediendo archivo: " + archivoPokedexUsuario.getAbsolutePath());
+		}
+		catch(ClassNotFoundException exception)
+		{
+			exception.printStackTrace();
+			throw new ExcepcionGenerica("No se ha encontrado la clase en  " + archivoPokedexUsuario.getAbsolutePath());
 		}
 		finally
 		{
 			try {
-				if (null != lecturaIds) {
-					lecturaIds.close();
+				if (null != lectorPokedex) {
+					lectorPokedex.close();
 				}
 			} catch (IOException exception) {
 				exception.printStackTrace();
-				throw new ExcepcionGenerica("No se puede cerrar el archivo: " + nombreArchivoPokedexUsuario());
+				throw new ExcepcionGenerica("No se puede cerrar el archivo: " + archivoPokedexUsuario.getAbsolutePath());
 			}
 		}
+		}
+
 		return visto;
 	}
 
@@ -828,12 +888,12 @@ public class Usuario implements Serializable {
 				exception.printStackTrace();
 				throw new ExcepcionGenerica("No se puede cerrar el archivo " + nombreArchivoPokedexUsuario());
 			}
-			
+
 		}
-		
+
 		return copia;
 	}
-	
+
 	/**
 	 * método para guarda una id en el archivo binario de pokemons vistos (pokedex)
 	 * @param pokemon
@@ -841,35 +901,54 @@ public class Usuario implements Serializable {
 	 */
 	public void cargarNuevoPokemonVisto(Pokemon pokemon) throws ExcepcionGenerica
 	{
-		FileOutputStream escrituraIds = null;
-		
-		try
+		if(!ElPokemonFueVisto(pokemon))
 		{
-			escrituraIds = new FileOutputStream(archivoPokedexUsuario.getAbsolutePath());
-			
-			escrituraIds.write(pokemon.getId());
-			
-	
-		} 
-		catch (FileNotFoundException exception) 
-		{
-			exception.printStackTrace();
-			throw new ExcepcionGenerica("Error abriendo archivo: " + nombreArchivoCapturados());
-		} 
-		catch (IOException exception) 
-		{
-			exception.printStackTrace();
-			throw new ExcepcionGenerica("Error accediendo archivo: " + nombreArchivoCapturados());
-		}
-		finally
-		{
-			try {
-				if (null != escrituraIds) {
-					escrituraIds.close();
+			FileOutputStream streamPokedex = null;	
+			ObjectOutputStream escrituraPokedex = null;
+			FileInputStream lector = null;	
+			ObjectInputStream lectorPokedex = null;
+			ArrayList<Integer> pokedex;
+
+			try
+			{
+				if(archivoPokedexUsuario.length()>0) { //SI EL ARCHIVO NO ESTA VACIO EL TREEMAP SE CARGA CON EL QUE YA ESTA ADENTRO DEL ARCHIVO
+					lector = new FileInputStream(archivoPokedexUsuario);
+					lectorPokedex= new ObjectInputStream(lector);
+					pokedex = new ArrayList<Integer> ((ArrayList<Integer> )lectorPokedex.readObject());
 				}
-			} catch (IOException exception) {
+				else { //SI EL ARCHIVO ESTA VACIO CREA ELTREEMAP DESDE 0
+					pokedex = new ArrayList<Integer>();
+				}
+				pokedex.add(pokemon.getId());
+				streamPokedex = new FileOutputStream(archivoPokedexUsuario);
+				escrituraPokedex= new ObjectOutputStream(streamPokedex);
+				escrituraPokedex.writeObject(pokedex);	
+			}
+			catch (FileNotFoundException exception) 
+			{
 				exception.printStackTrace();
-				throw new ExcepcionGenerica("No se puede cerrar el archivo: " + nombreArchivoCapturados());
+				throw new ExcepcionGenerica("Error abriendo archivo: " + archivoPokedexUsuario.getAbsolutePath());
+			} 
+			catch (IOException exception) 
+			{
+				exception.printStackTrace();
+				throw new ExcepcionGenerica("Error accediendo archivo: " + archivoPokedexUsuario.getAbsolutePath());
+			}
+			catch(ClassNotFoundException exception)
+			{
+				exception.printStackTrace();
+				throw new ExcepcionGenerica("No se ha encontrado la clase en  " + archivoPokedexUsuario.getAbsolutePath());
+			}
+			finally
+			{
+				try {
+					if (null != escrituraPokedex) {
+						escrituraPokedex.close();
+					}
+				} catch (IOException exception) {
+					exception.printStackTrace();
+					throw new ExcepcionGenerica("No se puede cerrar el archivo: " + archivoPokedexUsuario.getAbsolutePath());
+				}
 			}
 		}
 	}
@@ -883,158 +962,6 @@ public class Usuario implements Serializable {
 		CantidadDeBatallas = cantidadDeBatallas;
 	}
 	
-	public String toStringDeLaClasePokemonCorrespondiente(Pokemon pokemon)
-	{
-		String respuesta = null;
-		Pokemon pokemoncito = null;
-		
-		if (pokemon instanceof Agua_Hielo) {
-			pokemoncito = (Pokemon) new Agua_Hielo(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen());
-			respuesta = pokemoncito.toString();
-		}
-		if (pokemon instanceof Agua_Lucha) {
-			pokemoncito = (Pokemon) new Agua_Lucha(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen());
-			respuesta = pokemoncito.toString();
-		}
-		if (pokemon instanceof Agua_Psiquico) {
-			pokemoncito = (Pokemon) new Agua_Psiquico(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen());
-			respuesta = pokemoncito.toString();
-		}
-		if (pokemon instanceof Agua_Veneno) {
-			pokemoncito = (Pokemon) new Agua_Veneno(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen());
-			respuesta = pokemoncito.toString();
-		}
-		if (pokemon instanceof Agua_Volador) {
-			pokemoncito = (Pokemon) new Agua_Volador(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen());
-			respuesta = pokemoncito.toString();
-		}
-		if (pokemon instanceof Agua) {
-			pokemoncito = (Pokemon) new Agua(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen());
-			respuesta = pokemoncito.toString();
-		}
-		if (pokemon instanceof Bicho_Planta) {
-			pokemoncito = (Pokemon) new Bicho_Planta(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen());
-			respuesta = pokemoncito.toString();
-		}
-		if (pokemon instanceof Bicho_Veneno) {
-			pokemoncito = (Pokemon) new Bicho_Veneno(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen());
-			respuesta = pokemoncito.toString();
-		}
-		if (pokemon instanceof Bicho_Volador) {
-			pokemoncito = (Pokemon) new Bicho_Volador(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen());
-			respuesta = pokemoncito.toString();
-		}
-		if (pokemon instanceof Bicho ) {
-			pokemoncito = (Pokemon) new Bicho (pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen());
-			respuesta = pokemoncito.toString();
-		}
-		if (pokemon instanceof Dragon_Volador) {
-			pokemoncito = (Pokemon) new Dragon_Volador(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen());
-			respuesta = pokemoncito.toString();
-
-		}
-		if (pokemon instanceof Dragon) {
-			pokemoncito = (Pokemon) new Dragon(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen());
-			respuesta = pokemoncito.toString();
-		} 
-		if (pokemon instanceof Electrico_Acero) {
-			pokemoncito = (Pokemon) new Electrico_Volador(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen());
-			respuesta = pokemoncito.toString();
-		} 
-		if (pokemon instanceof Electrico_Volador) {
-			pokemoncito = (Pokemon) new Electrico_Volador(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen());
-			respuesta = pokemoncito.toString();
-		} 
-		if (pokemon instanceof Electrico) {
-			pokemoncito = (Pokemon) new Electrico(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen());
-			respuesta = pokemoncito.toString();
-		} 
-		if (pokemon instanceof Fantasma_Veneno) {
-			pokemoncito = (Pokemon) new Fantasma_Veneno(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen());
-			respuesta = pokemoncito.toString();
-		}
-		if (pokemon instanceof Fuego_Volador) {
-			pokemoncito = (Pokemon) new Fuego_Volador(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen());
-			respuesta = pokemoncito.toString();
-		}
-		if (pokemon instanceof Fuego) {
-			pokemoncito = (Pokemon) new Fuego(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen());
-			respuesta = pokemoncito.toString();
-		} 
-		if (pokemon instanceof Hada) {
-			pokemoncito = (Pokemon) new Hada(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen());
-			respuesta = pokemoncito.toString();
-		} 
-		if (pokemon instanceof Hielo_Psiquico) {
-			pokemoncito = (Pokemon) new Hielo_Psiquico(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen());
-			respuesta = pokemoncito.toString();
-		} 
-		if (pokemon instanceof Hielo_Volador) {
-			pokemoncito = (Pokemon) new Hielo_Volador(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen());
-			respuesta = pokemoncito.toString();
-		} 
-		if (pokemon instanceof Lucha) {
-			pokemoncito = (Pokemon) new Lucha(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen());
-			respuesta = pokemoncito.toString();
-		} 
-		if (pokemon instanceof Normal_Hada) {
-			pokemoncito = (Pokemon)new Normal_Hada(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen());
-			respuesta = pokemoncito.toString();
-		} 
-		if (pokemon instanceof Normal_Volador) {
-			pokemoncito = (Pokemon)new Normal_Volador(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen());
-			respuesta = pokemoncito.toString();
-		} 
-		if (pokemon instanceof Normal) {
-			pokemoncito = (Pokemon)new Normal(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen());
-			respuesta = pokemoncito.toString();
-		} 
-		if (pokemon instanceof Planta_Psiquico) {
-			pokemoncito = (Pokemon)new Planta_Psiquico(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen());
-			respuesta = pokemoncito.toString();
-		} 
-		if (pokemon instanceof PlantaVeneno) {
-			pokemoncito = (Pokemon)new PlantaVeneno(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen());
-			respuesta = pokemoncito.toString();
-		} 
-		if (pokemon instanceof Psiquico_Hada) {
-			pokemoncito = (Pokemon)new Psiquico_Hada(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen());
-			respuesta = pokemoncito.toString();
-		} 
-		if (pokemon instanceof Psiquico) {
-			pokemoncito = (Pokemon)new Psiquico(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen());
-			respuesta = pokemoncito.toString();
-		} 
-		if (pokemon instanceof Roca_Agua) {
-			pokemoncito = (Pokemon)new Roca_Agua(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen());
-			respuesta = pokemoncito.toString();
-		} 
-		if (pokemon instanceof Roca_Tierra) {
-			pokemoncito = (Pokemon)new Roca_Tierra(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen());
-			respuesta = pokemoncito.toString();
-		} 
-		if (pokemon instanceof Roca_Volador) {
-			pokemoncito = (Pokemon)new Roca_Volador(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen());
-			respuesta = pokemoncito.toString();
-		} 
-		if (pokemon instanceof Tierra_Veneno) {
-			pokemoncito = (Pokemon)new Tierra_Veneno(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen());
-			respuesta = pokemoncito.toString();
-		} 
-		if (pokemon instanceof Tierra) {
-			pokemoncito = (Pokemon)new Tierra(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen());
-			respuesta = pokemoncito.toString();
-		} 
-		if (pokemon instanceof Veneno_Volador) {
-			pokemoncito = (Pokemon)new Veneno_Volador(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen());
-			respuesta = pokemoncito.toString();
-		} 
-		if (pokemon instanceof Veneno) {
-			pokemoncito = (Pokemon)new Veneno(pokemon.getId(), pokemon.getNombre(), pokemon.getEvolucion(), pokemon.getTipo(), pokemon.getRutaImagen());
-			respuesta = pokemoncito.toString();
-		} 
-		return respuesta;
-	}
 	
 	//METODOS 
 	
