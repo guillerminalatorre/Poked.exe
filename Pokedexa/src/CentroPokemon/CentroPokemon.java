@@ -10,40 +10,46 @@ import Usuario.Usuario;
 public class CentroPokemon 
 {
 	Usuario usuario;
-	boolean compuerta;
+	boolean compuertaAbierta;
 	
 	
 	public CentroPokemon(Usuario usuario)
 	{
 		this.usuario =usuario;
-		this.compuerta = true;
+		this.compuertaAbierta = true;
 	}
-	
+	/*
 
-	public String mostrarPokemonsDañados() throws ExcepcionGenerica
+	public void manejadorDeCompuerta() throws ExcepcionGenerica
 	{
-		ArrayList <Pokemon> pokemonsDañados = usuario.getPokemonsDanados();
-		
-		String dañados = "";
-		
-		for(Pokemon dañado : pokemonsDañados)
+		if(compuertaAbierta == false)
 		{
-			dañados = dañado + "\n" +  dañado.toString();
+			try 
+			{
+				if(usuario.estanTodosDebilitados())
+				{
+					compuertaAbierta = true;
+				}
+			}
+			catch(ExcepcionGenerica excepcion)
+			{
+				System.err.println("El metodo estanTodosDebilitados() no funciona correctamente");
+			}
 		}
-		
-		return dañados;
+	}
+*/
+
+	public String listarPokemonsDanados() throws ExcepcionGenerica
+	{
+		return usuario.listarPokemonsDanados();
 	}
 	
 	// devuelve false si ya se curaron los pokemon, asi la compuerta se cierra, true si no se curaron, asi la compuerta sigue abierta.
-	public boolean curarPokemonsDañados() throws ExcepcionGenerica
+	
+	public void curarPokemonsDañados() throws ExcepcionGenerica
 	{
-		boolean rta=false;
-		
-		if(usuario.restaurarVidas(usuario.getPokemonsDanados()));
-		
-		else rta=true;
-		
-		return rta;
+		usuario.restaurarVidas();
+		compuertaAbierta = false;
 	}
 	
 	
