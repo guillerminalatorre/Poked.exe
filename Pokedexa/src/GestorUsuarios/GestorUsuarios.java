@@ -1,6 +1,7 @@
 package GestorUsuarios;
 
 import Pokemon.*;
+import GenericidadTreeMap.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -20,7 +21,6 @@ import Usuario.Usuario;
 public class GestorUsuarios implements Serializable
 {
 	private File archivoUsuarios=new File("src\\GestorUsuarios\\Usuarios.dat");
-	private File archivoUsuariosCopia;
 	@SuppressWarnings("unused")
 	private TreeMap<String,Usuario> usuarios= new TreeMap<String,Usuario>();
 	
@@ -29,8 +29,7 @@ public class GestorUsuarios implements Serializable
 	
 	public GestorUsuarios()
 	{
-		
-		archivoUsuariosCopia = null;
+
 	}
 	
 	//GETTERS 
@@ -39,13 +38,6 @@ public class GestorUsuarios implements Serializable
 	{
 		return archivoUsuarios.getAbsolutePath();
 	}
-	
-	public String getRutaArchivoUsuariosCopia()
-	{
-		return archivoUsuariosCopia.getAbsolutePath();
-	}
-	
-	
 	
 	
 	//METODOS DE CARGA
@@ -167,49 +159,13 @@ public class GestorUsuarios implements Serializable
 	
 	//METODOS DE OBTENCION DE USUARIOS 
 	
-	
-       
-    /**
-     * sobreescribe un asuario en el archivo
-     * @param usuarioAsobreescribir
-     * @return
-     * @throws ExcepcionGenerica
-     */
-	@SuppressWarnings("unchecked")
-	private TreeMap<String,Usuario> sacarMapa(){
-		FileInputStream lector = null;	
-		ObjectInputStream lectorUsuarios = null;
-		TreeMap<String,Usuario> usuarios=null;
-		try
-		{
-			lector = new FileInputStream(archivoUsuarios);
-			lectorUsuarios= new ObjectInputStream(lector);
-			usuarios= new TreeMap <String,Usuario>((TreeMap<String,Usuario>)lectorUsuarios.readObject());
-		}
-		catch (FileNotFoundException exception) 
-		{
-			exception.printStackTrace();
-		} 
-		catch (IOException exception) 
-		{
-			exception.printStackTrace();
-		}
-		catch (ClassNotFoundException exception) 
-		{
-			exception.printStackTrace();
-		}
-		finally
-		{
-			try {
-				if (lectorUsuarios != null) {
-					lectorUsuarios.close();
-				}
-			} catch (IOException exception) {
-				exception.printStackTrace();
-			}
-		}
-		return usuarios;
+
+	private TreeMap<String,Usuario> sacarMapa()
+	{
+		GenericidadTreeMap<String,Usuario> capturados = new GenericidadTreeMap<String,Usuario>();
+ 		return capturados.sacarMapa(archivoUsuarios);
 	}
+	
 	
 	public Usuario sacarUsuario(String nombre) {
 		TreeMap<String,Usuario> usuarios=null;
@@ -287,7 +243,7 @@ public class GestorUsuarios implements Serializable
 	
 	}
 	
-	private void sobreescribirUsuario(Usuario usu)  throws ExcepcionGenerica
+	public void sobreescribirUsuario(Usuario usu)  throws ExcepcionGenerica
 	{
 		FileOutputStream escribir=null;
 		ObjectOutputStream escrituraUsuarios = null;

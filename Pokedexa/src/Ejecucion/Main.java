@@ -97,8 +97,7 @@ public class Main
 		}
 		*/
 		
-	/*
-		
+	
 		//NO VA A ANDAR SI EXISTEN LOS .DAT
 		//CARGA DE USUARIOS ANDANDO
 		GestorUsuarios usu= new GestorUsuarios();
@@ -122,10 +121,10 @@ public class Main
 		Pokemon charmander = usu.cargarPrimerPokemon(ariel, 3);
 		System.out.println("pokemon Charmander cargado a el usuario ariel");
 	
-		*/
 		
 		
 		
+		/*
 		//TRABAJAR CON LOS ARCHIVOS YA CARGADOS Y CREADOS
 
 		GestorUsuarios usu = new GestorUsuarios();
@@ -133,7 +132,7 @@ public class Main
 		Usuario carlos = usu.sacarUsuario("carlos");
 		
 		Usuario ariel = usu.sacarUsuario("ariel");	
-				
+				*/
 			
 				
 		//MPRIMIR POKEDEX DE CADA USUARIO

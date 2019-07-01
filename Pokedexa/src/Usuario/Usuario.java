@@ -7,8 +7,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.TreeMap;
+import GenericidadTreeMap.*;
 
-public class Usuario implements Serializable {
+public class Usuario implements Serializable 
+{
   	private String Nombre=" "; //NOMBRE DE USUARIO CON EL QUE SE VA A LOGUEAR
 	private int CantidadDeBatallas; // "NIVEL" DEL JUGADOR
 	private File archivoPokedexUsuario;
@@ -212,8 +214,6 @@ public class Usuario implements Serializable {
 		
 		ObjectInputStream lecturaids= null;
 		
-		int idCopia;
-		
 		try
 		{
 			lecturaids = new ObjectInputStream (new FileInputStream(archivoPokedexUsuario));
@@ -249,41 +249,11 @@ public class Usuario implements Serializable {
 		return idsPokedex;
 	}
 	
-	@SuppressWarnings("unchecked")
+	
 	private TreeMap<Integer,Pokemon> leerMapaCapturados()
 	{
-		FileInputStream lector = null;	
-		ObjectInputStream lectorCapturados = null;
-		TreeMap<Integer,Pokemon> capturados=null;
-		try
-		{
-			lector = new FileInputStream(archivoCapturados);
-			lectorCapturados= new ObjectInputStream(lector);
-			capturados= new TreeMap <Integer,Pokemon>((TreeMap<Integer,Pokemon>)lectorCapturados.readObject());
-		}
-		catch (FileNotFoundException exception) 
-		{
-			exception.printStackTrace();
-		} 
-		catch (IOException exception) 
-		{
-			exception.printStackTrace();
-		}
-		catch (ClassNotFoundException exception) 
-		{
-			exception.printStackTrace();
-		}
-		finally
-		{
-			try {
-				if (lectorCapturados != null) {
-					lectorCapturados.close();
-				}
-			} catch (IOException exception) {
-				exception.printStackTrace();
-			}
-		}
-		return capturados;
+		GenericidadTreeMap<Integer,Pokemon> capturados = new GenericidadTreeMap<Integer,Pokemon>();
+ 		return capturados.sacarMapa(archivoCapturados);
 	}
 	
 	private TreeMap<Integer, Pokemon> getPokemonsDanados()  throws ExcepcionGenerica

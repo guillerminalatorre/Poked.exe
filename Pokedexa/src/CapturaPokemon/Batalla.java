@@ -1,5 +1,5 @@
 package CapturaPokemon;
-
+import GestorUsuarios.*;
 import ManejadorExcepciones.ExcepcionGenerica;
 import Pokemon.*;
 import Usuario.*;
@@ -116,6 +116,12 @@ public class Batalla {
 			//cambios en el usuario
 			usuario.sumarBatalla();
 			
+			
+			//se sobreescribe el usuario en el archivo para guardar los cambios.
+			GestorUsuarios gestor = new GestorUsuarios();
+			
+			gestor.sobreescribirUsuario(usuario);
+			
 			//le resto vidas al pokemon salvaje y lo capturo
 			pokemonSalvaje.setVidas( pokemonSalvaje.getVidas() / 4);
 			
@@ -132,6 +138,11 @@ public class Batalla {
 				//cambios en el usuario
 				usuario.sumarBatalla();
 				
+				//se sobreescribe el usuario en el archivo para guardar los cambios.
+				GestorUsuarios gestor = new GestorUsuarios();
+				
+				gestor.sobreescribirUsuario(usuario);
+				
 			}
 			else
 			{
@@ -140,12 +151,22 @@ public class Batalla {
 				
 				//cambios en el usuario
 				usuario.sumarBatalla();
+				
+				//se sobreescribe el usuario en el archivo para guardar los cambios.
+				GestorUsuarios gestor = new GestorUsuarios();
+				
+				gestor.sobreescribirUsuario(usuario);
 			} 
 		} 
 		
 		if(getGanador() == 4)//si gana el salvaje por random
 		{
 			pokemonCapturado.setVidas( 0 );//golpe critico
+			
+			//se sobreescribe el usuario en el archivo para guardar los cambios.
+			GestorUsuarios gestor = new GestorUsuarios();
+			
+			gestor.sobreescribirUsuario(usuario);
 		}
 	}
 

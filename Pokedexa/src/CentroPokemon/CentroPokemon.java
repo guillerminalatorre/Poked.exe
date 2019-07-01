@@ -18,8 +18,10 @@ public class CentroPokemon
 		this.usuario =usuario;
 		this.compuertaAbierta = true;
 	}
-	/*
+	
 
+	//Este método se debe ajecutar cada  vez que el usuario vuelva al menú pokemon.
+	
 	public void manejadorDeCompuerta() throws ExcepcionGenerica
 	{
 		if(compuertaAbierta == false)
@@ -37,7 +39,7 @@ public class CentroPokemon
 			}
 		}
 	}
-*/
+
 
 	public String listarPokemonsDanados() throws ExcepcionGenerica
 	{
