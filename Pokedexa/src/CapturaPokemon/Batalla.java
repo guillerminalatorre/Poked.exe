@@ -126,10 +126,13 @@ public class Batalla {
 			pokemonSalvaje.setVidas( pokemonSalvaje.getVidas() / 4);
 			
 			usuario.cargarNuevoPokemonCapturado(pokemonSalvaje);
+			
+			setGanador(1);
 		}
 		
 		if(getGanador() < 0 )//si gana el salvaje 
 		{
+			
 			if(( 0 - pokemonCapturado.getVidas()) > getGanador() )// si hay que restarle al pokemon capturado mas vidas de las que tiene 
 			{
 				pokemonCapturado.setVidas( 0 );
@@ -157,16 +160,22 @@ public class Batalla {
 				
 				gestor.sobreescribirUsuario(usuario);
 			} 
+			
+			setGanador(2);
 		} 
 		
 		if(getGanador() == 4)//si gana el salvaje por random
 		{
 			pokemonCapturado.setVidas( 0 );//golpe critico
+			usuario.actualizarUnPokemon(pokemonCapturado);
 			
 			//se sobreescribe el usuario en el archivo para guardar los cambios.
 			GestorUsuarios gestor = new GestorUsuarios();
 			
+			usuario.sumarBatalla();
 			gestor.sobreescribirUsuario(usuario);
+			
+			setGanador(3);
 		}
 	}
 

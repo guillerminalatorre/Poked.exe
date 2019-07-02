@@ -194,7 +194,23 @@ public class Usuario implements Serializable
 		return listado.toString();
 	}
 	
-	
+	public String listarPokemonsNOdebilitados() throws ExcepcionGenerica
+	{
+		StringBuilder listado = new StringBuilder("Pokemons de " + getNombre()+ ": \n");
+		
+		TreeMap<Integer, Pokemon> nuevoCapturados = getPokemonsNOdebilitados();
+
+		Collection<Pokemon> collectionNuevoCapturados = nuevoCapturados.values();
+
+		Iterator<Pokemon> iteradorNuevoCapturados = collectionNuevoCapturados.iterator();
+
+		while( iteradorNuevoCapturados.hasNext())
+		{
+			listado.append(iteradorNuevoCapturados.next().toString() +"\n");
+		}
+		
+		return listado.toString();
+	}
 	
 	
 	
@@ -276,6 +292,58 @@ public class Usuario implements Serializable
 				Pokemon pokemon = iterados.next();
 				
 				if(pokemon.getNivel() > pokemon.getVidas())
+				{
+					danados.put(pokemon.getId(), pokemon);
+				}
+			}
+			
+			
+		}
+		catch (FileNotFoundException exception) 
+		{
+			exception.printStackTrace();
+		} 
+		catch (IOException exception) 
+		{
+			exception.printStackTrace();
+		}
+		catch (ClassNotFoundException exception) 
+		{
+			exception.printStackTrace();
+		}
+		finally
+		{
+			try {
+				if (lectorCapturados != null) {
+					lectorCapturados.close();
+				}
+			} catch (IOException exception) {
+				exception.printStackTrace();
+			}
+		}
+		return danados;
+	}
+	
+	private TreeMap<Integer, Pokemon> getPokemonsNOdebilitados()  throws ExcepcionGenerica
+	{
+		FileInputStream lector = null;	
+		ObjectInputStream lectorCapturados = null;
+		TreeMap<Integer,Pokemon> danados= new TreeMap<Integer,Pokemon>();
+		try
+		{
+			lector = new FileInputStream(archivoCapturados);
+			lectorCapturados= new ObjectInputStream(lector);
+			TreeMap <Integer,Pokemon> capturadosDelArchivo = new TreeMap <Integer,Pokemon>((TreeMap<Integer,Pokemon>)lectorCapturados.readObject());
+			
+			Collection<Pokemon> coleccion = capturadosDelArchivo.values();
+			
+			Iterator<Pokemon> iterados = coleccion.iterator();
+			
+			while(iterados.hasNext())
+			{
+				Pokemon pokemon = iterados.next();
+				
+				if(pokemon.getVidas() != 0)
 				{
 					danados.put(pokemon.getId(), pokemon);
 				}
@@ -743,6 +811,13 @@ public class Usuario implements Serializable
 		}
 		
 		return retorno;
+	}
+	
+	public Pokemon leerPokemonNOdebilitado (int id)  throws ExcepcionGenerica
+	{
+		TreeMap<Integer,Pokemon> noDebilitados = getPokemonsNOdebilitados();
+		
+		return noDebilitados.get(id);
 	}
 	
 	

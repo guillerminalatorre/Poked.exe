@@ -281,6 +281,10 @@ public class GestorUsuarios implements Serializable
 		}
 	}
 	
+	public boolean elArchivoUsuariosEstaCreado()
+	{
+		return archivoUsuarios.exists();
+	}
 	
 	
 }

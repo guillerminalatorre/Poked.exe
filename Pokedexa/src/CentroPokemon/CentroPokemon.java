@@ -12,6 +12,10 @@ public class CentroPokemon
 	Usuario usuario;
 	boolean compuertaAbierta;
 	
+	public boolean getCompuertaAbierta()
+	{
+		return compuertaAbierta;
+	}
 	
 	public CentroPokemon(Usuario usuario)
 	{

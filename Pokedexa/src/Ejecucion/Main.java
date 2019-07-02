@@ -3,8 +3,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Scanner;
 import java.util.TreeMap;
 
+import CapturaPokemon.Batalla;
 import CentroPokemon.CentroPokemon;
 import GestorPokedex.GestorPokedex;
 import GestorUsuarios.GestorUsuarios;
@@ -20,204 +22,671 @@ public class Main
 	public static void main(String[] args) throws ExcepcionGenerica 
 	{
 		ManejadorJSON manejador = new ManejadorJSON();
-		/*
-		//CARGA DE POKEMONS EN EL JSON (ya estan cargados)
-		try {
-			
 
-			File imagenID1 = new File("src\\Imagenes\\1.jpg");
-			manejador.CargarPokemon(new PlantaVeneno(1, "Bulbasur", 1, " ", imagenID1.getAbsolutePath()));
+		GestorUsuarios gestorUsuario = new GestorUsuarios();
 
-			File imagenID2 = new File("src\\Imagenes\\2.jpg");
-			manejador.CargarPokemon(new PlantaVeneno(2, "Ivisaur", 2, " ", imagenID2.getAbsolutePath()));
+		Scanner lectorDeTecladoInt = new Scanner(System.in);
 
-			File imagenID3 = new File("src\\Imagenes\\3.jpg");
-			manejador.CargarPokemon(new PlantaVeneno(3, "Venusaur", 3, " ", imagenID3.getAbsolutePath()));
+		Scanner lectorDeTecladoString = new Scanner (System.in);
 
-			File imagenID4 = new File("src\\Imagenes\\4.jpg");
-			manejador.CargarPokemon(new Fuego(4, "Charmander", 1, " ", imagenID4.getAbsolutePath()));
+		Usuario usuario = null;
 
-			File imagenID5 = new File("src\\Imagenes\\5.jpg");
-			manejador.CargarPokemon(new Fuego(5, "Charmaleon", 2, " ", imagenID5.getAbsolutePath()));
+		CentroPokemon centroPokemon ;
 
-			File imagenID6 = new File("src\\Imagenes\\6.jpg");
-			manejador.CargarPokemon(new Fuego_Volador(6, "Charizard", 3, " ", imagenID6.getAbsolutePath()));
+		Batalla batalla;
 
-			File imagenID7 = new File("src\\Imagenes\\7.jpg");
-			manejador.CargarPokemon(new Agua(7, "Squirtle", 1, " ", imagenID7.getAbsolutePath()));
+		GestorPokedex gestorPokedex = new GestorPokedex();
 
-			File imagenID8 = new File("src\\Imagenes\\8.jpg");
-			manejador.CargarPokemon(new Agua(8, "Wartortle", 2, " ", imagenID8.getAbsolutePath()));
-			
-			File imagenID9 = new File("src\\Imagenes\\9.jpg");
-			manejador.CargarPokemon(new Agua(9, "Blastoise", 3, " ", imagenID9.getAbsolutePath()));
-			
+		int control = 1;
 
-			File imagenID10 = new File("src\\Imagenes\\10.jpg");
-			manejador.CargarPokemon(new Bicho(10, "Cartepie", 1, " ", imagenID10.getAbsolutePath()));
-			
+		while(control != 0 )
+		{
+			switch(control)
+			{
+			case 1://MENU PRINCIPAL
+			{
+				if(gestorUsuario.elArchivoUsuariosEstaCreado())
+				{
 
-			File imagenID11 = new File("src\\Imagenes\\11.jpg");
-			manejador.CargarPokemon(new Bicho(11, "Metapod", 2, " ", imagenID11.getAbsolutePath()));
-			
+					System.out.println("BIENVENIDO A POKED.EXE\n\n 1--Ingresar con un usuario existente \n\n 2--Crear un usuario nuevo \n\n 0--Salir");
 
-			File imagenID12 = new File("src\\Imagenes\\12.jpg");
-			manejador.CargarPokemon(new Bicho_Volador(12, "Butterfree", 3, " ", imagenID12.getAbsolutePath()));
-			
+					int control1 = lectorDeTecladoInt.nextInt();
 
-			File imagenID13 = new File("src\\Imagenes\\13.jpg");
-			manejador.CargarPokemon(new Bicho_Veneno(13, "Weedle", 1, " ", imagenID13.getAbsolutePath()));
+					while(control1 <0 || control1 >2)
+					{
+						System.out.println("La opción ingresada no corresponde a una opción. Por favor ingrese una nueva opcion: \n\n");
+						control1 = lectorDeTecladoInt.nextInt();
+					}
 
-			File imagenID14 = new File("src\\Imagenes\\14.jpg");
-			manejador.CargarPokemon(new Bicho_Veneno(14, "Kakuna",2, " ", imagenID14.getAbsolutePath()));
-			
+					switch(control1)
+					{
 
-			File imagenID15 = new File("src\\Imagenes\\15.jpg");
-			manejador.CargarPokemon(new Bicho_Veneno(15, "Beedrill", 3, " ", imagenID15.getAbsolutePath()));
-			
+					case 0:
+					{
+						control = 0;
+					}break;
 
-			File imagenID16 = new File("src\\Imagenes\\16.jpg");
-			manejador.CargarPokemon(new Normal_Volador(16, "Pidgey", 1, " ", imagenID16.getAbsolutePath()));
-			
+					case 1:
+					{
 
-			File imagenID17 = new File("src\\Imagenes\\17.jpg");
-			manejador.CargarPokemon(new Normal_Volador(17, "Pidgeotto", 2, " ", imagenID17.getAbsolutePath()));
-			
+						System.out.println("\r Ingrese un nombre de usuario existente: \n\n");
 
-			File imagenID18 = new File("src\\Imagenes\\18.jpg");
-			manejador.CargarPokemon(new Normal_Volador(18, "Pidgeot", 3, " ", imagenID18.getAbsolutePath()));
-			
+						String nombre = lectorDeTecladoString.nextLine();
 
-			File imagenID19 = new File("src\\Imagenes\\19.jpg");
-			manejador.CargarPokemon(new Normal(19, "Rattata", 1, " ", imagenID19.getAbsolutePath()));
-			manejador.cargarArchivoJSON();
-			
-		} catch (ExcepcionGenerica error) {
-			System.out.println(error.MensajeError());
-		}
-		*/
-		
-	
-		//NO VA A ANDAR SI EXISTEN LOS .DAT
-		//CARGA DE USUARIOS ANDANDO
-		GestorUsuarios usu= new GestorUsuarios();
-		
-		Usuario carlos=new Usuario(usu.cargarUnUsuario("carlos"));
-		System.out.println(carlos.getNombre());
-		
-		Usuario ariel=new Usuario(usu.cargarUnUsuario("ariel"));
-		System.out.println(ariel.getNombre());
-		
-		
-		//CARGA DE PRIMER POKEMON
-		
-		//DATO: al cargar los pokemons, debo tener en cuenta de que la ID que debo pasar en una menos, por las posiciones de los arreglos.
-		
-		ManejadorJSON manejadorJSON = new ManejadorJSON();
-		
-		Pokemon squirtle = usu.cargarPrimerPokemon(carlos, 0);
-		System.out.println("pokemon Bulvasaur cargado a el usuario carlos");
-		
-		Pokemon charmander = usu.cargarPrimerPokemon(ariel, 3);
-		System.out.println("pokemon Charmander cargado a el usuario ariel");
-	
-		
-		
-		
-		/*
-		//TRABAJAR CON LOS ARCHIVOS YA CARGADOS Y CREADOS
+						while(usuario == null)
+						{
+							if(gestorUsuario.ExisteNombre(nombre))
+							{
+								usuario = gestorUsuario.sacarUsuario(nombre);
+							}
+							else
+							{
+								System.out.println("\n\nEl nombre de usuario no existe, ingrese uno válido:\n\n");
+								nombre = lectorDeTecladoString.nextLine();
+							}
+						}
 
-		GestorUsuarios usu = new GestorUsuarios();
-		
-		Usuario carlos = usu.sacarUsuario("carlos");
-		
-		Usuario ariel = usu.sacarUsuario("ariel");	
-				*/
-			
+
+						control = 2;
+
+
+					}break;
+
+					case 2:
+					{
+
+						System.out.println("\r Ingrese un nombre de usuario nuevo: \n\n");
+
+						String nombre = lectorDeTecladoString.nextLine();
+
+						while(nombre == " ")
+						{
+							System.out.println("El nombre ingresado no es valido. Por favor ingrese un nuevo: \n\n");
+							nombre = lectorDeTecladoString.nextLine();
+						}
+
+						if(gestorUsuario.elArchivoUsuariosEstaCreado())
+						{
+
+							while( gestorUsuario.ExisteNombre(nombre) )
+							{
+								System.out.println("El nombre que ingresó ya existe. Por favor, ingrese uno nuevo \n\n");
+
+								nombre = lectorDeTecladoString.nextLine();
+							}
+
+							usuario = gestorUsuario.cargarUnUsuario(nombre);
+						}
+						else
+						{
+							usuario = gestorUsuario.cargarUnUsuario(nombre);
+						}
+
+
+						System.out.println("\n\n\n \"¡Hola a todos! ¡Bienvenidos al mundo de POKÉMON! ¡Me llamo OAK! ¡Pero la gente me llama el PROFESOR POKÉMON! ¡Este mundo está habitado por unas criaturas llamadas POKÉMON! Para algunos, los POKÉMON son mascotas. Pero otros los usan para pelear. En cuanto a mí... Estudio a los POKÉMON como profesión. ¡Bien! ¡Tu nombre es "+ usuario.getNombre()+"! \n ¡¡Tu propia leyenda POKÉMON está a punto de comenzar! ¡Te espera un mundo de sueños y aventuras con los POKÉMON! ¡Adelante!");
+
+						System.out.println("\"¡Eh! ¡Alto! ¡No te vayas!\r\n" + 
+								"¡Cuidado! ¡En la hierba viven POKÉMON salvajes! Necesitas a tu propio POKÉMON como protección! ¡Yo lo sé! ¡Ven conmigo! \"\n\n\"Quieres a:\n\t1--Charmander\n\t2--Squirtle\n\t3--Bulbasaur\n, que Pokemon eliges?\"");
+
+						System.out.println("\n\nIngresa una opcion:   ");
+
+						int opcion = lectorDeTecladoInt.nextInt();
+
+						while(opcion <1 || opcion >3)
+						{
+							System.out.println("La opción ingresada no corresponde a una opción. Por favor ingrese una nueva opcion: \n\n");
+							opcion = lectorDeTecladoInt.nextInt();
+						}
+
+						switch(opcion)
+						{
+						case 1:
+						{
+							gestorUsuario.cargarPrimerPokemon(usuario, 3);
+						}break;
+						case 2:
+						{
+							gestorUsuario.cargarPrimerPokemon(usuario, 6);
+						}break;
+						case 3:
+						{
+							gestorUsuario.cargarPrimerPokemon(usuario, 0);
+						}break;
+						}
+
+						System.out.println("\"¡Este POKÉMON es muy energético!¡Si aparece un POKÉMON salvaje, tu POKÉMON podrá luchar contra él!\"");
+
+						System.out.println("\n\n¡Este es un invento mío, la POKÉDEX! ¡Ésta registrará automáticamente datos sobre los POKÉMON que hayas visto o capturado! \n¡Es una tecno-enciclopedia! ¡"+ usuario.getNombre() +"! \n ¡Ten la POKÉDEX! Quería hacer una guía de todos los POKÉMON del mundo... ¡Era mi sueño! ¡Pero ya soy muy viejo y no puedo hacerlo!\n ¡Por eso quiero que tu hagas realidad ese sueño! ¡Adelante, ve en su busca! ¡Será una gran proeza en la historia de los POKéMON!");
+
+						System.out.println("\n¡" + usuario.getNombre() +", los POKÉMON del mundo te esperan! \"");
+
+
+
+						control = 2;
+
+
+
+
+					}break;
+
+					}
+				}
+
+				else
+				{
+					System.out.println("BIENVENIDO A POKED.EXE\n\n 1--Crear un usuario nuevo \n\n 0--Salir");
+
+					int control1 = lectorDeTecladoInt.nextInt();
+
+					while(control1 <0 || control1 >1)
+					{
+						System.out.println("La opción ingresada no corresponde a una opción. Por favor ingrese una nueva opcion: \n\n");
+						control1 = lectorDeTecladoInt.nextInt();
+					}
+
+					switch(control1)
+					{
+
+					case 0:
+					{
+						control = 0;
+					}break;
+
+					case 1:
+					{
+						System.out.flush();
+
+						System.out.println("\r Ingrese un nombre de usuario nuevo: \n\n");
+
+						String nombre = lectorDeTecladoString.nextLine();
+
+						while(nombre == " ")
+						{
+							System.out.println("El nombre ingresado no es valido. Por favor ingrese un nuevo: \n\n");
+							nombre = lectorDeTecladoString.nextLine();
+						}
+
+						if(gestorUsuario.elArchivoUsuariosEstaCreado())
+						{
+
+							while( gestorUsuario.ExisteNombre(nombre) )
+							{
+								System.out.println("El nombre que ingresó ya existe. Por favor, ingrese uno nuevo \n\n");
+
+								nombre = lectorDeTecladoString.nextLine();
+							}
+
+							usuario = gestorUsuario.cargarUnUsuario(nombre);
+						}
+						else
+						{
+							usuario = gestorUsuario.cargarUnUsuario(nombre);
+						}
+
+						System.out.println("\n\n\n \"¡Hola a todos! ¡Bienvenidos al mundo de POKÉMON! ¡Me llamo OAK! ¡Pero la gente me llama el PROFESOR POKÉMON! \n ¡Este mundo está habitado por unas criaturas llamadas POKÉMON! Para algunos, los POKÉMON son mascotas. Pero otros los usan para pelear.\n En cuanto a mí... Estudio a los POKÉMON como profesión.\n ¡Bien! ¡Tu nombre es "+ usuario.getNombre()+"! \n ¡¡Tu propia leyenda POKÉMON está a punto de comenzar! ¡Te espera un mundo de sueños y aventuras con los POKÉMON! ¡Adelante!\"");
+
+						System.out.println("\"¡Eh! ¡Alto! ¡No te vayas!\r\n" + 
+								"¡Cuidado! ¡En la hierba viven POKÉMON salvajes! Necesitas a tu propio POKÉMON como protección! ¡Yo lo sé! ¡Ven conmigo! \"\n\n\"Quieres a:\n\t1--Charmander\n\t2--Squirtle\n\t3--Bulbasaur\n, que Pokemon eliges ?\"");
+
+						System.out.println("\n\nIngresa una opcion:   ");
+
+						int opcion = lectorDeTecladoInt.nextInt();
+
+						while(opcion <1 || opcion >3)
+						{
+							System.out.println("La opción ingresada no corresponde a una opción. Por favor ingrese una nueva opcion: \n\n");
+							opcion = lectorDeTecladoInt.nextInt();
+						}
+
+						switch(opcion)
+						{
+						case 1:
+						{
+							gestorUsuario.cargarPrimerPokemon(usuario, 3);
+						}break;
+						case 2:
+						{
+							gestorUsuario.cargarPrimerPokemon(usuario, 6);
+						}break;
+						case 3:
+						{
+							gestorUsuario.cargarPrimerPokemon(usuario, 0);
+						}break;
+						}
+
+						System.out.println("\"¡Este POKÉMON es muy energético!¡Si aparece un POKÉMON salvaje, tu POKÉMON podrá luchar contra él!\"");
+
+						System.out.println("\n\n¡Este es un invento mío, la POKÉDEX! ¡Ésta registrará automáticamente datos sobre los POKÉMON que hayas visto o capturado! \n¡Es una tecno-enciclopedia! ¡"+ usuario.getNombre() +"! \n ¡Ten la POKÉDEX! Quería hacer una guía de todos los POKÉMON del mundo... ¡Era mi sueño! ¡Pero ya soy muy viejo y no puedo hacerlo!\n ¡Por eso quiero que tu hagas realidad ese sueño! ¡Adelante, ve en su busca! ¡Será una gran proeza en la historia de los POKéMON!");
+
+						System.out.println("\n¡" + usuario.getNombre() +", los POKÉMON del mundo te esperan! \"");
+
+
+						System.out.println("\n\n Ingrese una tecla para continuar: ");
+						String tecla = lectorDeTecladoString.nextLine();
+
+						control = 2;
+					}break;
+					}
+				}
+
+			}break;
+
+			case 2://MENU POKEMON
+			{
+				centroPokemon = new CentroPokemon(usuario);
+
+				centroPokemon.manejadorDeCompuerta();
+
+				int control2 = 1;
+
+				limpiar();
+				System.out.println("\n MENÚ POKEMON\n\n\nCantidad de batallas : "+ usuario.getCantidadDeBatallas());
 				
-		//MPRIMIR POKEDEX DE CADA USUARIO
-		System.out.println("POKEDEX DE CARLOS");
-		
-		System.out.println(carlos.listarPokemonsPokedex());
-		
-		System.out.println("POKEDEX DE ARIEL");
-		
-		System.out.println(ariel.listarPokemonsPokedex());
-	
+				if(usuario.estanTodosDebilitados())
+				{
+
+
+					while(control2 > -1 && control2 <5)
+					{	
+
+						
+
+						System.out.println("\t1-- Mis Pokemon \n\n\t2-- Mi Pokedex \n\n\t3--Pokemons Cercanos \n\n\t4--Centro Pokemon \n\n\t0-- Cerrar Sesion");
+
+						control2 = lectorDeTecladoInt.nextInt();
+
+						while(control2 <0 || control2 >4)
+						{
+							System.out.println("La opción ingresada no corresponde a una opción. Por favor ingrese una nueva opcion: \n\n");
+							control2 = lectorDeTecladoInt.nextInt();
+						}
+
+						switch(control2)
+						{
+
+						case 0:
+						{
+							control = 1;
+						}break;
+
+						case 1:
+						{
+							limpiar();
+
+							System.out.println("\nMIS POKEMON \n\n\n");
+
+							System.out.println(usuario.listarPokemonsCapturados());
+
+							System.out.println("\n\n\n\n\n\t1--Volver al Menú Pokemon");
+
+							control2 = lectorDeTecladoInt.nextInt();
+
+							while(control2 != 1)
+							{
+								System.out.println("La opción ingresada no corresponde a una opción. Por favor ingrese la opción 1 : \n\n");
+								control2 = lectorDeTecladoInt.nextInt();
+							}
+
+
+						}break;
+
+						case 2:
+						{
+							limpiar();
+
+							System.out.println("\nMI POKEDEX \n\n\n");
+
+							System.out.println(usuario.listarPokemonsPokedex());
+
+							System.out.println("\n\n\n\n\n\t1--Volver al Menú Pokemon");
+
+							control2 = lectorDeTecladoInt.nextInt();
+
+							while(control2 != 1)
+							{
+								System.out.println("La opción ingresada no corresponde a una opción. Por favor ingrese la opción 1 : \n\n");
+								control2 = lectorDeTecladoInt.nextInt();
+							}
+						}break;
+
+						case 3:
+						{
+							if(!usuario.estanTodosDebilitados()) {
+							limpiar();
+
+							System.out.println("\nPOKEMONS CERCANOS\n\n\n");
+
+							Pokemon salvaje1 = gestorPokedex.pokemonRandomXnivel(usuario.getCantidadDeBatallas());
+
+							Pokemon salvaje2 = gestorPokedex.pokemonRandomXnivel(usuario.getCantidadDeBatallas());
+
+							Pokemon salvaje3 = gestorPokedex.pokemonRandomXnivel(usuario.getCantidadDeBatallas());
+
+							System.out.println("¡Entrenador! ¡Hay tres Pokemons Salvajes!\n\n 1--" + salvaje1.getNombre() + ", \t2--"+ salvaje2.getNombre()+", \t3--"+salvaje3.getNombre()+ "\n ¡Elige uno antes de que escapen!");
+
+							int opcion = lectorDeTecladoInt.nextInt();
+
+							while(opcion <0 || opcion > 3)
+							{
+								System.out.println("La opción ingresada no corresponde a una opción. Por favor ingrese una opcion valida: \n\n");
+								control2 = lectorDeTecladoInt.nextInt();
+							}
+
+							limpiar();
+
+							System.out.println("\n\nEscoja un Pokemon para luchar:\n\n");
+
+							System.out.println(usuario.listarPokemonsNOdebilitados());
+
+							System.out.println("\n\nIngrese la id del Pokemon con el que desea luchar");
+
+							int idCapturado = lectorDeTecladoInt.nextInt();
+
+							Pokemon capturadoPokemon = usuario.leerPokemonNOdebilitado(idCapturado);
+
+							while(capturadoPokemon == null)
+							{
+								System.out.println("\nLa id no se encuentra entre sus Pokemon capturados. Por favor, ingrese una id valida: ");
+
+								idCapturado = lectorDeTecladoInt.nextInt();
+
+								capturadoPokemon = usuario.leerPokemonNOdebilitado(idCapturado);
+
+							}
+
+							limpiar();
+
+							System.out.println("\"¡Entrenador! ¡La batalla ha comenzado! ¡Mucha suerte " + capturadoPokemon.getNombre() + "! \"");
+
+							int resultado =0;
+							Pokemon salvaje = new Pokemon();
+
+							switch(opcion)
+							{
+							case 1:
+							{
+								batalla = new Batalla(capturadoPokemon, salvaje1, usuario);
+								System.out.println("\n\n" + capturadoPokemon.getNombre() + " VS "+ salvaje1.getNombre());
+								batalla.resultadoPelea();
+								resultado = batalla.getGanador();
+								salvaje = batalla.getPokemonSalvaje();
+								capturadoPokemon = batalla.getPokemonCapturado();
 
 
 
-		//IMPRIMIR CAPTURADOS DE CADA USUARIO
+							}break;
+							case 2:
+							{
+								batalla = new Batalla(capturadoPokemon, salvaje2, usuario);
+								System.out.println("\n\n" + capturadoPokemon.getNombre() + " VS "+ salvaje2.getNombre());
+								batalla.resultadoPelea();
+								resultado = batalla.getGanador();
+								salvaje = batalla.getPokemonSalvaje();
+								capturadoPokemon = batalla.getPokemonCapturado();
 
-		System.out.println("CAPTURADOS DE CARLOS");
-		
-		System.out.println(carlos.listarPokemonsCapturados());
-		
-		
 
-		System.out.println("CAPTURADOS DE ARIEL");
 
-		System.out.println(ariel.listarPokemonsCapturados());
-		
-		
-		
+							}break;
+							case 3:
+							{
+								batalla = new Batalla(capturadoPokemon, salvaje3, usuario);
+								System.out.println("\n\n" + capturadoPokemon.getNombre() + " VS "+ salvaje3.getNombre());
+								batalla.resultadoPelea();
+								resultado = batalla.getGanador();
+								salvaje = batalla.getPokemonSalvaje();
+								capturadoPokemon = batalla.getPokemonCapturado();
 
-		//CARGAR OTRO POKEMON A LA POKEDEX
-		
-		System.out.println("CARGANDO POKEMON NUEVO A CADA USUARIO\n");
-		//carlos.cargarNuevoPokemonVisto(manejador.leerPokemonJSON(3));
-		
-		
-		System.out.println(carlos.listarPokemonsPokedex());
-		
-		System.out.println("\n");
-		//ariel.cargarNuevoPokemonVisto(manejador.leerPokemonJSON(6));
-		
-		System.out.println("POKEDEX DE ARIEL");
-		
-		System.out.println(ariel.listarPokemonsPokedex());
-		
-		
-		//CARGAR UN POKEMON QUE YA EXISTE DENTRO DE LA POKEDEX
-		
-		System.out.println("CARGANDO UN POKEMON QUE YA EXISTE, EN LA POKEDEX (NO LO DEBERIA CARGAR)\n Cargarndo id 1 en carlos...");
-		
-		carlos.cargarNuevoPokemonVisto(manejador.leerPokemonJSON(3));
-		System.out.println(carlos.listarPokemonsPokedex());
-		
-		System.out.println("\nCargando id 4 en ariel...");
-		
-		ariel.cargarNuevoPokemonVisto(manejador.leerPokemonJSON(6));
-		System.out.println(ariel.listarPokemonsPokedex());
-		
-		
-		//CARGAR UN POKEMON EN CAPTURADOS DE CADA USUARIO
-		
-		System.out.println("\nCARGANDO UN NUEVO POKEMON CAPTURADO PARA CADA USUARIO\n");
-		
-		carlos.cargarNuevoPokemonCapturado(manejador.leerPokemonJSON(3));
-		System.out.println(carlos.listarPokemonsCapturados());
-		
-		ariel.cargarNuevoPokemonCapturado(manejador.leerPokemonJSON(0));
-		System.out.println(ariel.listarPokemonsCapturados());
 
-		
-		//ELIMINAR UN POKEMON CAPTURADO
-		
-		System.out.println("Eliminando el pokemon Bulvasaur de carlos");
-		carlos.eliminarUnPokemonCapturado(1);
-		System.out.println(carlos.listarPokemonsCapturados());
-		
-		
-		//¿HAY POKEMON
-		
-		
-		/*CentroPokemon centro= new CentroPokemon(usu);
-		gestorusu.cargarPrimerPokemon(usu, 3);
-		centro.mostrarPokemonsDañados();
-		centro.curarPokemonsDañados();
-		 */
 
+							}break;
+							}
+
+							System.out.println("\n\n\nRESULTADOS DE LA BATALLA");
+
+							if(resultado == 1)
+							{
+								System.out.println("\n\n¡El ganador es " + capturadoPokemon.getNombre()+ "!\n\n ¡Tu pokemon ha subido un nivel! ¡Tú adquieres una batalla más! \n\n Si el Pokemon Salvaje no formaba parte de tu equipo, ¡ahora lo hace!, ve a verlo en \"MIS CAPTURADOS\".");
+							}
+
+							if(resultado == 2)
+							{
+								System.out.println("\n\n ¡Oh! Tu pokemon no ha podido vencer al pokemon salvaje y ha huido. Tú adquieres una batalla mas.");
+							}
+							if(resultado == 3)
+							{
+								System.out.println("\n\n ¡El pokemon salvaje era demasiado fuerte! Tu pokemon ha sufrido un golpe crítico, llévalo al Centro Pokemon cuando se habilite.");
+							}
+
+							System.out.println("\n\n Ingrese una tecla para continuar: ");
+							String tecla = lectorDeTecladoString.nextLine();
+							}
+
+							control = 2;
+
+						}break;
+						case 4:
+						{
+							limpiar();
+							System.out.println("\nCENTRO POKEMON\n\n Pokemons dañados:\n\n");
+
+							System.out.println(centroPokemon.listarPokemonsDanados());
+
+							System.out.println("\n\nIngrese una tecka para curar los pokemons:");
+							lectorDeTecladoInt.nextInt();
+
+							centroPokemon.curarPokemonsDañados();
+
+							System.out.println("\"¡TUS POKEMONS YA SE ENCUENTRAN BIEN! ¡Gracias por visitar el Centro Pokemon!\" ");
+
+							System.out.println("\n\n Ingrese una tecla para continuar: ");
+							String tecla = lectorDeTecladoString.nextLine();
+
+							control = 2;
+
+
+						}break;
+
+
+
+
+						}break;
+					}
+				}
+				else
+				{
+
+
+					System.out.println("\t1-- Mis Pokemon \n\n\t2-- Mi Pokedex \n\n\t3--Pokemons Cercanos \n\n\t0-- Cerrar Sesion");
+
+					control2 = lectorDeTecladoInt.nextInt();
+
+					while(control2 <0 || control2 >3)
+					{
+						System.out.println("La opción ingresada no corresponde a una opción. Por favor ingrese una nueva opcion: \n\n");
+						control2 = lectorDeTecladoInt.nextInt();
+					}
+
+					switch(control2)
+					{
+
+					case 0:
+					{
+						control = 1;
+					}break;
+
+					case 1:
+					{
+						limpiar();
+
+						System.out.println("\nMIS POKEMON \n\n\n");
+
+						System.out.println(usuario.listarPokemonsCapturados());
+
+						System.out.println("\n\n\n\n\n\t1--Volver al Menú Pokemon");
+
+						control2 = lectorDeTecladoInt.nextInt();
+
+						while(control2 != 1)
+						{
+							System.out.println("La opción ingresada no corresponde a una opción. Por favor ingrese la opción 1 : \n\n");
+							control2 = lectorDeTecladoInt.nextInt();
+						}
+
+
+					}break;
+
+					case 2:
+					{
+						limpiar();
+
+						System.out.println("\nMI POKEDEX \n\n\n");
+
+						System.out.println(usuario.listarPokemonsPokedex());
+
+						System.out.println("\n\n\n\n\n\t1--Volver al Menú Pokemon");
+
+						control2 = lectorDeTecladoInt.nextInt();
+
+						while(control2 != 1)
+						{
+							System.out.println("La opción ingresada no corresponde a una opción. Por favor ingrese la opción 1 : \n\n");
+							control2 = lectorDeTecladoInt.nextInt();
+						}
+					}break;
+
+					case 3:
+					{
+						limpiar();
+
+						System.out.println("\nPOKEMONS CERCANOS\n\n\n");
+
+						Pokemon salvaje1 = gestorPokedex.pokemonRandomXnivel(usuario.getCantidadDeBatallas());
+
+						Pokemon salvaje2 = gestorPokedex.pokemonRandomXnivel(usuario.getCantidadDeBatallas());
+
+						Pokemon salvaje3 = gestorPokedex.pokemonRandomXnivel(usuario.getCantidadDeBatallas());
+
+						System.out.println("¡Entrenador! ¡Hay tres Pokemons Salvajes!\n\n 1--" + salvaje1.getNombre() + ", \t2--"+ salvaje2.getNombre()+", \t3--"+salvaje3.getNombre()+ "\n ¡Elige uno antes de que escapen!");
+
+						int opcion = lectorDeTecladoInt.nextInt();
+
+						while(opcion <0 || opcion > 3)
+						{
+							System.out.println("La opción ingresada no corresponde a una opción. Por favor ingrese una opcion valida: \n\n");
+							control2 = lectorDeTecladoInt.nextInt();
+						}
+
+						limpiar();
+
+						System.out.println("\n\nEscoja un Pokemon para luchar:\n\n");
+
+						System.out.println(usuario.listarPokemonsNOdebilitados());
+
+						System.out.println("\n\nIngrese la id del Pokemon con el que desea luchar");
+
+						int idCapturado = lectorDeTecladoInt.nextInt();
+
+						Pokemon capturadoPokemon = usuario.leerPokemonNOdebilitado(idCapturado);
+
+						while(capturadoPokemon == null)
+						{
+							System.out.println("\nLa id no se encuentra entre sus Pokemon capturados. Por favor, ingrese una id valida: ");
+
+							idCapturado = lectorDeTecladoInt.nextInt();
+
+							capturadoPokemon = usuario.leerPokemonNOdebilitado(idCapturado);
+
+						}
+
+						limpiar();
+
+						System.out.println("\"¡Entrenador! ¡La batalla ha comenzado! ¡Mucha suerte " + capturadoPokemon.getNombre() + "! \"");
+
+						int resultado =0;
+						Pokemon salvaje = new Pokemon();
+
+						switch(opcion)
+						{
+						case 1:
+						{
+							batalla = new Batalla(capturadoPokemon, salvaje1, usuario);
+							System.out.println("\n\n" + capturadoPokemon.getNombre() + " VS "+ salvaje1.getNombre());
+							batalla.resultadoPelea();
+							resultado = batalla.getGanador();
+							salvaje = batalla.getPokemonSalvaje();
+							capturadoPokemon = batalla.getPokemonCapturado();
+
+
+
+						}break;
+						case 2:
+						{
+							batalla = new Batalla(capturadoPokemon, salvaje2, usuario);
+							System.out.println("\n\n" + capturadoPokemon.getNombre() + " VS "+ salvaje2.getNombre());
+							batalla.resultadoPelea();
+							resultado = batalla.getGanador();
+							salvaje = batalla.getPokemonSalvaje();
+							capturadoPokemon = batalla.getPokemonCapturado();
+
+
+
+						}break;
+						case 3:
+						{
+							batalla = new Batalla(capturadoPokemon, salvaje3, usuario);
+							System.out.println("\n\n" + capturadoPokemon.getNombre() + " VS "+ salvaje3.getNombre());
+							batalla.resultadoPelea();
+							resultado = batalla.getGanador();
+							salvaje = batalla.getPokemonSalvaje();
+							capturadoPokemon = batalla.getPokemonCapturado();
+
+
+
+						}break;
+						}
+
+						System.out.println("\n\n\nRESULTADOS DE LA BATALLA");
+
+						if(resultado == 1)
+						{
+							System.out.println("\n\n¡El ganador es " + capturadoPokemon.getNombre()+ "!\n\n ¡Tu pokemon ha subido un nivel! ¡Tú adquieres una batalla más! \n\n Si el Pokemon Salvaje no formaba parte de tu equipo, ¡ahora lo hace!, ve a verlo en \"MIS CAPTURADOS\".");
+						}
+
+						if(resultado == 2)
+						{
+							System.out.println("\n\n ¡Oh! Tu pokemon no ha podido vencer al pokemon salvaje y ha huido. Tú adquieres una batalla mas.");
+						}
+						if(resultado == 3)
+						{
+							System.out.println("\n\n ¡El pokemon salvaje era demasiado fuerte! Tu pokemon ha sufrido un golpe crítico, llévalo al Centro Pokemon cuando se habilite.");
+						}
+
+						System.out.println("\n\n Ingrese una tecla para continuar: ");
+						String tecla = lectorDeTecladoString.nextLine();
+
+						control = 2;
+
+					}break;
+					}
+
+
+				}
+
+			}break;
+
+			}
+		}
+
+	}		
+
+
+	public static void limpiar()
+	{
+		for (int i=0; i < 40 ; i++)
+		{
+			System.out.println();
+		}
+		
 	}
 
 }
