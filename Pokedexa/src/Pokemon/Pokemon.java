@@ -16,6 +16,7 @@ public class Pokemon implements Serializable
 
 	/**
 	 * Constructor para COPIA, aplicado en la captura pokemon.
+	 * @author GuillerminaLatorre
 	 * @param id
 	 * @param nombre
 	 * @param vidas
