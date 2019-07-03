@@ -232,8 +232,8 @@ public class Pokemon implements Serializable
 
 	@Override
 	public String toString() {
-		return "\n -ID: " + id + "\n -Nombre:" + nombre + "\n -Vidas: " + vidas + "\n Nivel: " + nivel + "\n -Evolucion: "
-				+ evolucion + "\n -Tipo: "+ tipo;
+		return "\n\t -ID: " + id + "\t -Nombre:" + nombre + "\t -Vidas: " + vidas + "\t Nivel: " + nivel + "\t -Evolucion: "
+				+ evolucion + "\t -Tipo: "+ tipo;
 	}
 
 }
