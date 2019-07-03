@@ -21,8 +21,7 @@ import Usuario.Usuario;
 public class GestorUsuarios implements Serializable
 {
 	private File archivoUsuarios=new File("src\\GestorUsuarios\\Usuarios.dat");
-	@SuppressWarnings("unused")
-	private TreeMap<String,Usuario> usuarios= new TreeMap<String,Usuario>();
+	@SuppressWarnings("unused")	private TreeMap<String,Usuario> usuarios= new TreeMap<String,Usuario>();
 	
 	
 	//CONSTRUCTOR

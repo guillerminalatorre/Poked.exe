@@ -317,14 +317,71 @@ public class Main
 
 							System.out.println(usuario.listarPokemonsCapturados());
 
-							System.out.println("\n\n\n\n\n\t1--Volver al Menú Pokemon");
+							System.out.println("\n\n\n\n\n\t1--Eliminar un Pokemon\n\n\t2--Volver al Menú Pokemon\n\n");
 
 							control2 = lectorDeTecladoInt.nextInt();
 
-							while(control2 != 1)
+							while(control2 <1 || control2>2)
 							{
 								System.out.println("La opción ingresada no corresponde a una opción. Por favor ingrese la opción 1 : \n\n");
 								control2 = lectorDeTecladoInt.nextInt();
+							}
+							switch(control2)
+							{
+							case 1:
+							{
+								System.out.println("Ingrese la ID del Pokemon: ");
+
+								int idCapturado = lectorDeTecladoInt.nextInt();
+
+								Pokemon capturadoPokemon = usuario.leerPokemonCapturado(idCapturado);
+
+								while(capturadoPokemon == null)
+								{
+									System.out.println("\nLa id no se encuentra entre sus Pokemon capturados. Por favor, ingrese una id valida: ");
+
+									idCapturado = lectorDeTecladoInt.nextInt();
+
+									capturadoPokemon = usuario.leerPokemonCapturado(idCapturado);
+
+								}
+								
+								System.out.println("\n\n\n ¿Esta seguro que quiere eliminar a " + capturadoPokemon.getNombre() +" ?   1=SI   2=NO");
+								
+								control2 = lectorDeTecladoInt.nextInt();
+
+								while(control2 <1 || control2>2)
+								{
+									System.out.println("La opción ingresada no corresponde a una opción. Por favor ingrese la opción 1 : \n\n");
+									control2 = lectorDeTecladoInt.nextInt();
+								}
+								
+								switch(control2)
+								{
+								case 1:
+								{
+									usuario.eliminarUnPokemonCapturado(capturadoPokemon.getId());
+									
+									System.out.println("\n\n Pokemon Eliminado");
+									
+									System.out.println("\n\n Ingrese una tecla para continuar: ");
+									
+									String tecla = lectorDeTecladoString.nextLine();
+									
+									control=2;
+								}
+								case 2:
+								{
+									control=2;
+								}break;
+								}
+								
+							}break;
+							case 2:
+							{
+								control =2;
+								
+							}break;
 							}
 
 
@@ -686,6 +743,11 @@ public class Main
 		{
 			System.out.println();
 		}
+		
+	}
+	
+	public static void menuPrincipal()
+	{
 		
 	}
 

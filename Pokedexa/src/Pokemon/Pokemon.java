@@ -35,6 +35,7 @@ public class Pokemon implements Serializable
 	}
 	/**
 	 * Constructor COPIA2
+	 * @author Ivan Lopez
 	 * @param Pokemon
 	 */
 	public Pokemon(Pokemon poke)
@@ -50,6 +51,7 @@ public class Pokemon implements Serializable
 	
 	/**
 	 * Constructor por DEFECTO, para pokemons nuevos.
+	 * @author Guillermina Latorre
 	 * @param id
 	 * @param nombre
 	 * @param nivel
@@ -68,6 +70,7 @@ public class Pokemon implements Serializable
 	
 	/**
 	 * Constructor por DEFECTO2, para pokemons nuevos.
+	 * @author GuillerminaLatorre
 	 * @param id
 	 * @param nombre
 	 * @param nivel
@@ -84,10 +87,10 @@ public class Pokemon implements Serializable
 		this.rutaImagen = " ";
 	}
 
-	//SETTERS
+	//SETTERS, SE UTILIZAN PARA JSON
 
 	/**
-	 * las vidas varian en cada pokemon depende la actividad que se aplique sobre Ã©l, por eso pueden ser sobreescritas
+	 * las vidas varian en cada pokemon depende la actividad que se aplique sobre el, por eso pueden ser sobreescritas
 	 * @param vidas
 	 */
 	public void setVidas (int vidas)
@@ -96,7 +99,7 @@ public class Pokemon implements Serializable
 	}
 	
 	/**
-	 * el nivel varia en cada pokemon depende la actividad que se aplique sobre Ã©l, por eso puede ser sobreescrito
+	 * el nivel varia en cada pokemon depende la actividad que se aplique sobre el, por eso puede ser sobreescrito
 	 * @param nivel
 	 */
 	public void setNivel (int nivel)
@@ -109,7 +112,6 @@ public class Pokemon implements Serializable
 		setNivel(n);
 		setVidas(n);
 	}
-	
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -156,6 +158,13 @@ public class Pokemon implements Serializable
 		return rutaImagen;
 	}
 
+	/**
+	 * @author Guillermina Latorre
+	 * @return el nivel de del pokemon mas el nivel que le otroga su evolucion
+	 * @see {@link Pokemon#nivelPrimeraEvolucion()}<br>
+	 * {@link Pokemon#nivelSegundaEvolucion()}<br>
+	 * {@link Pokemon#nivelTercersEvolucion()}
+	 */
 	protected int calcularNivel()
 	{
 		return nivel+nivelPrimeraEvolucion()+nivelSegundaEvolucion()+nivelTerceraEvolucion();
@@ -166,21 +175,35 @@ public class Pokemon implements Serializable
 	//CALCULADORES DE NIVEL
 	
 	
-	
+	/**
+	 * @author Guillermina Latorre
+	 * @return
+	 * @see {@link Pokemon#calcularNivel()}
+	 */
 	protected int nivelPrimeraEvolucion()
 	{	
 		int nivel = 0;
 		if (getEvolucion() == 1 ) nivel =1;
 		return nivel;
 	}
-
+	
+	/**
+	 * @author Guillermina Latorre
+	 * @return
+	 * @see {@link Pokemon#calcularNivel()}
+	 */
 	protected int nivelSegundaEvolucion()
 	{
 		int nivel = 0;
 		if (getEvolucion() == 2 ) nivel =10;
 		return nivel;
 	}
-
+	
+	/**
+	 * @author Guillermina Latorre
+	 * @return
+	 * @see {@link Pokemon#calcularNivel()}
+	 */
 	protected int nivelTerceraEvolucion ()
 	{
 		int nivel = 0;
@@ -192,7 +215,7 @@ public class Pokemon implements Serializable
 	//METODOS OVERRIDE
 	
 
-	@Override
+	
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;

@@ -40,7 +40,7 @@ public class Agua_Hielo extends Pokemon implements IAgua , IHielo{
 
     
     
-	@Override
+	
 	/**
 	 * Metodo abstracto entre las clases solo cambia el "tipo" las evoluciones quedan igual.
 	 */

@@ -4,7 +4,7 @@ import ManejadorExcepciones.ExcepcionGenerica;
 import Pokemon.*;
 import Usuario.*;
 
-public class Batalla {
+public class Batalla  extends CapturaPokemonAbstraccion {
   
 	private Usuario usuario;
 	private Pokemon pokemonCapturado;
@@ -27,8 +27,6 @@ public class Batalla {
 		definirGanador();
 		this.usuario = usuario;
 	}
-
-	
 	
 
 	// GETTERS Y SETTERS

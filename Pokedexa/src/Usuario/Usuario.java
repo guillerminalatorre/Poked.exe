@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.TreeMap;
+
 import GenericidadTreeMap.*;
 
 public class Usuario implements Serializable 
@@ -26,6 +27,10 @@ public class Usuario implements Serializable
 	
 	//vacio
 	
+	/**
+	 * Constructor de la clase vac�o
+	 * @author Ivan Lopez
+	 */
 	public Usuario() 
 	{
 		super();
@@ -37,7 +42,11 @@ public class Usuario implements Serializable
 	
 	
 	//defecto
-	
+	/**
+	 * Constructor de la clase por DEFECTO
+	 * @param nombre
+	 * @author Ivan Lopez
+	 */
 	public Usuario(String nombre) 
 	{
 		super();
@@ -59,7 +68,11 @@ public class Usuario implements Serializable
 	}
 	
 	//copia
-	
+	/**
+	 * Constructor de la clase por copia
+	 * @author Ivan Lopez
+	 * @param usu
+	 */
 	public Usuario(Usuario usu) 
 	{
 		super();
@@ -100,6 +113,11 @@ public class Usuario implements Serializable
 
 	// SETTERS
 
+	/**
+	 * Unico set necesario para el manejo de la clase
+	 *@author Guillermina Latorre
+	 * @param cantidadDeBatallas
+	 */
 	public void setCantidadDeBatallas(int cantidadDeBatallas) {
 		CantidadDeBatallas = cantidadDeBatallas;
 	}
@@ -121,6 +139,11 @@ public class Usuario implements Serializable
 		return archivoCapturados.getAbsolutePath();
 	}
 
+	/**
+	 * Aunmenta el atributo cantidadDeBatallas en uno.
+	 * @author Guillermina Latorre
+	 * @see {@link Batalla#resultadoPelea()}
+	 */
 	public void sumarBatalla ()
 	{
 		setCantidadDeBatallas( getCantidadDeBatallas()+1 );
@@ -133,6 +156,12 @@ public class Usuario implements Serializable
 	
 	//METODOS DE LISTADO
 	
+	/**
+	 * @author Guillermina Latorre
+	 * @return String cadena con todos los pokemons de la Pokedex, listo para imprimir por pantalla
+	 * @throws ExcepcionGenerica
+	 * @see {@link Usuario#getArchivoPokedexUsuario()}
+	 */
 	public String listarPokemonsPokedex() throws ExcepcionGenerica
 	{
 		StringBuilder listado = new StringBuilder ("Pokemons Pokedex de " + getNombre()+ ": \n");
@@ -156,7 +185,12 @@ public class Usuario implements Serializable
 		
 	}
 	
-	
+	/**
+	 * @author Guillermina Latorre
+	 * @return String cadena con todos los pokemons Capturados, listo para imprimir por pantalla
+	 * @throws ExcepcionGenerica
+	 * @see {@link Usuario#leerMapaCapturados()}
+	 */
 	public String listarPokemonsCapturados()
 	{
 		StringBuilder listado = new StringBuilder("Pokemons Capturados de " + getNombre()+ ": \n");
@@ -175,7 +209,12 @@ public class Usuario implements Serializable
 		return listado.toString();
 	}
 	
-	
+	/**
+	 * @author Guillermina Latorre
+	 * @return String cadena con todos los pokemons danados, listo para imprimir por pantalla
+	 * @throws ExcepcionGenerica
+	 * @see {@link Usuario#getPokemonsDanados()}
+	 */
 	public String listarPokemonsDanados() throws ExcepcionGenerica
 	{
 		StringBuilder listado = new StringBuilder("Pokemons Danados de " + getNombre()+ ": \n");
@@ -194,6 +233,12 @@ public class Usuario implements Serializable
 		return listado.toString();
 	}
 	
+	/**
+	 * @author Guillermina Latorre
+	 * @return String cadena con todos los pokemons NO debilitados, listo para imprimir por pantalla
+	 * @throws ExcepcionGenerica
+	 * @see {@link Usuario#getPokemonsNOdebilitados()}
+	 */
 	public String listarPokemonsNOdebilitados() throws ExcepcionGenerica
 	{
 		StringBuilder listado = new StringBuilder("Pokemons de " + getNombre()+ ": \n");
@@ -219,10 +264,9 @@ public class Usuario implements Serializable
 	
 	
 	/**
-	 * 
-	 * @return retorna las ids de la pokedex de el usuario en un ArrayList.
-	 * @throws  
-	 * @throws FileNotFoundException 
+	 * @author Guillermina Latorre
+	 * @return retorna las ids de la pokedex de el usuario en un ArrayList<Integer>, desde el archivo binario
+	 * @throws Excepcion Generica
 	 */
 	private ArrayList<Integer> getArchivoPokedexUsuario() throws ExcepcionGenerica
 	{
@@ -265,13 +309,22 @@ public class Usuario implements Serializable
 		return idsPokedex;
 	}
 	
-	
+	/**
+	 * @author Guillermina Latorre
+	 * @return TreeMap<Integer,Pokemon> con los pokemon del archivo de capturados, llama a una funcion generica
+	 * @see {@link GenericidadTreeMap#GenericidadTreeMap()}
+	 */
 	private TreeMap<Integer,Pokemon> leerMapaCapturados()
 	{
 		GenericidadTreeMap<Integer,Pokemon> capturados = new GenericidadTreeMap<Integer,Pokemon>();
  		return capturados.sacarMapa(archivoCapturados);
 	}
 	
+	/**
+	 * @author Guillermina Latorre
+	 * @return Pokemons danados en TreeMap<Integer,Pokemon> con la id =clave, y el pokemon=valor, del archivo binario de Pokemons Capturados.
+	 * @throws ExcepcionGenerica
+	 */
 	private TreeMap<Integer, Pokemon> getPokemonsDanados()  throws ExcepcionGenerica
 	{
 		FileInputStream lector = null;	
@@ -324,6 +377,11 @@ public class Usuario implements Serializable
 		return danados;
 	}
 	
+	/**
+	 * @author Guillermina Latorre
+	 * @return Pokemons NO danados en TreeMap<Integer,Pokemon> con la id =clave, y el pokemon=valor, del archivo binario de Pokemons Capturados.
+	 * @throws ExcepcionGenerica
+	 */
 	private TreeMap<Integer, Pokemon> getPokemonsNOdebilitados()  throws ExcepcionGenerica
 	{
 		FileInputStream lector = null;	
@@ -387,7 +445,8 @@ public class Usuario implements Serializable
 	
 	
 	/**
-	 * método publico para guardar el nuevo pokemon en el archivo binario
+	 * metodo publico para guardar el nuevo pokemon en el archivo binario
+	 * @author Guillermina Latore
 	 * @param pokemonNuevo
 	 * @throws ExcepcionGenerica
 	 */
@@ -452,8 +511,10 @@ public class Usuario implements Serializable
   
 	/**
 	 * elimina el pokemon que sea igual a la id pasada por parametro;
+	 * @author Guillermina Latorre
 	 * @param id
 	 * @throws ExcepcionGenerica 
+	 * @return true= se elimino, false= no lo elimino
 	 */
 	public boolean eliminarUnPokemonCapturado(int idAeliminar) throws ExcepcionGenerica
 	{
@@ -474,7 +535,7 @@ public class Usuario implements Serializable
 				capturados=new TreeMap<Integer, Pokemon>((TreeMap<Integer,Pokemon>)lectorCapturados.readObject());
 				
 				Pokemon eliminado = capturados.remove(idAeliminar);
-				if(eliminado.getId() == idAeliminar)
+				if(eliminado != null)
 				{
 					rta = true;
 				}
@@ -534,7 +595,8 @@ public class Usuario implements Serializable
 	
 	
 	/**
-	 * método para guarda una id en el archivo binario de pokemons vistos (pokedex)
+	 * metodo para guarda una id en el archivo binario de pokemons vistos (pokedex)
+	 * @author Guillermina Latorre e Ivan Lopez
 	 * @param pokemon
 	 * @throws ExcepcionGenerica
 	 */
@@ -605,9 +667,10 @@ public class Usuario implements Serializable
 	
 	
 		/**
-		 * retorna True si el pokemon fue visto, false si no lo fue.
+		 * Recorre el archivo binario de Pokedex del usuario
+		 * @author Guillermina Latorre
 		 * @param pokemonNuevo
-		 * @return
+		 * @return True si el pokemon fue visto, false si no lo fue.
 		 * @throws ExcepcionGenerica
 		 */
 		@SuppressWarnings("unchecked")
@@ -676,9 +739,8 @@ public class Usuario implements Serializable
 
 	
 	 /**
-     * sobreescribe los pokemon ya curados, que son pasados por parametro en el arrayList,  en el archivo.       
-     * @param curados
-     * @return
+     * Restaura a vidas == nivel, de los pokemons que no cumplan esa condicion. Recorre el archivo binario de Capturados
+     * @author Guillermina Latorre 
      * @throws ExcepcionGenerica
      */
 	public void restaurarVidas()  throws ExcepcionGenerica
@@ -749,9 +811,10 @@ public class Usuario implements Serializable
 	}
 	
 	/**
-	 * retorna el pokemon de la id enviada por parametro, si no lo encuentra retorna null.
+	 * Interactura con el Archivo Capturados
+	 * @author Guillermina Latorre
 	 * @param pokemonNuevo
-	 * @return
+	 * @return el pokemon de la id enviada por parametro, si no lo encuentra retorna null.
 	 * @throws ExcepcionGenerica
 	 */
 	public Pokemon leerPokemonCapturado (int id)  throws ExcepcionGenerica
@@ -813,6 +876,12 @@ public class Usuario implements Serializable
 		return retorno;
 	}
 	
+	/**
+	 * @author Guillermina Latorre
+	 * @param id
+	 * @return el pokemon correspondiente a la id pasada por parametro, que corresponde a un pokemon NO debilitado, si no lo encuentra = null.
+	 * @throws ExcepcionGenerica
+	 */
 	public Pokemon leerPokemonNOdebilitado (int id)  throws ExcepcionGenerica
 	{
 		TreeMap<Integer,Pokemon> noDebilitados = getPokemonsNOdebilitados();
@@ -820,7 +889,13 @@ public class Usuario implements Serializable
 		return noDebilitados.get(id);
 	}
 	
-	
+	/**
+	 * Para sobreescribir un pokemon presente en el archivo de Capturados
+	 * @author Guillermina Latorre
+	 * @param pokemon
+	 * @throws ExcepcionGenerica
+	 * @see {@link Batalla#resultadoPelea()}
+	 */
 	public void actualizarUnPokemon (Pokemon pokemon)  throws ExcepcionGenerica
 	{
 		FileOutputStream streamCapturados = null;	
@@ -885,6 +960,12 @@ public class Usuario implements Serializable
 		
 	}
 	
+	/**
+	 * Interactua con el archivo binario de Capturados
+	 * @author Guillermina Latorre
+	 * @return true = estan todos los Pokemon capturados debilitados, false= no todos
+	 * @throws ExcepcionGenerica
+	 */
 	public boolean estanTodosDebilitados() throws ExcepcionGenerica
 	{
 		FileOutputStream streamCapturados = null;	
