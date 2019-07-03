@@ -5,12 +5,13 @@ import Pokemon.Pokemon;
 
 public class GestorPokedex
 {	
-	//este método debe ser llamado 3 veces cada vez que el usuario entra en zona de pokemons salvajes 
 	/**
 	 * Arroja un pokemon, dependiendo de la cantidad de batallas que tenga el usuario.
+	 * @author Guillermina Latorre 
 	 * @param cantidadDeBatallas
-	 * @return
+	 * @return Pokemon levantado del archivo JSON
 	 * @throws ExcepcionGenerica
+	 * @see {@link ManejadorJSON#leerPokemonJSON(int)}
 	 */
 	public Pokemon pokemonRandomXnivel (int cantidadDeBatallas) throws ExcepcionGenerica 
 	{	

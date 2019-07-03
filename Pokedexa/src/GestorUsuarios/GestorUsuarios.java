@@ -26,7 +26,10 @@ public class GestorUsuarios implements Serializable
 	
 	
 	//CONSTRUCTOR
-	
+	/**
+	 * Constructor de la clase
+	 * @author Ivan Lopez
+	 */
 	public GestorUsuarios()
 	{
 
@@ -44,6 +47,7 @@ public class GestorUsuarios implements Serializable
 	
 	
 	/**
+	 * @author Ivan Lopez
 	 * @param nombre
 	 * @return null si no cargo el usuario porque ya existia; Usuario si lo cargo
 	 * @throws ExcepcionGenerica 
@@ -70,10 +74,16 @@ public class GestorUsuarios implements Serializable
 		return nuevo;
 	}
 	
+	/**
+	 * Carga el pokemon en la pokedex y capturados del usuario, extrayendolo del archivo JSON mediante la id pasada por parametro.
+	 * @author Ivan Lopez
+	 * @param usuario
+	 * @param id
+	 * @return Pokemon 
+	 * @throws ExcepcionGenerica
+	 */
 	public Pokemon cargarPrimerPokemon ( Usuario usuario, int id ) throws ExcepcionGenerica
-	{
-		//Pokemon primero = usuario.encontrarPokemon(id);
-		
+	{	
 		ManejadorJSON manejadorJSON = new ManejadorJSON();
 		
 		Pokemon primero = manejadorJSON.leerPokemonJSON(id);
@@ -93,8 +103,10 @@ public class GestorUsuarios implements Serializable
 	
 	/**
 	 *Privado, solo accesible desde  Agrega un nuevo usuario a final del archivo de usuarios.
+	 *@author Ivan Lopez
 	 * @param usuarioNuevo
 	 * @throws ExcepcionGenerica
+	 * @return el usuario que fue guardado.
 	 */
 	@SuppressWarnings("unchecked")
 	private Usuario guardarNuevoUsuario (Usuario usuarioNuevo)  throws ExcepcionGenerica
@@ -160,13 +172,24 @@ public class GestorUsuarios implements Serializable
 	//METODOS DE OBTENCION DE USUARIOS 
 	
 
+	/**
+	 * Aplica método generico
+	 * @author Guillermina Latorre
+	 * @return TreeMap<String, Usuario>
+	 * @see {@link GenericidadTreeMap#sacarMapa(File)}
+	 */
 	private TreeMap<String,Usuario> sacarMapa()
 	{
 		GenericidadTreeMap<String,Usuario> capturados = new GenericidadTreeMap<String,Usuario>();
  		return capturados.sacarMapa(archivoUsuarios);
 	}
 	
-	
+	/**
+	 * @author Ivan Lopez
+	 * @param nombre
+	 * @return El usuario sacado del archivoUsuarios
+	 * @see {@link GestorUsuarios#ExisteNombre(String)}
+	 */
 	public Usuario sacarUsuario(String nombre) {
 		TreeMap<String,Usuario> usuarios=null;
 		try {		
@@ -190,8 +213,9 @@ public class GestorUsuarios implements Serializable
 
 	/**
 	 * verifica si el nuevo nombre de usuario ya existe en el archivo de usuarios
+	 * @author Ivan Lopez
 	 * @param nombre
-	 * @return
+	 * @return booleano: true (si existe) false (si no existe)
 	 * @throws ExcepcionGenerica
 	 */
 	@SuppressWarnings("unchecked")
@@ -243,6 +267,12 @@ public class GestorUsuarios implements Serializable
 	
 	}
 	
+	/**
+	 * Pisa el usuario enviado por parametro con el que esta en el archivo de usuarios
+	 * @author Ivan Lopez
+	 * @param un Usuario
+	 * @throws ExcepcionGenerica
+	 */
 	public void sobreescribirUsuario(Usuario usu)  throws ExcepcionGenerica
 	{
 		FileOutputStream escribir=null;
@@ -281,6 +311,10 @@ public class GestorUsuarios implements Serializable
 		}
 	}
 	
+	/**
+	 * @author Guillermina Latorre
+	 * @return booleano: true (si existe) false (si no existe)
+	 */
 	public boolean elArchivoUsuariosEstaCreado()
 	{
 		return archivoUsuarios.exists();

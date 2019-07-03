@@ -17,12 +17,21 @@ public class ManejadorJSON {
 	
 	
 	//Pokemon pokemonObj;
-	
+	/**
+	 * Constructor de la clase
+	 * @author Ivan Lopez
+	 */
 	public ManejadorJSON() 
 	{
 		pokemones = new JSONArray();
 	}
 	
+	/**
+	 * Carga el archivo JSON con el pokemon pasado por parametro pasado a un JSONObject
+	 * @author Ivan Lopez
+	 * @param pokemonObj
+	 * @throws ExcepcionGenerica
+	 */
 	public void CargarPokemon(Pokemon pokemonObj) throws ExcepcionGenerica
 	{	
 		 JSONObject pokemonJSON;
@@ -46,6 +55,11 @@ public class ManejadorJSON {
 		}
 	}
 	
+	/**
+	 * Carga el archivo JSON 
+	 * @author Ivan Lopez
+	 * @throws ExcepcionGenerica
+	 */
 	public void cargarArchivoJSON() throws ExcepcionGenerica {
 		try {
 			escritor= new FileWriter(json);
@@ -69,6 +83,13 @@ public class ManejadorJSON {
 			}
 		}
 	}
+	
+	/**
+	 * @author Ivan Lopez
+	 * @param id
+	 * @return Pokemon que tenga la id igual a la pasada por parametro
+	 * @throws ExcepcionGenerica
+	 */
 	public Pokemon leerPokemonJSON(int id) throws ExcepcionGenerica
 	{
 		Pokemon pokemon=new Pokemon();
@@ -94,6 +115,10 @@ public class ManejadorJSON {
 		return pokemon;
 	}
 
+	/**
+	 * @author Ivan Lopez
+	 * @return Strign con el contenido del ArchivoJSON
+	 */
 	public String leer() 
 	{
 		String contenido = "";
@@ -108,6 +133,11 @@ public class ManejadorJSON {
 		return contenido;
 	}
 	
+	
+	/**
+	 * Carga manual del archivo PokemonJSON
+	 * @author Guillermina Latorre
+	 */
 	public void cargarPokedexBDD ()
 	{
 		try {

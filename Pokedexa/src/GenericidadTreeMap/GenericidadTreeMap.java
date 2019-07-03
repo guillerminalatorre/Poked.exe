@@ -9,11 +9,22 @@ import java.util.TreeMap;
 
 public class GenericidadTreeMap <U, T>
 {
+	/**
+	 * @author Guillermina Latorre
+	 * Constructor de la clase.
+	 */
 	public GenericidadTreeMap()
 	{
 		
 	}
 	
+	/**
+	 * @author Guillermina Latorre
+	 * @param archivo que tenga datos guardados en forma de TreeMap 
+	 * @return TreeMap con los datos del archivo pasado por parametro.
+	 * @see {@link Usuario#leerMapaCapturados()}
+	 * {@link GestorUsuarios#sacarMapa()}
+	 */
 	public TreeMap<U,T> sacarMapa(File archivo)
 	{
 		FileInputStream lector = null;	

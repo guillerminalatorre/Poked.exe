@@ -13,6 +13,13 @@ public class Batalla {
 	
 	//CONSTRUCTOR
 	
+	/**
+	 * Constructor de la clase Batalla
+	 * @author Matias Araneta
+	 * @param pokemonCapturado
+	 * @param pokemonSalvaje
+	 * @param usuario
+	 */
 	public Batalla(Pokemon pokemonCapturado ,Pokemon pokemonSalvaje, Usuario usuario)
 	{
 		this.pokemonCapturado = pokemonCapturado;
@@ -25,7 +32,7 @@ public class Batalla {
 	
 
 	// GETTERS Y SETTERS
-	
+
 	public int getGanador() 
 	{
 		return Ganador;
@@ -58,8 +65,9 @@ public class Batalla {
 	//METODOS PARA CONCER EL GANADOR
 	
 	/**
-	 * 
-	 * @return
+	 * @author Guillermina Latorre
+	 * @return diferencia entre los niveles de los dos pokemons
+	 * @see {@link Batalla#definirGanador()}
 	 */
 	private int calcularGanador()
 	{
@@ -76,7 +84,9 @@ public class Batalla {
 	
 	
 	/**
+	 * @author Matias Araneta
 	 * si el resultado de calcularGanador() es mayor a 0 gana el capturado, si es menos a 0 gana el salvaje, si es igual a cero es random.
+	 * @see {@link Batalla#resultadoPelea()}
 	 */
 	private void definirGanador() 
 	{
@@ -100,7 +110,8 @@ public class Batalla {
 	
 	
 	/**
-	 * se acreditan los premios o las prendas al pokemon capturado, premio al usuario, y captura pokemon.
+	 * @author Guilllermina Latorre
+	 * se bajan las vidas del pokemon capturad, o captura pokemon, y suma un nivel al usuario .
 	 * @throws ExcepcionGenerica 
 	 */
 	public void resultadoPelea() throws ExcepcionGenerica

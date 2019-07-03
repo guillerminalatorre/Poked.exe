@@ -17,15 +17,23 @@ public class CentroPokemon
 		return compuertaAbierta;
 	}
 	
+	/**
+	 * @author Guillermina Latorre
+	 * Constructor de la clase
+	 * @param usuario
+	 */
 	public CentroPokemon(Usuario usuario)
 	{
 		this.usuario =usuario;
 		this.compuertaAbierta = true;
 	}
-	
 
-	//Este método se debe ajecutar cada  vez que el usuario vuelva al menú pokemon.
-	
+	/**
+	 * @author Guillermina Latorre
+	 * @throws ExcepcionGenerica
+	 * Si estan todos lo pokemon debilitados el atributo compuertaAbierta es true.
+	 * @see {@link Usuario#estanTodosDebilitados()}
+	 */
 	public void manejadorDeCompuerta() throws ExcepcionGenerica
 	{
 		if(compuertaAbierta == false)
@@ -43,15 +51,24 @@ public class CentroPokemon
 			}
 		}
 	}
-
-
+	
+	/**
+	 * @author Guillermina Latorre
+	 * @return String con la cedena de pokemons capturados danados.
+	 * @throws ExcepcionGenerica
+	 * @see {@link Usuario#listarPokemonsDanados()}
+	 */
 	public String listarPokemonsDanados() throws ExcepcionGenerica
 	{
 		return usuario.listarPokemonsDanados();
 	}
 	
-	// devuelve false si ya se curaron los pokemon, asi la compuerta se cierra, true si no se curaron, asi la compuerta sigue abierta.
-	
+	/**
+	 * @author Guillermina Latorre
+	 * @throws ExcepcionGenerica
+	 * Restaura las vidas de los pokemons danados
+	 * @see {@link Usuario#restaurarVidas()}
+	 */
 	public void curarPokemonsDañados() throws ExcepcionGenerica
 	{
 		usuario.restaurarVidas();
